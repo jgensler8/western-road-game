@@ -1,0 +1,9 @@
+*.o
+*.rel
+*.sym
+*.asm
+*.lst
+*.ihx
+*.sav
+*.gbc
+assets/
