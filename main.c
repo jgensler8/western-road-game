@@ -7,10 +7,30 @@
 #include <stdio.h>
 #include <string.h>
 #include <gbdk/platform.h>
-// #include <gb/gb.h>
+#include <gb/hardware.h>
 
 #include "lankygitmono.h"
 #include "sframe7.h"
+#include "hUGEDriver.h"
+
+void play_sfx_blip()
+{
+    // Stop the channel first to reset it
+    NR41_REG = 0x00; // Length: max (63)
+    NR42_REG = 0xF1; // Volume/Envelope: Initial volume 15 (F), decrease (1), step time 1 (001)
+    NR43_REG = 0x3F; // Frequency: max (fast noise)
+    NR44_REG = 0x80; // Control: Trigger (start sound)
+}
+
+void play_sfx_high()
+{
+    NR10_REG = 0x00; // No sweep (optional, could add for a 'ping')
+    NR11_REG = 0x80; // Length (no use) | Duty (50% wave) - 0x80 means 50% duty
+    NR12_REG = 0xF1; // Initial volume (F=max) | Envelope (decrease) | Step time (1)
+    // Frequency: Higher pitch (e.g., C6)
+    NR13_REG = 0x83; // Low byte of frequency for C6 (1760 Hz)
+    NR14_REG = 0x86; // Trigger | Length Enable (0x80 to trigger, 0x06 for high byte)
+}
 
 #define ALPHABET_TILE_START 0
 void xy_printf(uint8_t screen_x, uint8_t screen_y, char *word)
@@ -20,6 +40,11 @@ void xy_printf(uint8_t screen_x, uint8_t screen_y, char *word)
     {
         set_bkg_tile_xy(screen_x + c, screen_y, ALPHABET_TILE_START + word[c] - ' ');
     }
+}
+
+void xy_printf_progress(uint8_t screen_x, uint8_t screen_y, char *word, uint8_t *progress)
+{
+    set_bkg_tile_xy(screen_x + *progress, screen_y, ALPHABET_TILE_START + word[*progress] - ' ');
 }
 
 void draw_frame(uint8_t screen_x, uint8_t screen_y, uint8_t width, uint8_t height)
@@ -75,10 +100,63 @@ void init_frame_vram(void)
 void draw_frame_text(char *line_1, char *line_2)
 {
     clear_bkg_frame();
+    draw_frame(0, 14, 20, 4);
     xy_printf(1, 15, line_1);
     xy_printf(1, 16, line_2);
-    draw_frame(0, 14, 20, 4);
     SHOW_BKG;
+}
+
+#define PROGRESS_FRAME_WAIT 4
+struct ProgressableFrame
+{
+    char *line_1;
+    uint8_t line_1_len;
+    char *line_2;
+    uint8_t line_2_len;
+    uint8_t l1_progress;
+    uint8_t l2_progress;
+    uint8_t skip;
+    uint8_t wait;
+};
+void frame_progress_init(char *line_1, char *line_2, struct ProgressableFrame *frame)
+{
+    frame->wait = 0;
+    frame->line_1 = line_1;
+    frame->line_1_len = strlen(line_1);
+    frame->line_2 = line_2;
+    frame->line_2_len = strlen(line_2);
+    frame->l1_progress = 0;
+    frame->l2_progress = 0;
+}
+// return 1 if progress happened, return 0 if no progress is left
+uint8_t draw_frame_progress(struct ProgressableFrame *frame)
+{
+    if (frame->wait > 0)
+    {
+        frame->wait -= 1;
+        return;
+    }
+    if (frame->l1_progress == 0 && frame->l2_progress == 0)
+    {
+        // only run this once
+        clear_bkg_frame();
+        draw_frame(0, 14, 20, 4);
+    }
+    if (frame->l1_progress < frame->line_1_len)
+    {
+        xy_printf_progress(1, 15, frame->line_1, &frame->l1_progress);
+        frame->l1_progress += 1;
+        frame->wait = PROGRESS_FRAME_WAIT;
+        return 1;
+    }
+    else if (frame->l2_progress < frame->line_2_len)
+    {
+        xy_printf_progress(1, 16, frame->line_2, &frame->l2_progress);
+        frame->l2_progress += 1;
+        frame->wait = PROGRESS_FRAME_WAIT;
+        return 1;
+    }
+    return 0;
 }
 
 uint8_t input_last = 0;
@@ -139,6 +217,7 @@ uint8_t menu_process_input(struct Menu *menu)
         if (menu->selection != menu->max_option)
         {
             menu->selection += 1;
+            play_sfx_blip();
         }
     }
     else if (joypad_up_pressed)
@@ -146,6 +225,7 @@ uint8_t menu_process_input(struct Menu *menu)
         if (menu->selection != 0)
         {
             menu->selection -= 1;
+            play_sfx_blip();
         }
     }
     if (joypad_a_pressed)
@@ -246,6 +326,7 @@ void scene_story_process_input(void)
     {
         if (joypad_a_pressed)
         {
+            play_sfx_high();
             scene_story_dialog_progress++;
         }
     }
@@ -255,6 +336,7 @@ void scene_story_process_input(void)
     }
 }
 uint8_t scene_story_last_render_progress;
+struct ProgressableFrame scene_story_progressable_frame;
 void scene_story_render(uint8_t swapped)
 {
     if (swapped)
@@ -266,7 +348,9 @@ void scene_story_render(uint8_t swapped)
     {
         draw_frame_text(dialogs[scene_story_dialog_progress], EMPTY);
         scene_story_last_render_progress = scene_story_dialog_progress;
+        frame_progress_init(dialogs[scene_story_dialog_progress], EMPTY, &scene_story_progressable_frame);
     }
+    draw_frame_progress(&scene_story_progressable_frame);
 }
 struct Scene scene_story = {
     .process_input = scene_story_process_input,
@@ -285,6 +369,7 @@ void scene_title_process_input(void)
 {
     if (menu_process_input(&start_menu))
     {
+        play_sfx_blip();
         switch (start_menu.selection)
         {
         case 0:
@@ -310,8 +395,16 @@ struct Scene scene_title = {
     .process_input = scene_title_process_input,
     .render = scene_title_render,
 };
+
+extern const hUGESong_t single_beep;
 void main(void)
 {
+    LCDC_REG = 0xD1;
+    BGP_REG = 0b11100100;
+    NR52_REG = 0x80;
+    NR51_REG = 0xFF;
+    NR50_REG = 0x77;
+
     init_font_vram();
     init_frame_vram();
     struct StatCalculation default_calculation = {
@@ -321,10 +414,17 @@ void main(void)
     };
     default_state.calculations[0] = default_calculation;
     queue_scene(&scene_title);
+    // apparaently this needs to happen some time after startup?
+    __critical
+    {
+        // hUGE_init(&single_beep);
+        add_VBL(hUGE_dosound);
+    }
 
     uint8_t swapped = 0;
     while (1)
     {
+        wait_vbl_done();
         scan_input();
         if (current_scene)
         {
@@ -333,6 +433,7 @@ void main(void)
         // maybe swap scene but do not immediately render it
         if (next_scene != NULL && next_scene != current_scene)
         {
+            clear_bkg();
             current_scene = next_scene;
             next_scene = NULL;
             swapped = 1;

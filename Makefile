@@ -4,8 +4,9 @@ ifndef GBDK_HOME
 	GBDK_HOME = ../../
 endif
 
-LCC_FLAGS_GBC = -Wl-yt0x1B -Wm-yc -autobank
-LCC_FLAGS = -Wl-j -Wm-yoA -Wm-ya4 -Wb-ext=.rel -Wb-v $(LCC_FLAGS_GBC)
+LCC_FLAGS_HUGEDRIVER = -Wl-lhUGEDriver.lib
+LCC_FLAGS_GBC = -Wl-yt0x1B -autobank $(LCC_FLAGS_HUGEDRIVER)
+LCCFLAGS = -Wl-j -Wm-yoA -Wm-ya4 -Wb-ext=.rel -Wb-v $(LCC_FLAGS_GBC)
 LCC = $(GBDK_HOME)bin/lcc.exe
 PNG2ASSET = $(GBDK_HOME)bin/png2asset.exe
 ROMUSAGE = $(GBDK_HOME)bin/romusage.exe
@@ -50,8 +51,8 @@ bg_road.c:
 	$(PNG2ASSET) bg_road.png -noflip -bpp 2 -spr8x8 -sprite_no_optimize
 
 # Link file, and write 0x80 at position 0x143 in header
-compo25.gbc:	lankygitmono.o sframe7.o bg_road.o main.o
-	$(LCC) $(LCCFLAGS) $(CFLAGS) -o compo25.gbc lankygitmono.o sframe7.o bg_road.o main.o
+compo25.gbc:	lankygitmono.o sframe7.o bg_road.o single_beep.o main.o
+	$(LCC) $(LCCFLAGS) $(CFLAGS) -o compo25.gbc lankygitmono.o sframe7.o bg_road.o single_beep.o main.o
 
 MGBA=c:\Users\jgens\Downloads\mGBA-0.10.5-win64\mGBA-0.10.5-win64\mGBA.exe
 
