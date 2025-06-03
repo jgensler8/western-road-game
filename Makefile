@@ -50,9 +50,13 @@ sframe7.c:
 bg_road.c:
 	$(PNG2ASSET) bg_road.png -noflip -bpp 2 -spr8x8 -sprite_no_optimize
 
+ASSETS = lankygitmono.c sframe7.c bg_road.c
+SRCS = types.c text.c input.c sound.c scene_intro_dialog.c scene_start_menu.c $(ASSETS)
+OBJS = $(SRCS:.c=.o)
+
 # Link file, and write 0x80 at position 0x143 in header
-compo25.gbc:	lankygitmono.o sframe7.o bg_road.o single_beep.o main.o
-	$(LCC) $(LCCFLAGS) $(CFLAGS) -o compo25.gbc lankygitmono.o sframe7.o bg_road.o single_beep.o main.o
+compo25.gbc: $(OBJS)
+	$(LCC) $(LCCFLAGS) $(CFLAGS) -o main.o $(OBJS) main.c
 
 MGBA=c:\Users\jgens\Downloads\mGBA-0.10.5-win64\mGBA-0.10.5-win64\mGBA.exe
 
