@@ -5,7 +5,7 @@ extern const hUGESong_t single_beep;
 
 void sound_init(void)
 {
-    LCDC_REG = 0xD1;
+    // LCDC_REG = 0xD1;
     BGP_REG = 0b11100100;
     NR52_REG = 0x80;
     NR51_REG = 0xFF;
