@@ -9,7 +9,7 @@ void clear_bkg_frame(void);
 
 #define EMPTY "\0"
 
-void draw_frame_text(char *line_1, char *line_2);
+void text_draw_frame(char *line_1, char *line_2);
 
 #define PROGRESS_FRAME_WAIT 4
 struct ProgressableFrame
@@ -23,8 +23,8 @@ struct ProgressableFrame
     uint8_t skip;
     uint8_t wait;
 };
-void frame_progress_init(char *line_1, char *line_2, struct ProgressableFrame *frame);
-uint8_t draw_frame_progress(struct ProgressableFrame *frame);
+void text_progress_init(char *line_1, char *line_2, struct ProgressableFrame *frame);
+uint8_t text_draw_frame_progress(struct ProgressableFrame *frame);
 
 // menu
 

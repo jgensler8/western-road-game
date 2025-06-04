@@ -35,11 +35,10 @@ void scene_story_render(uint8_t swapped)
     }
     if (scene_story_dialog_progress != scene_story_last_render_progress)
     {
-        draw_frame_text(dialogs[scene_story_dialog_progress], EMPTY);
         scene_story_last_render_progress = scene_story_dialog_progress;
-        frame_progress_init(dialogs[scene_story_dialog_progress], EMPTY, &scene_story_progressable_frame);
+        text_progress_init(dialogs[scene_story_dialog_progress], EMPTY, &scene_story_progressable_frame);
     }
-    draw_frame_progress(&scene_story_progressable_frame);
+    text_draw_frame_progress(&scene_story_progressable_frame);
 }
 struct Scene scene_story = {
     .process_input = scene_story_process_input,

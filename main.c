@@ -3,6 +3,7 @@
 #include "text.h"
 #include "sound.h"
 #include "scene_start_menu.h"
+#include <gb/hardware.h>
 
 struct Scene *current_scene = NULL;
 struct Scene *next_scene = NULL;
@@ -12,19 +13,49 @@ void queue_scene(struct Scene *new_next_scene)
     menu_reset_state();
 }
 
-#include "bg_fade.h"
-#include <gbdk/platform.h>
-#define FADE_TILE_START 69
 #define FADE_SWAP_STEPS 4
-void load_swap_bkg(void)
+#define FADE_MS 200
+const palette_color_t pals[] = {
+    RGB_WHITE,
+    RGB_LIGHTGRAY,
+    RGB_DARKGRAY,
+    RGB_BLACK,
+    // p2
+    RGB_LIGHTGRAY,
+    RGB_DARKGRAY,
+    RGB_BLACK,
+    RGB_BLACK,
+    // p3
+    RGB_DARKGRAY,
+    RGB_BLACK,
+    RGB_BLACK,
+    RGB_BLACK,
+    // p4
+    RGB_BLACK,
+    RGB_BLACK,
+    RGB_BLACK,
+    RGB_BLACK,
+};
+palette_color_t *get_palette_for_fade(uint8_t fade)
 {
-    set_bkg_1bpp_data(FADE_TILE_START, FADE_SWAP_STEPS, bg_fade_tiles);
+    switch (fade)
+    {
+    case 0:
+        return &pals[0];
+    case 1:
+        return &pals[4];
+    case 2:
+        return &pals[8];
+    case 3:
+        return &pals[12];
+    default:
+        return &pals[0];
+    }
 }
 
 void main(void)
 {
     text_init();
-    load_swap_bkg();
     struct StatCalculation default_calculation = {
         .src = STAT_STEPS,
         .dst = STAT_DISTANCE,
@@ -36,14 +67,14 @@ void main(void)
     clear_bkg();
 
     uint8_t swapped = 0;
-    // 0 is empty 4 is completely black
-    int8_t swap_progress = FADE_SWAP_STEPS - 1;
+    // 0 is normal 3 is completely black
+    uint8_t swap_progress = FADE_SWAP_STEPS - 1;
     while (1)
     {
         wait_vbl_done();
         if (swap_progress > 0)
         {
-            delay(200);
+            delay(FADE_MS);
         }
         input_scan();
         if (current_scene && swap_progress == 0)
@@ -56,9 +87,7 @@ void main(void)
             if (swap_progress < FADE_SWAP_STEPS)
             {
                 // continue swap out swap out
-                // in this case swap_progress==0 means the first tile
-                fill_win_rect(0, 0, 20, 18, FADE_TILE_START + swap_progress);
-                SHOW_WIN;
+                set_bkg_palette(BKGF_CGB_PAL0, 1, get_palette_for_fade(swap_progress));
                 swap_progress += 1;
             }
             else
@@ -72,19 +101,18 @@ void main(void)
         {
             if (swap_progress > 0)
             {
-                if (swap_progress > FADE_SWAP_STEPS)
+                if (swap_progress >= FADE_SWAP_STEPS)
                 {
-                    swap_progress == FADE_SWAP_STEPS;
+                    swap_progress = FADE_SWAP_STEPS - 1;
                 }
                 // swap in
-                // in this case, swap_progress==1 means the first tile
-                fill_win_rect(0, 0, 20, 18, FADE_TILE_START + swap_progress - 1);
+                set_bkg_palette(BKGF_CGB_PAL0, 1, get_palette_for_fade(swap_progress));
                 swap_progress -= 1;
                 if (swap_progress == 0)
                 {
-                    delay(400);
+                    delay(FADE_MS);
+                    set_bkg_palette(BKGF_CGB_PAL0, 1, get_palette_for_fade(0));
                     swapped = 1;
-                    HIDE_WIN;
                 }
             }
 

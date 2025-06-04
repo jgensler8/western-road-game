@@ -5,7 +5,7 @@ ifndef GBDK_HOME
 endif
 
 LCC_FLAGS_HUGEDRIVER = -Wl-lhUGEDriver.lib
-LCC_FLAGS_GBC = -Wl-yt0x1B -autobank $(LCC_FLAGS_HUGEDRIVER)
+LCC_FLAGS_GBC = -Wm-yc -Wl-yt0x1B -autobank $(LCC_FLAGS_HUGEDRIVER)
 LCCFLAGS = -Wl-j -Wm-yoA -Wm-ya4 -Wb-ext=.rel -Wb-v $(LCC_FLAGS_GBC)
 LCC = $(GBDK_HOME)bin/lcc.exe
 PNG2ASSET = $(GBDK_HOME)bin/png2asset.exe

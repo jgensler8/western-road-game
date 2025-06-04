@@ -77,7 +77,7 @@ void text_init(void)
     init_frame_vram();
 }
 
-void draw_frame_text(char *line_1, char *line_2)
+void text_draw_frame(char *line_1, char *line_2)
 {
     clear_bkg_frame();
     draw_frame(0, 14, 20, 4);
@@ -86,7 +86,7 @@ void draw_frame_text(char *line_1, char *line_2)
     SHOW_BKG;
 }
 
-void frame_progress_init(char *line_1, char *line_2, struct ProgressableFrame *frame)
+void text_progress_init(char *line_1, char *line_2, struct ProgressableFrame *frame)
 {
     frame->wait = 0;
     frame->line_1 = line_1;
@@ -97,7 +97,7 @@ void frame_progress_init(char *line_1, char *line_2, struct ProgressableFrame *f
     frame->l2_progress = 0;
 }
 // return 1 if progress happened, return 0 if no progress is left
-uint8_t draw_frame_progress(struct ProgressableFrame *frame)
+uint8_t text_draw_frame_progress(struct ProgressableFrame *frame)
 {
     if (frame->wait > 0)
     {
@@ -163,7 +163,7 @@ void menu_render(struct Menu *menu)
 {
     if (!menu_render_drew_frame)
     {
-        draw_frame_text(menu->options[0], menu->options[1]);
+        text_draw_frame(menu->options[0], menu->options[1]);
         menu_render_drew_frame = 1;
     }
     // render cursor
