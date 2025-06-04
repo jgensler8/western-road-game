@@ -54,7 +54,7 @@ bg_fade.c: bg_fade.png
 	$(PNG2ASSET) bg_fade.png -noflip -bpp 1 -spr8x8 -sprite_no_optimize
 
 ASSETS = lankygitmono.c sframe7.c bg_road.c bg_fade.c
-SRCS = types.c text.c input.c sound.c scene_intro_dialog.c scene_start_menu.c $(ASSETS)
+SRCS = types.c text.c input.c sound.c scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c $(ASSETS)
 OBJS = $(SRCS:.c=.o)
 
 # Link file, and write 0x80 at position 0x143 in header

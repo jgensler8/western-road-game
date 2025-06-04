@@ -1,46 +1,29 @@
 #include "scene_intro_dialog.h"
-#include "scene_common.h"
+#include "scene_dialog.h"
+#include "scene_road.h"
 
-uint8_t scene_story_dialog_progress = 0;
-char *dialogs[5] = {
+#define DIALOGS 5
+static char *dialogs[DIALOGS * 2] = {
     "YOU FEEL",
+    EMPTY,
     "PRETTY WEIRD",
+    EMPTY,
     "JUST WOKE UP",
-    "TIME TO GET OUT\nOF BED!",
-    "DONE\n",
+    EMPTY,
+    "TIME TO GET OUT",
+    "OF BED!",
+    "DONE",
+    EMPTY,
 };
-void scene_story_process_input(void)
-{
-    if (scene_story_dialog_progress < 4)
-    {
-        if (joypad_a_pressed)
-        {
-            play_sfx_high();
-            scene_story_dialog_progress++;
-        }
-    }
-    else
-    {
-        // queue_scene();
-    }
-}
-uint8_t scene_story_last_render_progress;
-struct ProgressableFrame scene_story_progressable_frame;
-void scene_story_render(uint8_t swapped)
+static void render(uint8_t swapped)
 {
     if (swapped)
     {
-        scene_story_dialog_progress = 0;
-        scene_story_last_render_progress = 0xff;
+        scene_dialog_init(dialogs, DIALOGS, &scene_road);
     }
-    if (scene_story_dialog_progress != scene_story_last_render_progress)
-    {
-        scene_story_last_render_progress = scene_story_dialog_progress;
-        text_progress_init(dialogs[scene_story_dialog_progress], EMPTY, &scene_story_progressable_frame);
-    }
-    text_draw_frame_progress(&scene_story_progressable_frame);
+    scene_dialog_render(swapped);
 }
 struct Scene scene_story = {
-    .process_input = scene_story_process_input,
-    .render = scene_story_render,
+    .process_input = scene_dialog_process_input,
+    .render = render,
 };
