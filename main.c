@@ -3,6 +3,7 @@
 #include "text.h"
 #include "sound.h"
 #include "scene_start_menu.h"
+#include "scene_road.h"
 #include <gb/hardware.h>
 
 struct Scene *current_scene = NULL;
@@ -62,7 +63,8 @@ void main(void)
         .change = STAT_CHANGE_INC,
     };
     default_state.calculations[0] = default_calculation;
-    queue_scene(&scene_title);
+    // queue_scene(&scene_title);
+    queue_scene(&scene_road);
     sound_init();
     clear_bkg();
 

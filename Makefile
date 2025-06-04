@@ -38,8 +38,13 @@ compile.bat: Makefile
 %.gb:	%.o
 	$(LCC) $(LCCFLAGS) -o $@ $<
 
+ASSETS = lankygitmono.c sframe7.c bg_road.c bg_fade.c sp_cacti.c
+SRCS = types.c text.c input.c sound.c scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c $(ASSETS)
+OBJS = $(SRCS:.c=.o)
+
+
 clean:
-	rm -f *.o *.lst *.map *.gb *.ihx *.sym *.cdb *.adb *.asm *.noi *.rst
+	rm -f *.o *.lst *.map *.gb *.ihx *.sym *.cdb *.adb *.asm *.noi *.rst $(ASSETS)
 
 lankygitmono.c: lankygitmono.png
 	$(PNG2ASSET) lankygitmono.png -noflip -bpp 1 -spr8x8 -sprite_no_optimize
@@ -53,9 +58,8 @@ bg_road.c: bg_road.png
 bg_fade.c: bg_fade.png
 	$(PNG2ASSET) bg_fade.png -noflip -bpp 1 -spr8x8 -sprite_no_optimize
 
-ASSETS = lankygitmono.c sframe7.c bg_road.c bg_fade.c
-SRCS = types.c text.c input.c sound.c scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c $(ASSETS)
-OBJS = $(SRCS:.c=.o)
+sp_cacti.c: sp_cacti.png
+	$(PNG2ASSET) sp_cacti.png -noflip -bpp 2 -spr8x8 -sprite_no_optimize
 
 # Link file, and write 0x80 at position 0x143 in header
 compo25.gbc: $(OBJS) main.c
