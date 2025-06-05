@@ -4,8 +4,13 @@
 #include "sp_store_owner.h"
 #include "animate.h"
 
+uint8_t is_talking = 0;
 static void process_input(void)
 {
+    if (joypad_a_pressed)
+    {
+        is_talking = !is_talking;
+    }
 }
 
 #define SP_STORE_OWNER_SHEET {           \
@@ -52,7 +57,8 @@ struct SpriteAnimation animation_right_eye = {
     .style = ANIMATION_STYLE_PING_PONG,
     .state.frame = 0,
 };
-struct SpriteAnimation animation_mouth = {
+#define SYLABLE_TALKING_
+struct SpriteAnimation animation_mouth_talking = {
     .sheet = SP_STORE_OWNER_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 1,
@@ -61,8 +67,22 @@ struct SpriteAnimation animation_mouth = {
     .sp_index_start = 4,
     .screen_x = SP_STORE_OWNER_SCREEN_X + 30,
     .screen_y = SP_STORE_OWNER_SCREEN_Y + 48,
-    .style = ANIMATION_STYLE_NONE,
+    .timings_len = 3,
+    .timings = {10, 2, 10},
+    .style = ANIMATION_STYLE_ONCE,
     .state.frame = 0,
+};
+struct SpriteAnimation animation_mouth_passive = {
+    .sheet = SP_STORE_OWNER_SHEET,
+    .sheet_tile_x = 2,
+    .sheet_tile_y = 1,
+    .tile_width = 2,
+    .tile_height = 1,
+    .sp_index_start = 6,
+    .screen_x = SP_STORE_OWNER_SCREEN_X + 30,
+    .screen_y = SP_STORE_OWNER_SCREEN_Y + 48,
+    .style = ANIMATION_STYLE_NONE,
+    .state.frame = 2,
 };
 
 static void render(uint8_t swapped)
@@ -82,7 +102,8 @@ static void render(uint8_t swapped)
         animation_init_sprite_sheet(&animation_left_eye.sheet);
         animation_init_sprite_animation(&animation_left_eye);
         animation_init_sprite_animation(&animation_right_eye);
-        animation_init_sprite_animation(&animation_mouth);
+        animation_init_sprite_animation(&animation_mouth_passive);
+        animation_init_sprite_animation(&animation_mouth_talking);
         SHOW_SPRITES;
         // frame
         draw_frame(0, 0, 10, 10);
@@ -92,9 +113,17 @@ static void render(uint8_t swapped)
     {
         maybe_animate(&animation_left_eye);
         maybe_animate(&animation_right_eye);
-        maybe_animate(&animation_mouth);
+        if (is_talking)
+        {
+            maybe_animate(&animation_mouth_talking);
+        }
+        else
+        {
+            maybe_animate(&animation_mouth_passive);
+        }
     }
 }
+BANKREF(scene_inn_ref)
 struct Scene scene_inn = {
     .process_input = process_input,
     .render = render,

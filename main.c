@@ -67,11 +67,12 @@ void main(void)
     };
     default_state.calculations[0] = default_calculation;
     // ~~~~ MAKE SURE SWITCH_ROM IS CORRECT ~~~~
-    queue_scene(&scene_title, 2);
-    SWITCH_ROM(2);
+    // queue_scene(&scene_title, 2);
+    // SWITCH_ROM(2);
     // queue_scene(&scene_road);
-    // queue_scene(&scene_inn, 3);
-    // SWITCH_ROM(3);
+    BANKREF_EXTERN(scene_inn_ref)
+    queue_scene(&scene_inn, BANK(scene_inn_ref));
+    SWITCH_ROM(BANK(scene_inn_ref));
     // ~~~ !!! ~~~
     sound_init();
     clear_bkg();
