@@ -1,6 +1,17 @@
 #pragma once
+#include <gb/metasprites.h>
 #include <gbdk/platform.h>
 #include <stdint.h>
+
+// common bkg operations
+#define ADJUST_X 8
+#define ADJUST_Y 16
+struct PaletteArgs
+{
+    const metasprite_t* metasprites;
+    uint8_t palette_start;
+};
+void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t tile_start, struct PaletteArgs* args);
 
 struct Scene
 {
@@ -35,6 +46,11 @@ struct StatCalculation
 #define MAX_STAT_CALCULATIONS 32
 struct State
 {
+    uint16_t stats[STAT_COUNT];
     struct StatCalculation calculations[MAX_STAT_CALCULATIONS];
+    uint8_t next_event;
+    uint8_t next_event_steps;
 };
 extern struct State default_state;
+void on_step(void);
+void maybe_handle_event(void);

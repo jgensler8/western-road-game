@@ -2,16 +2,6 @@
 #include "bg_road.h"
 #include "sp_cacti.h"
 
-static void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t tile_start)
-{
-    for (uint8_t y_s = 0; y_s < height; y_s++)
-    {
-        for (uint8_t x_s = 0; x_s < width; x_s++)
-        {
-            set_bkg_tile_xy(x + x_s, y + y_s, tile_start + y_s * width + x_s);
-        }
-    }
-}
 uint8_t cactus_animation_frame;
 static void process_input(void)
 {
@@ -23,10 +13,9 @@ static void process_input(void)
             cactus_animation_frame = 0;
         }
         play_sfx_blip();
+        on_step();
     }
 }
-#define ADJUST_X 8
-#define ADJUST_Y 16
 void render_cactus_frame(uint8_t frame, uint8_t sprite_start, uint8_t tile_start)
 {
     uint8_t x = 0;
@@ -101,8 +90,8 @@ static void render(uint8_t swapped)
 {
     if (swapped)
     {
-        set_bkg_data(SCENE_TILE_DATA_START, 64, bg_road_tiles);
-        set_bkg_offset(4, 4, 8, 8, SCENE_TILE_DATA_START);
+        set_bkg_data(SCENE_BG_TILE_DATA_START, 64, bg_road_tiles);
+        set_bkg_offset(4, 4, 8, 8, SCENE_BG_TILE_DATA_START, NULL);
         text_draw_frame("A TO STEP", EMPTY);
         // TODO: technically only need to hold two animation in sprite memroy at a time
         set_sprite_data(0, 16, sp_cacti_tiles);
@@ -112,6 +101,7 @@ static void render(uint8_t swapped)
         SHOW_SPRITES;
     }
     render_cactus_frame(cactus_animation_frame, 0, 0);
+    maybe_handle_event();
 }
 struct Scene scene_road = {
     .process_input = process_input,

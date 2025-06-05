@@ -4,6 +4,7 @@
 #include "sound.h"
 #include "scene_start_menu.h"
 #include "scene_road.h"
+#include "scene_inn.h"
 #include <gb/hardware.h>
 
 struct Scene *current_scene = NULL;
@@ -64,7 +65,8 @@ void main(void)
     };
     default_state.calculations[0] = default_calculation;
     // queue_scene(&scene_title);
-    queue_scene(&scene_road);
+    // queue_scene(&scene_road);
+    queue_scene(&scene_inn);
     sound_init();
     clear_bkg();
 
