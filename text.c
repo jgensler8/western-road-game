@@ -1,3 +1,4 @@
+#pragma bank 0
 #include "text.h"
 #include <string.h>
 #include <gbdk/platform.h>
@@ -63,11 +64,13 @@ void clear_bkg_frame(void)
 
 void init_font_vram(void)
 {
+    SWITCH_ROM(1);
     set_bkg_1bpp_data(0, 'Z' - ' ' + 1, lankygitmono_tiles);
 }
 
 void init_frame_vram(void)
 {
+    SWITCH_ROM(1);
     set_bkg_1bpp_data('Z' - ' ' + 1, 9, sframe7_tiles);
 }
 

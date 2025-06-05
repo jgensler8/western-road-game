@@ -1,14 +1,17 @@
+#pragma bank 0
 #include "scene_dialog.h"
 
 static uint8_t progress;
 static char **dialogs;
 static uint8_t dialog_count;
-static struct Scene* next_scene;
-void scene_dialog_init(char **new_dialogs, uint8_t new_dialog_count, struct Scene* new_next_scene)
+static struct Scene *next_scene;
+static uint8_t next_bank_num;
+void scene_dialog_init(char **new_dialogs, uint8_t new_dialog_count, struct Scene *new_next_scene, uint8_t new_bank_num)
 {
     dialogs = new_dialogs;
     dialog_count = new_dialog_count;
     next_scene = new_next_scene;
+    next_bank_num = new_bank_num;
 }
 void scene_dialog_process_input(void)
 {
@@ -22,7 +25,7 @@ void scene_dialog_process_input(void)
     }
     else
     {
-        queue_scene(next_scene);
+        queue_scene(next_scene, next_bank_num);
     }
 }
 static uint8_t last_render_progress;

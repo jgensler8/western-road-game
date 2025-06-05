@@ -1,3 +1,4 @@
+#pragma bank 0
 #include "input.h"
 #include <gbdk/platform.h>
 

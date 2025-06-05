@@ -1,3 +1,4 @@
+#pragma bank 2
 #include "scene_road.h"
 #include "bg_road.h"
 #include "sp_cacti.h"
@@ -103,6 +104,7 @@ static void render(uint8_t swapped)
     render_cactus_frame(cactus_animation_frame, 0, 0);
     maybe_handle_event();
 }
+BANKREF(scene_road_ref)
 struct Scene scene_road = {
     .process_input = process_input,
     .render = render,

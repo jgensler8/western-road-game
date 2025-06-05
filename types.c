@@ -1,3 +1,4 @@
+#pragma bank 0
 #include "types.h"
 #include "rand.h"
 #include "scene_common.h"

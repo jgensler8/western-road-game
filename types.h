@@ -8,17 +8,17 @@
 #define ADJUST_Y 16
 struct PaletteArgs
 {
-    const metasprite_t* metasprites;
+    const metasprite_t *metasprites;
     uint8_t palette_start;
 };
-void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t tile_start, struct PaletteArgs* args);
+void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t tile_start, struct PaletteArgs *args);
 
 struct Scene
 {
     void (*process_input)(void);
     void (*render)(uint8_t swapped);
 };
-extern void queue_scene(struct Scene *new_next_scene);
+extern void queue_scene(struct Scene *new_next_scene, uint8_t new_bank_num);
 
 enum Stat
 {

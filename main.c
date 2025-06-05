@@ -9,9 +9,11 @@
 
 struct Scene *current_scene = NULL;
 struct Scene *next_scene = NULL;
-void queue_scene(struct Scene *new_next_scene)
+uint8_t next_bank_num = 1;
+void queue_scene(struct Scene *new_next_scene, uint8_t new_bank_num)
 {
     next_scene = new_next_scene;
+    next_bank_num = new_bank_num;
     menu_reset_state();
 }
 
@@ -64,9 +66,13 @@ void main(void)
         .change = STAT_CHANGE_INC,
     };
     default_state.calculations[0] = default_calculation;
-    // queue_scene(&scene_title);
+    // ~~~~ MAKE SURE SWITCH_ROM IS CORRECT ~~~~
+    queue_scene(&scene_title, 2);
+    SWITCH_ROM(2);
     // queue_scene(&scene_road);
-    queue_scene(&scene_inn);
+    // queue_scene(&scene_inn, 3);
+    // SWITCH_ROM(3);
+    // ~~~ !!! ~~~
     sound_init();
     clear_bkg();
 
@@ -75,7 +81,6 @@ void main(void)
     uint8_t swap_progress = FADE_SWAP_STEPS - 1;
     while (1)
     {
-        wait_vbl_done();
         if (swap_progress > 0)
         {
             delay(FADE_MS);
@@ -99,6 +104,7 @@ void main(void)
                 // when the swap out progress is complete, then swap scenes
                 current_scene = next_scene;
                 next_scene = NULL;
+                SWITCH_ROM(next_bank_num);
             }
         }
         else
@@ -124,6 +130,7 @@ void main(void)
             // note: still rendered during the swap in
             if (current_scene)
             {
+                wait_vbl_done();
                 current_scene->render(swapped);
                 // unset swapped
                 swapped = 0;

@@ -1,61 +1,13 @@
+#pragma bank 3
 #include "scene_inn.h"
 #include "bg_store_owner.h"
 #include "sp_store_owner.h"
+#include "animate.h"
 
 static void process_input(void)
 {
 }
-#define FRAME_TILE(x, y, frame, sheet) ((((y) * sheet.sheet_width_tiles) + (x)) + frame * sheet.sheet_frame_width_tiles)
-struct SpriteSheet
-{
-    const uint8_t *tiles;
-    uint8_t tiles_len;
-    // sprite_data tile start
-    uint8_t sheet_start;
-    // how many frames of animation
-    uint8_t sheet_frames;
-    // for an individual frames, how many tiles wide is it
-    uint8_t sheet_frame_width_tiles;
-    // how wide is the entire sheet (cached calculation of sheet_frames*sheet_frame_tile_width)
-    uint8_t sheet_width_tiles;
-    uint8_t palette_start;
-    uint8_t *palettes;
-    uint8_t palettes_len;
-};
-enum AnimationStyle
-{
-    ANIMATION_STYLE_NONE,
-    ANIMATION_STYLE_ONCE,
-    ANIMATION_STYLE_LOOP,
-    ANIMATION_STYLE_PING_PONG,
-};
-enum AnimationDirection
-{
-    ANIMATION_DIRECTION_FORWARD,
-    ANIMATION_DIRECTION_BACKWARD,
-};
-struct SpriteAnimationState
-{
-    uint8_t frame;
-    uint8_t frame_wait;
-    enum AnimationDirection direction;
-};
-struct SpriteAnimation
-{
-    struct SpriteSheet sheet;
-    // these are tile units
-    uint8_t sheet_tile_x;
-    uint8_t sheet_tile_y;
-    uint8_t tile_width;
-    uint8_t tile_height;
-    uint8_t sp_index_start;
-    uint8_t screen_x;
-    uint8_t screen_y;
-    uint8_t timings_len;
-    uint8_t timings[8];
-    enum AnimationStyle style;
-    struct SpriteAnimationState state;
-};
+
 #define SP_STORE_OWNER_SHEET {           \
     .tiles = sp_store_owner_tiles,       \
     .tiles_len = 4 * 4 * 3,              \
@@ -112,96 +64,7 @@ struct SpriteAnimation animation_mouth = {
     .style = ANIMATION_STYLE_NONE,
     .state.frame = 0,
 };
-static void animation_init_sprite_sheet(struct SpriteSheet *sheet)
-{
-    set_sprite_data(sheet->sheet_start, sheet->tiles_len, sheet->tiles);
-    set_sprite_palette(sheet->palette_start, sheet->palettes_len, sheet->palettes);
-}
-static void animation_init_sprite_animation(struct SpriteAnimation *ani)
-{
-    for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
-    {
-        for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
-        {
-            uint8_t sp_i = ani->sp_index_start + tile_y * ani->tile_width + tile_x;
-            set_sprite_tile(sp_i, FRAME_TILE(ani->sheet_tile_x + tile_x, ani->sheet_tile_y + tile_y, ani->state.frame, ani->sheet));
-            move_sprite(sp_i, ani->screen_x + 8 * tile_x + ADJUST_X, ani->screen_y + 8 * tile_y + ADJUST_Y);
-        }
-    }
-}
-static void animation_update(struct SpriteAnimation *ani)
-{
-    for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
-    {
-        for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
-        {
-            uint8_t sp_i = ani->sp_index_start + tile_y * ani->tile_width + tile_x;
-            set_sprite_tile(sp_i, FRAME_TILE(ani->sheet_tile_x + tile_x, ani->sheet_tile_y + tile_y, ani->state.frame, ani->sheet));
-        }
-    }
-    ani->state.frame_wait = ani->timings[ani->state.frame];
-}
-static inline void animate(struct SpriteAnimation *ani)
-{
-    switch (ani->style)
-    {
-    case ANIMATION_STYLE_NONE:
-        // alread rendered in init
-        return;
-    case ANIMATION_STYLE_ONCE:
-        if (ani->state.frame == ani->sheet.sheet_frames)
-        {
-            return;
-        }
-        ani->state.frame++;
-        animation_update(ani);
-        return;
-    case ANIMATION_STYLE_LOOP:
-        if (ani->state.frame == ani->sheet.sheet_frames)
-        {
-            ani->state.frame = 0;
-        }
-        else
-        {
-            ani->state.frame++;
-        }
-        animation_update(ani);
-        return;
-    case ANIMATION_STYLE_PING_PONG:
-        // update state
-        if (ani->state.frame == 0)
-        {
-            ani->state.direction = ANIMATION_DIRECTION_FORWARD;
-        }
-        else if (ani->state.frame == ani->sheet.sheet_frames)
-        {
-            ani->state.direction = ANIMATION_DIRECTION_BACKWARD;
-        }
-        // move frame
-        if (ani->state.direction == ANIMATION_DIRECTION_FORWARD)
-        {
-            ani->state.frame++;
-        }
-        else if (ani->state.direction == ANIMATION_DIRECTION_BACKWARD)
-        {
-            ani->state.frame--;
-        }
-        // then render
-        animation_update(ani);
-        return;
-    }
-}
-static inline void maybe_animate(struct SpriteAnimation *ani)
-{
-    if (ani->state.frame_wait > 0)
-    {
-        ani->state.frame_wait--;
-    }
-    else
-    {
-        animate(ani);
-    }
-}
+
 static void render(uint8_t swapped)
 {
     if (swapped)

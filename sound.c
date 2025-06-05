@@ -1,3 +1,4 @@
+#pragma bank 0
 #include <gb/hardware.h>
 #include "hUGEDriver.h"
 

@@ -1,3 +1,4 @@
+#pragma bank 2
 #include "scene_intro_dialog.h"
 #include "scene_dialog.h"
 #include "scene_road.h"
@@ -15,14 +16,16 @@ static char *dialogs[DIALOGS * 2] = {
     "DONE",
     EMPTY,
 };
+BANKREF_EXTERN(scene_road_ref)
 static void render(uint8_t swapped)
 {
     if (swapped)
     {
-        scene_dialog_init(dialogs, DIALOGS, &scene_road);
+        scene_dialog_init(dialogs, DIALOGS, &scene_road, BANK(scene_road_ref));
     }
     scene_dialog_render(swapped);
 }
+BANKREF(scene_story_ref)
 struct Scene scene_story = {
     .process_input = scene_dialog_process_input,
     .render = render,
