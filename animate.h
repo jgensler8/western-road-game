@@ -55,7 +55,8 @@ struct SpriteAnimation
     struct SpriteAnimationState state;
 };
 
-
 void animation_init_sprite_sheet(struct SpriteSheet *sheet);
-void animation_init_sprite_animation(struct SpriteAnimation *ani);
+void animation_init_sprite_animation(struct SpriteAnimation *ani, const metasprite_t *metasprite);
 void maybe_animate(struct SpriteAnimation *ani);
+void animation_show(struct SpriteAnimation *ani);
+void animation_hide(struct SpriteAnimation *ani);

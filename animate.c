@@ -22,7 +22,35 @@ void animation_update(struct SpriteAnimation *ani)
     ani->state.frame_wait = ani->timings[ani->state.frame];
 }
 #define FRAME_TILE(x, y, frame, sheet) ((((y) * sheet.sheet_width_tiles) + (x)) + frame * sheet.sheet_frame_width_tiles)
-void animation_init_sprite_animation(struct SpriteAnimation *ani)
+void animation_move_sprite(struct SpriteAnimation *ani)
+{
+    uint8_t sp_i = ani->sp_index_start;
+    for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
+    {
+        for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
+        {
+            move_sprite(sp_i, ani->screen_x + 8 * tile_x + ADJUST_X, ani->screen_y + 8 * tile_y + ADJUST_Y);
+            sp_i++;
+        }
+    }
+}
+void animation_set_palette(struct SpriteAnimation *ani, const metasprite_t *metasprite)
+{
+    uint8_t sp_i = ani->sp_index_start;
+    for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
+    {
+        for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
+        {
+            // TODO: possibly support multiple palettes
+            // let's use the same palette across the animation
+            // i suspect this would require too much cpu time to update palettes as frames change
+            // 4 palettes 11
+            set_sprite_prop(sp_i, metasprite[ani->frame_tiles[0][tile_y][tile_x]].props & 0x03);
+            sp_i++;
+        }
+    }
+}
+void animation_init_sprite_animation(struct SpriteAnimation *ani, const metasprite_t *metasprite)
 {
     // init frame data
     for (uint8_t frame = 0; frame < ANIMATION_MAX_FRAMES; frame++)
@@ -36,15 +64,8 @@ void animation_init_sprite_animation(struct SpriteAnimation *ani)
         }
     }
     // move current sp
-    uint8_t sp_i = ani->sp_index_start;
-    for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
-    {
-        for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
-        {
-            move_sprite(sp_i, ani->screen_x + 8 * tile_x + ADJUST_X, ani->screen_y + 8 * tile_y + ADJUST_Y);
-            sp_i++;
-        }
-    }
+    animation_move_sprite(ani);
+    animation_set_palette(ani, metasprite);
     // animate current frame
     animation_update(ani);
 }
@@ -107,5 +128,17 @@ void maybe_animate(struct SpriteAnimation *ani)
     else
     {
         animate(ani);
+    }
+}
+void animation_show(struct SpriteAnimation *ani)
+{
+    animation_move_sprite(ani);
+}
+void animation_hide(struct SpriteAnimation *ani)
+{
+    uint8_t num_sprites = ani->tile_width * ani->tile_height;
+    for (uint8_t sp_i = ani->sp_index_start; sp_i < ani->sp_index_start + num_sprites; sp_i++)
+    {
+        hide_sprite(sp_i);
     }
 }

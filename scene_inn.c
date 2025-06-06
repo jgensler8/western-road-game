@@ -5,24 +5,26 @@
 #include "animate.h"
 
 uint8_t is_talking = 0;
+uint8_t talking_changed = 0;
 static void process_input(void)
 {
     if (joypad_a_pressed)
     {
         is_talking = !is_talking;
+        talking_changed = 1;
     }
 }
 
-#define SP_STORE_OWNER_SHEET {           \
-    .tiles = sp_store_owner_tiles,       \
-    .tiles_len = 4 * 4 * 3,              \
-    .sheet_start = 0,                    \
-    .sheet_frames = 3,                   \
-    .sheet_frame_width_tiles = 4,        \
-    .sheet_width_tiles = 4 * 3,          \
-    .palette_start = OAMF_CGB_PAL0,      \
-    .palettes = sp_store_owner_palettes, \
-    .palettes_len = 2,                   \
+#define SP_STORE_OWNER_SHEET {                    \
+    .tiles = sp_store_owner_tiles,                \
+    .tiles_len = 4 * 4 * 3,                       \
+    .sheet_start = 0,                             \
+    .sheet_frames = 3,                            \
+    .sheet_frame_width_tiles = 4,                 \
+    .sheet_width_tiles = 4 * 3,                   \
+    .palette_start = OAMF_CGB_PAL0,               \
+    .palettes = sp_store_owner_palettes,          \
+    .palettes_len = sp_store_owner_PALETTE_COUNT, \
 }
 #define SP_STORE_OWNER_TILE_X 1
 #define SP_STORE_OWNER_TILE_Y 1
@@ -68,8 +70,8 @@ struct SpriteAnimation animation_mouth_talking = {
     .screen_x = SP_STORE_OWNER_SCREEN_X + 30,
     .screen_y = SP_STORE_OWNER_SCREEN_Y + 48,
     .timings_len = 3,
-    .timings = {10, 2, 10},
-    .style = ANIMATION_STYLE_ONCE,
+    .timings = {10, 1, 2},
+    .style = ANIMATION_STYLE_PING_PONG,
     .state.frame = 0,
 };
 struct SpriteAnimation animation_mouth_passive = {
@@ -82,7 +84,7 @@ struct SpriteAnimation animation_mouth_passive = {
     .screen_x = SP_STORE_OWNER_SCREEN_X + 30,
     .screen_y = SP_STORE_OWNER_SCREEN_Y + 48,
     .style = ANIMATION_STYLE_NONE,
-    .state.frame = 2,
+    .state.frame = 0,
 };
 
 static void render(uint8_t swapped)
@@ -100,10 +102,10 @@ static void render(uint8_t swapped)
         set_bkg_offset(owner_xt, owner_yt, 8, 8, SCENE_BG_TILE_DATA_START, &pargs);
         // owner sp
         animation_init_sprite_sheet(&animation_left_eye.sheet);
-        animation_init_sprite_animation(&animation_left_eye);
-        animation_init_sprite_animation(&animation_right_eye);
-        animation_init_sprite_animation(&animation_mouth_passive);
-        animation_init_sprite_animation(&animation_mouth_talking);
+        animation_init_sprite_animation(&animation_left_eye, sp_store_owner_metasprites[0]);
+        animation_init_sprite_animation(&animation_right_eye, sp_store_owner_metasprites[0]);
+        animation_init_sprite_animation(&animation_mouth_passive, sp_store_owner_metasprites[0]);
+        animation_init_sprite_animation(&animation_mouth_talking, sp_store_owner_metasprites[0]);
         SHOW_SPRITES;
         // frame
         draw_frame(0, 0, 10, 10);
@@ -116,12 +118,23 @@ static void render(uint8_t swapped)
         if (is_talking)
         {
             maybe_animate(&animation_mouth_talking);
+            if (talking_changed)
+            {
+                animation_show(&animation_mouth_talking);
+                animation_hide(&animation_mouth_passive);
+            }
         }
         else
         {
             maybe_animate(&animation_mouth_passive);
+            if (talking_changed)
+            {
+                animation_show(&animation_mouth_passive);
+                animation_hide(&animation_mouth_talking);
+            }
         }
     }
+    talking_changed = 0;
 }
 BANKREF(scene_inn_ref)
 struct Scene scene_inn = {
