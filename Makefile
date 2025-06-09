@@ -39,12 +39,15 @@ compile.bat: Makefile
 	$(LCC) $(LCCFLAGS) -o $@ $<
 
 ASSETS = lankygitmono.c sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c
-SRCS = types.c text.c input.c sound.c animate.c scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_inn.c $(ASSETS)
+GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c
+SRCS = types.c text.c input.c sound.c animate.c scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_inn.c $(ASSETS) $(GENERATED)
 OBJS = $(SRCS:.c=.o)
-
 
 clean:
 	rm -f *.o *.lst *.map *.gb *.ihx *.sym *.cdb *.adb *.asm *.noi *.rst $(ASSETS)
+
+scene_gen:
+	python scene_gen.py
 
 lankygitmono.c: lankygitmono.png
 	$(PNG2ASSET) lankygitmono.png -noflip -bpp 1 -spr8x8 -sprite_no_optimize -b 1
