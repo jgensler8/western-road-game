@@ -1,0 +1,25 @@
+characters:
+- tag: p
+  name: player
+- tag: cr
+  name: cheri
+dialog:
+- cr hey there!
+- cr you must be new around here
+- cr i'm cheri, i don't believe we've met
+- p nice to meet you, cheri
+- cr say, do you want to know a secret?
+- - - p sure
+    - cr so head down a bit further
+    - cr maybe 100 steps or so
+    - cr on the right, you should see a small shed
+    - cr it should be off the road
+    - cr did you get all that?
+    - p uhm... sure!
+    - SETQUEST=SHED1
+  - - p no, i'm fine
+    - cr really? aww...
+    - cr i was really hoping to tell someone
+    - cr guess I'll save that for another day
+    - p uhm... ok...
+

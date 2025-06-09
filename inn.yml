@@ -1,0 +1,19 @@
+characters:
+- tag: i
+  name: inn keeper
+- tag: p
+  name: player
+dialog:
+- i hello there traveler
+- i where are you headed?
+- - - p headed home
+    - i is that so?
+    - i well, its a long road...
+  - - p on a vacation
+    - i out here?
+    - i well, to each there own
+- i anyway, what can i do for you?
+- - - shop
+    - SCENESWAP=SHOP
+  - - customers
+    - SCENESWAP=CUSTOMERS 
