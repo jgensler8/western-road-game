@@ -5,12 +5,23 @@ static uint8_t progress;
 static uint8_t progress_changed;
 static struct ProgressableFrame frame;
 
+struct Menu menu_5 = {
+    .options = {
+        "SURE",
+        "NO, I'M FINE"
+    },
+    .max_option = 2,
+};
+#include "scene_road.h"
+BANKREF_EXTERN(scene_road_ref)
+
 
 static void process_input(void) {
     switch(progress){
             case 0:
         if(joypad_a_pressed)
         {
+            
             progress = 1;
             progress_changed = 1;
         }
@@ -18,6 +29,7 @@ static void process_input(void) {
     case 1:
         if(joypad_a_pressed)
         {
+            
             progress = 2;
             progress_changed = 1;
         }
@@ -25,6 +37,7 @@ static void process_input(void) {
     case 2:
         if(joypad_a_pressed)
         {
+            
             progress = 3;
             progress_changed = 1;
         }
@@ -32,6 +45,7 @@ static void process_input(void) {
     case 3:
         if(joypad_a_pressed)
         {
+            
             progress = 4;
             progress_changed = 1;
         }
@@ -39,34 +53,15 @@ static void process_input(void) {
     case 4:
         if(joypad_a_pressed)
         {
+            
             progress = 5;
-            progress_changed = 1;
-        }
-        break;
-    case 5:
-        if(joypad_a_pressed)
-        {
-            progress = 6;
-            progress_changed = 1;
-        }
-        break;
-    case 6:
-        if(joypad_a_pressed)
-        {
-            progress = 7;
             progress_changed = 1;
         }
         break;
     case 7:
         if(joypad_a_pressed)
         {
-            progress = 8;
-            progress_changed = 1;
-        }
-        break;
-    case 8:
-        if(joypad_a_pressed)
-        {
+            
             progress = 9;
             progress_changed = 1;
         }
@@ -74,13 +69,7 @@ static void process_input(void) {
     case 9:
         if(joypad_a_pressed)
         {
-            progress = 10;
-            progress_changed = 1;
-        }
-        break;
-    case 10:
-        if(joypad_a_pressed)
-        {
+            
             progress = 11;
             progress_changed = 1;
         }
@@ -88,6 +77,128 @@ static void process_input(void) {
     case 11:
         if(joypad_a_pressed)
         {
+            
+            progress = 13;
+            progress_changed = 1;
+        }
+        break;
+    case 13:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 15;
+            progress_changed = 1;
+        }
+        break;
+    case 15:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 17;
+            progress_changed = 1;
+        }
+        break;
+    case 17:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 19;
+            progress_changed = 1;
+        }
+        break;
+    case 19:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 21;
+            progress_changed = 1;
+        }
+        break;
+    case 21:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 6;
+            progress_changed = 1;
+        }
+        break;
+    case 8:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 10;
+            progress_changed = 1;
+        }
+        break;
+    case 10:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 12;
+            progress_changed = 1;
+        }
+        break;
+    case 12:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 14;
+            progress_changed = 1;
+        }
+        break;
+    case 14:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 16;
+            progress_changed = 1;
+        }
+        break;
+    case 16:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 18;
+            progress_changed = 1;
+        }
+        break;
+    case 18:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 20;
+            progress_changed = 1;
+        }
+        break;
+    case 20:
+        if(joypad_a_pressed)
+        {
+            
+            progress = 6;
+            progress_changed = 1;
+        }
+        break;
+    case 5:
+        if(menu_process_input(&menu_5))
+        {
+            switch(menu_5.selection)
+            {
+            case 0:
+                
+                progress = 7;
+                break;
+            case 1:
+                
+                progress = 8;
+                break;
+            }
+            progress_changed = 1;
+        }
+        break;
+    case 6:
+        if(joypad_a_pressed)
+        {
+            queue_scene(&scene_road, BANK(scene_road_ref));
             progress = 254;
             progress_changed = 1;
         }
@@ -102,73 +213,130 @@ static void render(uint8_t swapped) {
     {
         case 0:
         if(progress_changed) {
-            text_progress_init("YOU WAKE UP", "", &frame);
+            text_progress_init("HEY THERE!", "", &frame);
         }
         text_draw_frame_progress(&frame);
         break;
     case 1:
         if(progress_changed) {
-            text_progress_init("WHAT'S THIS? OH, A", "PIECE OF PAPER", &frame);
+            text_progress_init("YOU MUST BE NEW", "AROUND HERE", &frame);
         }
         text_draw_frame_progress(&frame);
         break;
     case 2:
         if(progress_changed) {
-            text_progress_init("HERE, TAKE THIS", "MONEY", &frame);
+            text_progress_init("I'M CHERI, I DON'T", "BELIEVE WE'VE MET", &frame);
         }
         text_draw_frame_progress(&frame);
         break;
     case 3:
         if(progress_changed) {
-            text_progress_init("I HAVE A PRESENT", "WAITING FOR YOU", &frame);
+            text_progress_init("NICE TO MEET YOU,", "CHERI", &frame);
         }
         text_draw_frame_progress(&frame);
         break;
     case 4:
         if(progress_changed) {
-            text_progress_init("ITS AT THE END OF", "THE PATH", &frame);
-        }
-        text_draw_frame_progress(&frame);
-        break;
-    case 5:
-        if(progress_changed) {
-            text_progress_init("THE END OF THE", "PATH?", &frame);
-        }
-        text_draw_frame_progress(&frame);
-        break;
-    case 6:
-        if(progress_changed) {
-            text_progress_init("BUT, I DON'T EVEN", "KNOW WHERE I AM...", &frame);
+            text_progress_init("SAY, DO YOU WANT", "TO KNOW A SECRET?", &frame);
         }
         text_draw_frame_progress(&frame);
         break;
     case 7:
         if(progress_changed) {
-            text_progress_init("...", "", &frame);
-        }
-        text_draw_frame_progress(&frame);
-        break;
-    case 8:
-        if(progress_changed) {
-            text_progress_init("IF I DON'T KNOW", "WHY I'M HERE...", &frame);
+            text_progress_init("SURE", "", &frame);
         }
         text_draw_frame_progress(&frame);
         break;
     case 9:
         if(progress_changed) {
-            text_progress_init("THEN I DON'T", "REALLY HAVE MUCH", &frame);
-        }
-        text_draw_frame_progress(&frame);
-        break;
-    case 10:
-        if(progress_changed) {
-            text_progress_init("OF A CHOICE", "", &frame);
+            text_progress_init("SO HEAD DOWN A BIT", "FURTHER", &frame);
         }
         text_draw_frame_progress(&frame);
         break;
     case 11:
         if(progress_changed) {
-            text_progress_init("YOU OPEN THE DOOR", "AND EMBARK", &frame);
+            text_progress_init("MAYBE 100 STEPS OR", "SO", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 13:
+        if(progress_changed) {
+            text_progress_init("ON THE RIGHT, YOU", "SHOULD SEE", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 15:
+        if(progress_changed) {
+            text_progress_init("A SMALL SHED", "", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 17:
+        if(progress_changed) {
+            text_progress_init("IT SHOULD BE OFF", "THE ROAD", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 19:
+        if(progress_changed) {
+            text_progress_init("DID YOU GET ALL", "THAT?", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 21:
+        if(progress_changed) {
+            text_progress_init("UHM... SURE!", "", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 8:
+        if(progress_changed) {
+            text_progress_init("NO, I'M FINE", "", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 10:
+        if(progress_changed) {
+            text_progress_init("REALLY? AWW...", "", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 12:
+        if(progress_changed) {
+            text_progress_init("I WAS REALLY", "HOPING", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 14:
+        if(progress_changed) {
+            text_progress_init("TO TELL SOMEONE", "", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 16:
+        if(progress_changed) {
+            text_progress_init("GUESS I'LL SAVE", "THAT", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 18:
+        if(progress_changed) {
+            text_progress_init("FOR ANOTHER DAY", "", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 20:
+        if(progress_changed) {
+            text_progress_init("UHM... OK...", "", &frame);
+        }
+        text_draw_frame_progress(&frame);
+        break;
+    case 5:
+        menu_render(&menu_5);
+        break;
+    case 6:
+        if(progress_changed) {
+            text_progress_init("TIME TO HIT THE", "ROAD", &frame);
         }
         text_draw_frame_progress(&frame);
         break;

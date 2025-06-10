@@ -4,6 +4,8 @@
 static uint8_t progress;
 static uint8_t progress_changed;
 static struct ProgressableFrame frame;
+#include "scene_road.h"
+BANKREF_EXTERN(scene_road_ref)
 
 
 static void process_input(void) {
@@ -11,6 +13,7 @@ static void process_input(void) {
             case 0:
         if(joypad_a_pressed)
         {
+            
             progress = 1;
             progress_changed = 1;
         }
@@ -18,6 +21,7 @@ static void process_input(void) {
     case 1:
         if(joypad_a_pressed)
         {
+            
             progress = 2;
             progress_changed = 1;
         }
@@ -25,6 +29,7 @@ static void process_input(void) {
     case 2:
         if(joypad_a_pressed)
         {
+            
             progress = 3;
             progress_changed = 1;
         }
@@ -32,6 +37,7 @@ static void process_input(void) {
     case 3:
         if(joypad_a_pressed)
         {
+            
             progress = 4;
             progress_changed = 1;
         }
@@ -39,6 +45,7 @@ static void process_input(void) {
     case 4:
         if(joypad_a_pressed)
         {
+            
             progress = 5;
             progress_changed = 1;
         }
@@ -46,6 +53,7 @@ static void process_input(void) {
     case 5:
         if(joypad_a_pressed)
         {
+            
             progress = 6;
             progress_changed = 1;
         }
@@ -53,6 +61,7 @@ static void process_input(void) {
     case 6:
         if(joypad_a_pressed)
         {
+            
             progress = 7;
             progress_changed = 1;
         }
@@ -60,6 +69,7 @@ static void process_input(void) {
     case 7:
         if(joypad_a_pressed)
         {
+            
             progress = 8;
             progress_changed = 1;
         }
@@ -67,6 +77,7 @@ static void process_input(void) {
     case 8:
         if(joypad_a_pressed)
         {
+            
             progress = 9;
             progress_changed = 1;
         }
@@ -74,6 +85,7 @@ static void process_input(void) {
     case 9:
         if(joypad_a_pressed)
         {
+            
             progress = 10;
             progress_changed = 1;
         }
@@ -81,6 +93,7 @@ static void process_input(void) {
     case 10:
         if(joypad_a_pressed)
         {
+            
             progress = 11;
             progress_changed = 1;
         }
@@ -88,6 +101,7 @@ static void process_input(void) {
     case 11:
         if(joypad_a_pressed)
         {
+            queue_scene(&scene_road, BANK(scene_road_ref));
             progress = 254;
             progress_changed = 1;
         }

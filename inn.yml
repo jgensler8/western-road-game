@@ -15,7 +15,5 @@ dialog:
     - i out here?
     - i well, to each there own
 - i anyway, what can i do for you?
-- - - m shop
-    - SCENESWAP=SHOP
-  - - m customers
-    - SCENESWAP=CUSTOMERS 
+- - - SCENESWAP=scene_shop m shop
+  - - SCENESWAP=gen_scene_customers m customers

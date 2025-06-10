@@ -16,8 +16,7 @@ dialog:
     - cr a small shed
     - cr it should be off the road
     - cr did you get all that?
-    - p uhm... sure!
-    - SETQUEST=SHED1
+    - SETQUEST=SHED1 p uhm... sure!
   - - p no, i'm fine
     - cr really? aww...
     - cr i was really hoping
@@ -25,5 +24,5 @@ dialog:
     - cr guess I'll save that
     - cr for another day
     - p uhm... ok...
-- SCENESWAP=scene_road
+- SCENESWAP=scene_road p time to hit the road
 

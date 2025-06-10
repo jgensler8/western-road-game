@@ -51,6 +51,7 @@ struct Scene gen_scene_{scene_name} =
 template_chat_input = """    case {progress_step}:
         if(joypad_a_pressed)
         {{
+            {optional_scene_swap}
             progress = {next_progress_step};
             progress_changed = 1;
         }}
@@ -81,9 +82,11 @@ template_menu_input = """    case {progress_step}:
             switch(menu_{progress_step}.selection)
             {{
             case 0:
+                {menu_0_scene_swap}
                 progress = {menu_0};
                 break;
             case 1:
+                {menu_1_scene_swap}
                 progress = {menu_1};
                 break;
             }}
@@ -114,12 +117,13 @@ class NodeType(Enum):
 
 
 class Node:
-    next: Node = None
-    parent: Node = None
-    child: List[Node] = []
-    type: NodeType
-    options: DialogOptions
-    id: int = -1
+    def __init__(self):
+        self.next: Node = None
+        self.parent: Node = None
+        self.child: List[Node] = []
+        self.type: NodeType
+        self.options: DialogOptions = DialogOptions({}, None, None, None)
+        self.id: int = -1
 
 
 dialog_re = re.compile(r"^((?:\w+=\w+\s+)*)(\S+)\s*(.*)$")
@@ -129,6 +133,13 @@ def parse_dialog(dialog: str) -> DialogOptions:
     m = dialog_re.match(dialog)
     if not m:
         raise ValueError(f"dialog does not match re: {dialog}")
+    flags = {}
+    flag_string = m.group(1)
+    # print(f"fs:{flag_string}:", f":{m.group(2)}:")
+    if flag_string:
+        for pair_string in flag_string.strip().split(" "):
+            kv_parts = pair_string.split("=")
+            flags[kv_parts[0]] = kv_parts[1]
     character = m.group(2)
     line = m.group(3)
     lines = ["" for i in range(2)]
@@ -147,7 +158,7 @@ def parse_dialog(dialog: str) -> DialogOptions:
             maybe_space = ""
         lines[curline] += maybe_space + word.upper()
     return DialogOptions(
-        flags={}, character=character, dialog_0=lines[0], dialog_1=lines[1]
+        flags=flags, character=character, dialog_0=lines[0], dialog_1=lines[1]
     )
 
 
@@ -183,21 +194,26 @@ def dialog_build_map(parent: Node, dialog_arr: List[any]) -> Node:
     return start
 
 
-def dialog_map_init_ids(start: Node):
-    id: int = 0
+def dialog_map_all_nodes(start: Node):
     nodes: List[Node] = [start]
+    all_nodes = [start]
     while len(nodes) > 0:
         cur = nodes[0]
         nodes = nodes[1:]
-        # print(id)
-        cur.id = id
-        id += 1
         if cur.next != None:
             nodes.append(cur.next)
-        # if len(cur.child) > 0:
-        #     print(cur.child)
-        # nodes.extend(n.child)
-        # print(nodes)
+            all_nodes.append(cur.next)
+        if len(cur.child) > 0:
+            nodes.extend(cur.child)
+            all_nodes.extend(cur.child)
+    return all_nodes
+
+
+def dialog_map_init_ids(start: Node):
+    id: int = 0
+    for node in dialog_map_all_nodes(start):
+        node.id = id
+        id += 1
 
 
 def dialog_find_next(cur: Node):
@@ -212,6 +228,27 @@ def dialog_find_next(cur: Node):
     return 254
 
 
+def get_scene_swap_extern(start: Node) -> str:
+    scenes = {}
+    for node in dialog_map_all_nodes(start):
+        scene = node.options.flags.get("SCENESWAP")
+        if scene:
+            scenes[scene] = None
+    extern_str = ""
+    for scene in scenes.keys():
+        extern_str += f"#include \"{scene}.h\"\n"
+        extern_str += f"BANKREF_EXTERN({scene}_ref)\n"
+    return extern_str
+
+
+def get_scene_swap_call(cur: Node) -> str:
+    # print(cur.options.flags)
+    scene = cur.options.flags.get("SCENESWAP", None)
+    if scene:
+        return f"queue_scene(&{scene}, BANK({scene}_ref));"
+    return ""
+
+
 def dialog_render(start: Node) -> (str, str, str):
     variables = ""
     process_input = ""
@@ -222,7 +259,9 @@ def dialog_render(start: Node) -> (str, str, str):
         if cur.type == NodeType.DIALOG:
             next_progress_step = dialog_find_next(cur)
             process_input += template_chat_input.format(
-                progress_step=cur.id, next_progress_step=next_progress_step
+                progress_step=cur.id,
+                next_progress_step=next_progress_step,
+                optional_scene_swap=get_scene_swap_call(cur),
             )
             render += template_chat_render.format(
                 progress_step=cur.id,
@@ -247,7 +286,9 @@ def dialog_render(start: Node) -> (str, str, str):
             process_input += template_menu_input.format(
                 progress_step=cur.id,
                 menu_0=cur.child[0].id,
+                menu_0_scene_swap=get_scene_swap_call(cur.child[0]),
                 menu_1=cur.child[1].id,
+                menu_1_scene_swap=get_scene_swap_call(cur.child[1]),
             )
             render += template_menu_render.format(progress_step=cur.id)
         cur = cur.next
@@ -259,13 +300,15 @@ if __name__ == "__main__":
     output_dir = "."
 
     for file in yml_files():
+        parsed = None
+        print(file)
         with open(file, "r") as f:
             parsed = yaml.load(f.read(), Loader=yaml.Loader)
-        print(file)
         dialog_map = Node()
         dialog_build_map(parent=dialog_map, dialog_arr=parsed["dialog"])
         dialog_map_init_ids(start=dialog_map.child[0])
         (variables, process_input, render) = dialog_render(start=dialog_map.child[0])
+        variables += get_scene_swap_extern(start=dialog_map.child[0])
         # extract name root
         scene_name = os.path.splitext(file)[0]
         # template h file (use format)
