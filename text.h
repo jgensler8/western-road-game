@@ -22,7 +22,6 @@ struct ProgressableFrame
     uint8_t line_2_len;
     uint8_t l1_progress;
     uint8_t l2_progress;
-    uint8_t skip;
     uint8_t wait;
 };
 void text_progress_init(char *line_1, char *line_2, struct ProgressableFrame *frame);

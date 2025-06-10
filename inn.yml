@@ -8,12 +8,14 @@ dialog:
 - i where are you headed?
 - - - p headed home
     - i is that so?
+    - - - p sure is
+      - - p you betcha
     - i well, its a long road...
   - - p on a vacation
     - i out here?
     - i well, to each there own
 - i anyway, what can i do for you?
-- - - shop
+- - - m shop
     - SCENESWAP=SHOP
-  - - customers
+  - - m customers
     - SCENESWAP=CUSTOMERS 

@@ -12,15 +12,18 @@ dialog:
 - - - p sure
     - cr so head down a bit further
     - cr maybe 100 steps or so
-    - cr on the right, you should see a small shed
+    - cr on the right, you should see
+    - cr a small shed
     - cr it should be off the road
     - cr did you get all that?
     - p uhm... sure!
     - SETQUEST=SHED1
   - - p no, i'm fine
     - cr really? aww...
-    - cr i was really hoping to tell someone
-    - cr guess I'll save that for another day
+    - cr i was really hoping
+    - cr to tell someone
+    - cr guess I'll save that
+    - cr for another day
     - p uhm... ok...
 - SCENESWAP=scene_road
 
