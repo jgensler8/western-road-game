@@ -98,6 +98,22 @@ void text_progress_init(char *line_1, char *line_2, struct ProgressableFrame *fr
     frame->line_2_len = strlen(line_2);
     frame->l1_progress = 0;
     frame->l2_progress = 0;
+    frame->fast_forward = 0;
+}
+uint8_t text_frame_has_progress(struct ProgressableFrame *frame)
+{
+    return (frame->l1_progress < frame->line_1_len) || (frame->l2_progress < frame->line_2_len);
+}
+inline void text_print_remainder(struct ProgressableFrame *frame)
+{
+    for (; frame->l1_progress < frame->line_1_len; frame->l1_progress++)
+    {
+        xy_printf_progress(1, 15, frame->line_1, &frame->l1_progress);
+    }
+    for (; frame->l2_progress < frame->line_2_len; frame->l2_progress++)
+    {
+        xy_printf_progress(1, 16, frame->line_2, &frame->l2_progress);
+    }
 }
 // return 1 if progress happened, return 0 if no progress is left
 uint8_t text_draw_frame_progress(struct ProgressableFrame *frame)
@@ -115,16 +131,30 @@ uint8_t text_draw_frame_progress(struct ProgressableFrame *frame)
     }
     if (frame->l1_progress < frame->line_1_len)
     {
-        xy_printf_progress(1, 15, frame->line_1, &frame->l1_progress);
-        frame->l1_progress += 1;
-        frame->wait = PROGRESS_FRAME_WAIT;
+        if (frame->fast_forward)
+        {
+            text_print_remainder(frame);
+        }
+        else
+        {
+            xy_printf_progress(1, 15, frame->line_1, &frame->l1_progress);
+            frame->l1_progress += 1;
+            frame->wait = PROGRESS_FRAME_WAIT;
+        }
         return 1;
     }
     else if (frame->l2_progress < frame->line_2_len)
     {
-        xy_printf_progress(1, 16, frame->line_2, &frame->l2_progress);
-        frame->l2_progress += 1;
-        frame->wait = PROGRESS_FRAME_WAIT;
+        if (frame->fast_forward)
+        {
+            text_print_remainder(frame);
+        }
+        else
+        {
+            xy_printf_progress(1, 16, frame->line_2, &frame->l2_progress);
+            frame->l2_progress += 1;
+            frame->wait = PROGRESS_FRAME_WAIT;
+        }
         return 1;
     }
     return 0;

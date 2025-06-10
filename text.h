@@ -23,8 +23,10 @@ struct ProgressableFrame
     uint8_t l1_progress;
     uint8_t l2_progress;
     uint8_t wait;
+    uint8_t fast_forward;
 };
 void text_progress_init(char *line_1, char *line_2, struct ProgressableFrame *frame);
+uint8_t text_frame_has_progress(struct ProgressableFrame *frame);
 uint8_t text_draw_frame_progress(struct ProgressableFrame *frame);
 
 // menu

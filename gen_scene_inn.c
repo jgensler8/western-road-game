@@ -40,48 +40,78 @@ static void process_input(void) {
         if(joypad_a_pressed)
         {
             
-            progress = 1;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 1;
+                progress_changed = 1;
+            }
         }
         break;
     case 1:
         if(joypad_a_pressed)
         {
             
-            progress = 2;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 2;
+                progress_changed = 1;
+            }
         }
         break;
     case 4:
         if(joypad_a_pressed)
         {
             
-            progress = 7;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 7;
+                progress_changed = 1;
+            }
         }
         break;
     case 7:
         if(joypad_a_pressed)
         {
             
-            progress = 11;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 11;
+                progress_changed = 1;
+            }
         }
         break;
     case 14:
         if(joypad_a_pressed)
         {
             
-            progress = 13;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 13;
+                progress_changed = 1;
+            }
         }
         break;
     case 15:
         if(joypad_a_pressed)
         {
             
-            progress = 13;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 13;
+                progress_changed = 1;
+            }
         }
         break;
     case 11:
@@ -99,38 +129,59 @@ static void process_input(void) {
                 break;
             }
             progress_changed = 1;
+            menu_reset_state();
         }
         break;
     case 13:
         if(joypad_a_pressed)
         {
             
-            progress = 3;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 3;
+                progress_changed = 1;
+            }
         }
         break;
     case 5:
         if(joypad_a_pressed)
         {
             
-            progress = 8;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 8;
+                progress_changed = 1;
+            }
         }
         break;
     case 8:
         if(joypad_a_pressed)
         {
             
-            progress = 12;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 12;
+                progress_changed = 1;
+            }
         }
         break;
     case 12:
         if(joypad_a_pressed)
         {
             
-            progress = 3;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 3;
+                progress_changed = 1;
+            }
         }
         break;
     case 2:
@@ -148,30 +199,46 @@ static void process_input(void) {
                 break;
             }
             progress_changed = 1;
+            menu_reset_state();
         }
         break;
     case 3:
         if(joypad_a_pressed)
         {
             
-            progress = 6;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 6;
+                progress_changed = 1;
+            }
         }
         break;
     case 9:
         if(joypad_a_pressed)
         {
             queue_scene(&scene_shop, BANK(scene_shop_ref));
-            progress = 254;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 254;
+                progress_changed = 1;
+            }
         }
         break;
     case 10:
         if(joypad_a_pressed)
         {
             queue_scene(&gen_scene_customers, BANK(gen_scene_customers_ref));
-            progress = 254;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 254;
+                progress_changed = 1;
+            }
         }
         break;
     case 6:
@@ -189,6 +256,7 @@ static void process_input(void) {
                 break;
             }
             progress_changed = 1;
+            menu_reset_state();
         }
         break;
 

@@ -14,96 +14,156 @@ static void process_input(void) {
         if(joypad_a_pressed)
         {
             
-            progress = 1;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 1;
+                progress_changed = 1;
+            }
         }
         break;
     case 1:
         if(joypad_a_pressed)
         {
             
-            progress = 2;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 2;
+                progress_changed = 1;
+            }
         }
         break;
     case 2:
         if(joypad_a_pressed)
         {
             
-            progress = 3;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 3;
+                progress_changed = 1;
+            }
         }
         break;
     case 3:
         if(joypad_a_pressed)
         {
             
-            progress = 4;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 4;
+                progress_changed = 1;
+            }
         }
         break;
     case 4:
         if(joypad_a_pressed)
         {
             
-            progress = 5;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 5;
+                progress_changed = 1;
+            }
         }
         break;
     case 5:
         if(joypad_a_pressed)
         {
             
-            progress = 6;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 6;
+                progress_changed = 1;
+            }
         }
         break;
     case 6:
         if(joypad_a_pressed)
         {
             
-            progress = 7;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 7;
+                progress_changed = 1;
+            }
         }
         break;
     case 7:
         if(joypad_a_pressed)
         {
             
-            progress = 8;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 8;
+                progress_changed = 1;
+            }
         }
         break;
     case 8:
         if(joypad_a_pressed)
         {
             
-            progress = 9;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 9;
+                progress_changed = 1;
+            }
         }
         break;
     case 9:
         if(joypad_a_pressed)
         {
             
-            progress = 10;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 10;
+                progress_changed = 1;
+            }
         }
         break;
     case 10:
         if(joypad_a_pressed)
         {
             
-            progress = 11;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 11;
+                progress_changed = 1;
+            }
         }
         break;
     case 11:
         if(joypad_a_pressed)
         {
             queue_scene(&scene_road, BANK(scene_road_ref));
-            progress = 254;
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 254;
+                progress_changed = 1;
+            }
         }
         break;
 

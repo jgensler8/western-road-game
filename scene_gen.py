@@ -52,8 +52,13 @@ template_chat_input = """    case {progress_step}:
         if(joypad_a_pressed)
         {{
             {optional_scene_swap}
-            progress = {next_progress_step};
-            progress_changed = 1;
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {{
+                frame.fast_forward = 1;
+            }} else {{
+                progress = {next_progress_step};
+                progress_changed = 1;
+            }}
         }}
         break;
 """
@@ -91,6 +96,7 @@ template_menu_input = """    case {progress_step}:
                 break;
             }}
             progress_changed = 1;
+            menu_reset_state();
         }}
         break;
 """
@@ -236,7 +242,7 @@ def get_scene_swap_extern(start: Node) -> str:
             scenes[scene] = None
     extern_str = ""
     for scene in scenes.keys():
-        extern_str += f"#include \"{scene}.h\"\n"
+        extern_str += f'#include "{scene}.h"\n'
         extern_str += f"BANKREF_EXTERN({scene}_ref)\n"
     return extern_str
 
