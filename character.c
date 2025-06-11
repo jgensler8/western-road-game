@@ -2,11 +2,13 @@
 #include "character.h"
 #include "animate.h"
 #include "character_store_owner.h"
+#include "character_cheri.h"
 
 void character_reset(void)
 {
 }
 BANKREF_EXTERN(character_store_owner_ref)
+BANKREF_EXTERN(character_cheri_ref)
 void character_init(enum CharacterModel model, uint8_t tile_x, uint8_t tile_y)
 {
     uint8_t previous_bank = CURRENT_BANK;
@@ -25,6 +27,8 @@ void character_init(enum CharacterModel model, uint8_t tile_x, uint8_t tile_y)
         character_store_owner.init(allocation, tile_x, tile_y);
         break;
     case CHARACTER_MODEL_CHERI:
+        SWITCH_ROM(BANK(character_cheri_ref));
+        character_cheri.init(allocation, tile_x, tile_y);
         break;
     }
     SHOW_SPRITES;
@@ -42,6 +46,8 @@ void character_render(enum CharacterModel model, enum CharacterExpression expres
         character_store_owner.render();
         break;
     case CHARACTER_MODEL_CHERI:
+        SWITCH_ROM(BANK(character_cheri_ref));
+        character_cheri.render();
         break;
     }
     SWITCH_ROM(previous_bank);

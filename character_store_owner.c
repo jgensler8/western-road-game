@@ -14,11 +14,6 @@
     .palettes = sp_store_owner_palettes,          \
     .palettes_len = sp_store_owner_PALETTE_COUNT, \
 }
-#define SP_STORE_OWNER_TILE_X 1
-#define SP_STORE_OWNER_TILE_Y 1
-#define SP_STORE_OWNER_SCREEN_X (SP_STORE_OWNER_TILE_X * 8)
-#define SP_STORE_OWNER_SCREEN_Y (SP_STORE_OWNER_TILE_Y * 8)
-#define SP_STORE_OWNER_FRAME_TIMINGS {128, 4, 4}
 
 static struct SpriteAnimation animation_left_eye = {
     .sheet = SP_STORE_OWNER_SHEET,
@@ -27,10 +22,8 @@ static struct SpriteAnimation animation_left_eye = {
     .tile_width = 2,
     .tile_height = 1,
     .sp_index_start = 0,
-    .screen_x = SP_STORE_OWNER_SCREEN_X + 18,
-    .screen_y = SP_STORE_OWNER_SCREEN_Y + 25,
     .timings_len = 3,
-    .timings = SP_STORE_OWNER_FRAME_TIMINGS,
+    .timings = ANIMATE_DEFAULT_BLINK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
     .state.frame = 0,
 };
@@ -41,10 +34,8 @@ static struct SpriteAnimation animation_right_eye = {
     .tile_width = 2,
     .tile_height = 1,
     .sp_index_start = 2,
-    .screen_x = SP_STORE_OWNER_SCREEN_X + 40,
-    .screen_y = SP_STORE_OWNER_SCREEN_Y + 25,
     .timings_len = 3,
-    .timings = SP_STORE_OWNER_FRAME_TIMINGS,
+    .timings = ANIMATE_DEFAULT_BLINK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
     .state.frame = 0,
 };
@@ -55,10 +46,8 @@ static struct SpriteAnimation animation_mouth_talking = {
     .tile_width = 2,
     .tile_height = 1,
     .sp_index_start = 4,
-    .screen_x = SP_STORE_OWNER_SCREEN_X + 30,
-    .screen_y = SP_STORE_OWNER_SCREEN_Y + 48,
     .timings_len = 3,
-    .timings = {10, 1, 2},
+    .timings = ANIMATE_DEFAULT_TALK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
     .state.frame = 0,
 };
@@ -69,8 +58,6 @@ static struct SpriteAnimation animation_mouth_passive = {
     .tile_width = 2,
     .tile_height = 1,
     .sp_index_start = 6,
-    .screen_x = SP_STORE_OWNER_SCREEN_X + 30,
-    .screen_y = SP_STORE_OWNER_SCREEN_Y + 48,
     .style = ANIMATION_STYLE_NONE,
     .state.frame = 0,
 };
@@ -90,9 +77,13 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     // owner sp
     animation_init_sprite_sheet(&animation_left_eye.sheet);
     animation_init_sprite_animation(&animation_left_eye, sp_store_owner_metasprites[0]);
+    ANIMATE_TILE_OFFSET(animation_left_eye, 18, 25);
     animation_init_sprite_animation(&animation_right_eye, sp_store_owner_metasprites[0]);
+    ANIMATE_TILE_OFFSET(animation_right_eye, 40, 25);
     animation_init_sprite_animation(&animation_mouth_passive, sp_store_owner_metasprites[0]);
+    ANIMATE_TILE_OFFSET(animation_mouth_passive, 30, 48);
     animation_init_sprite_animation(&animation_mouth_talking, sp_store_owner_metasprites[0]);
+    ANIMATE_TILE_OFFSET(animation_mouth_talking, 30, 48);
     talking = 0;
 }
 static void set_expression(enum CharacterExpression expression)

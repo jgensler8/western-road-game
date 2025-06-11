@@ -16,6 +16,17 @@ struct SpriteSheet
     uint8_t *palettes;
     uint8_t palettes_len;
 };
+#define ANIMATE_SPRITE_SHEET_COMMON(SPRITE) { \
+    .tiles = SPRITE##_tiles,                  \
+    .tiles_len = 4 * 4 * 3,                   \
+    .sheet_start = 0,                         \
+    .sheet_frames = 3,                        \
+    .sheet_frame_width_tiles = 4,             \
+    .sheet_width_tiles = 4 * 3,               \
+    .palettes = SPRITE##_palettes,            \
+    .palettes_len = SPRITE##_PALETTE_COUNT,   \
+}
+
 enum AnimationStyle
 {
     ANIMATION_STYLE_NONE,
@@ -55,6 +66,10 @@ struct SpriteAnimation
     struct SpriteAnimationState state;
 };
 
+#define ANIMATE_DEFAULT_METASPRITE(SPRITE) SPRITE##_metasprites[0]
+#define ANIMATE_TILE_OFFSET(animation, offset_x, offset_y) animation.screen_x = tile_x * 8 + offset_x; animation.screen_y = tile_y * 8 + offset_y;
+#define ANIMATE_DEFAULT_BLINK_TIMINGS {128, 4, 4}
+#define ANIMATE_DEFAULT_TALK_TIMINGS {10, 1, 2}
 void animation_init_sprite_sheet(struct SpriteSheet *sheet);
 void animation_init_sprite_animation(struct SpriteAnimation *ani, const metasprite_t *metasprite);
 void maybe_animate(struct SpriteAnimation *ani);
