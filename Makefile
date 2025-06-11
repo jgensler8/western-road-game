@@ -40,7 +40,9 @@ compile.bat: Makefile
 
 ASSETS = lankygitmono.c sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c
 GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c
-SRCS = types.c text.c input.c sound.c animate.c scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_inn.c scene_shop.c $(ASSETS) $(GENERATED)
+CHARACTERS = character_store_owner.c
+SCENES = scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_inn.c scene_shop.c $(GENERATED)
+SRCS = types.c text.c input.c sound.c animate.c character.c $(ASSETS) $(CHARACTERS) $(SCENES)
 OBJS = $(SRCS:.c=.o)
 
 clean:

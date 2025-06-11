@@ -71,11 +71,11 @@ void main(void)
     // queue_scene(&scene_title, 2);
     // SWITCH_ROM(2);
     // queue_scene(&scene_road);
-    // BANKREF_EXTERN(scene_inn_ref)
-    // queue_scene(&scene_inn, BANK(scene_inn_ref));
-    // SWITCH_ROM(BANK(scene_inn_ref));
-    BANKREF_EXTERN(gen_scene_inn_ref);
-    queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
+    BANKREF_EXTERN(scene_inn_ref)
+    queue_scene(&scene_inn, BANK(scene_inn_ref));
+    SWITCH_ROM(BANK(scene_inn_ref));
+    // BANKREF_EXTERN(gen_scene_inn_ref);
+    // queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
     // ~~~ !!! ~~~
     sound_init();
     clear_bkg();
