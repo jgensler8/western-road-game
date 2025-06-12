@@ -3,7 +3,7 @@ static void process_input(void)
 {
 }
 
-static void render(uint8_t swapped)
+static void render(struct SceneRenderOptions *options)
 {
 }
 

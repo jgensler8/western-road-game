@@ -12,8 +12,8 @@
 #define lankygitmono_WIDTH 128
 #define lankygitmono_HEIGHT 112
 #define lankygitmono_TILE_COUNT 224
-#define lankygitmono_PALETTE_COUNT 2
-#define lankygitmono_COLORS_PER_PALETTE 2
+#define lankygitmono_PALETTE_COUNT 1
+#define lankygitmono_COLORS_PER_PALETTE 4
 #define lankygitmono_TOTAL_COLORS 4
 #define lankygitmono_PIVOT_X 64
 #define lankygitmono_PIVOT_Y 56
@@ -24,6 +24,6 @@ extern const metasprite_t* const lankygitmono_metasprites[1];
 BANKREF_EXTERN(lankygitmono)
 
 extern const palette_color_t lankygitmono_palettes[4];
-extern const uint8_t lankygitmono_tiles[1792];
+extern const uint8_t lankygitmono_tiles[3584];
 
 #endif

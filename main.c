@@ -20,46 +20,11 @@ void queue_scene(struct Scene *new_next_scene, uint8_t new_bank_num)
 
 #define FADE_SWAP_STEPS 4
 #define FADE_MS 200
-const palette_color_t pals[] = {
-    RGB_WHITE,
-    RGB_LIGHTGRAY,
-    RGB_DARKGRAY,
-    RGB_BLACK,
-    // p2
-    RGB_LIGHTGRAY,
-    RGB_DARKGRAY,
-    RGB_BLACK,
-    RGB_BLACK,
-    // p3
-    RGB_DARKGRAY,
-    RGB_BLACK,
-    RGB_BLACK,
-    RGB_BLACK,
-    // p4
-    RGB_BLACK,
-    RGB_BLACK,
-    RGB_BLACK,
-    RGB_BLACK,
-};
-palette_color_t *get_palette_for_fade(uint8_t fade)
-{
-    switch (fade)
-    {
-    case 0:
-        return &pals[0];
-    case 1:
-        return &pals[4];
-    case 2:
-        return &pals[8];
-    case 3:
-        return &pals[12];
-    default:
-        return &pals[0];
-    }
-}
+// #define FADE_MS 1
 
 void main(void)
 {
+    SPRITES_8x8;
     text_init();
     struct StatCalculation default_calculation = {
         .src = STAT_STEPS,
@@ -67,41 +32,44 @@ void main(void)
         .change = STAT_CHANGE_INC,
     };
     default_state.calculations[0] = default_calculation;
-    // ~~~~ MAKE SURE SWITCH_ROM IS CORRECT ~~~~
-    // queue_scene(&scene_title, 2);
-    // SWITCH_ROM(2);
-    // queue_scene(&scene_road);
-    BANKREF_EXTERN(scene_inn_ref)
-    queue_scene(&scene_inn, BANK(scene_inn_ref));
-    SWITCH_ROM(BANK(scene_inn_ref));
-    // BANKREF_EXTERN(gen_scene_inn_ref);
-    // queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
-    // ~~~ !!! ~~~
+    // BANKREF_EXTERN(scene_title_ref)
+    // queue_scene(&scene_title, BANK(scene_title_ref));
+    // BANKREF_EXTERN(scene_road_ref)
+    // queue_scene(&scene_road, BANK(scene_road_ref));
+    // BANKREF_EXTERN(scene_inn_ref)
+    // queue_scene(&scene_inn, BANK(scene_inn_ref));
+    BANKREF_EXTERN(gen_scene_inn_ref);
+    queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
     sound_init();
     clear_bkg();
+    SHOW_BKG;
+    SHOW_SPRITES;
 
-    uint8_t swapped = 0;
+    struct SceneRenderOptions options = {
+        .swapped = 0,
+        .fade = FADE_SWAP_STEPS - 1,
+    };
     // 0 is normal 3 is completely black
-    uint8_t swap_progress = FADE_SWAP_STEPS - 1;
     while (1)
     {
-        if (swap_progress > 0)
+        if (options.fade > 0)
         {
             delay(FADE_MS);
         }
         input_scan();
-        if (current_scene && swap_progress == 0)
+        if (current_scene && options.fade == 0)
         {
             current_scene->process_input();
         }
-        // try swap in
+        // make swap progress
         if (next_scene != NULL && next_scene != current_scene)
         {
-            if (swap_progress < FADE_SWAP_STEPS)
+            // swap out
+            if (options.fade < FADE_SWAP_STEPS - 1)
             {
                 // continue swap out swap out
-                set_bkg_palette(BKGF_CGB_PAL0, 1, get_palette_for_fade(swap_progress));
-                swap_progress += 1;
+                // fade_all_bg_palettes(options.fade);
+                options.fade += 1;
             }
             else
             {
@@ -109,38 +77,29 @@ void main(void)
                 current_scene = next_scene;
                 next_scene = NULL;
                 SWITCH_ROM(next_bank_num);
+                options.swapped = 1;
+                palette_util_reset();
             }
         }
         else
         {
-            if (swap_progress > 0)
+            // swap in
+            if (options.fade > 0)
             {
-                if (swap_progress >= FADE_SWAP_STEPS)
-                {
-                    swap_progress = FADE_SWAP_STEPS - 1;
-                }
-                // swap in
-                set_bkg_palette(BKGF_CGB_PAL0, 1, get_palette_for_fade(swap_progress));
-                swap_progress -= 1;
-                if (swap_progress == 0)
-                {
-                    delay(FADE_MS);
-                    set_bkg_palette(BKGF_CGB_PAL0, 1, get_palette_for_fade(0));
-                    swapped = 1;
-                }
+                options.fade -= 1;
             }
-
-            // safety check
-            // note: still rendered during the swap in
-            if (current_scene)
-            {
-                wait_vbl_done();
-                EMU_PROFILE_BEGIN("render_s:%TOTALCLKS%:")
-                current_scene->render(swapped);
-                EMU_PROFILE_END("render_e:%TOTALCLKS%:")
-                // unset swapped
-                swapped = 0;
-            }
+        }
+        // safety check
+        // note: still rendered during the swap in
+        if (current_scene)
+        {
+            wait_vbl_done();
+            EMU_PROFILE_BEGIN("render_s:%TOTALCLKS%:")
+            current_scene->render(&options);
+            palette_util_maybe_fade(&options);
+            EMU_PROFILE_END("render_e:%TOTALCLKS%:")
+            // unset swapped
+            options.swapped = 0;
         }
     }
 }

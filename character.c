@@ -31,7 +31,6 @@ void character_init(enum CharacterModel model, uint8_t tile_x, uint8_t tile_y)
         character_cheri.init(allocation, tile_x, tile_y);
         break;
     }
-    SHOW_SPRITES;
     SWITCH_ROM(previous_bank);
 }
 void character_render(enum CharacterModel model, enum CharacterExpression expression)

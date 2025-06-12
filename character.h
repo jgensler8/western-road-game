@@ -20,12 +20,8 @@ struct MemoryAllocation
 {
     uint8_t sp_start;
     uint8_t sp_end;
-    uint8_t sp_pal_start;
-    uint8_t sp_pal_end;
     uint8_t bg_start;
     uint8_t bg_end;
-    uint8_t bg_pal_start;
-    uint8_t bg_pal_end;
 };
 
 struct Character
@@ -34,7 +30,7 @@ struct Character
     void (*set_expression)(enum CharacterExpression expression);
     void (*start_talking)(void);
     void (*stop_talking)(void);
-    void (*render)(void);
+    void (*render)(struct SceneRenderOptions *options);
 };
 
 void character_reset(void);

@@ -7,7 +7,8 @@
 void animation_init_sprite_sheet(struct SpriteSheet *sheet)
 {
     set_sprite_data(sheet->sheet_start, sheet->tiles_len, sheet->tiles);
-    set_sprite_palette(sheet->palette_start, sheet->palettes_len, sheet->palettes);
+    sheet->palette_start = palette_util_init_sp(sheet->palettes_len, sheet->palettes);
+    // set_sprite_palette(sheet->palette_start, sheet->palettes_len, sheet->palettes);
 }
 void animation_update(struct SpriteAnimation *ani)
 {
@@ -46,7 +47,7 @@ void animation_set_palette(struct SpriteAnimation *ani, const metasprite_t *meta
             // let's use the same palette across the animation
             // i suspect this would require too much cpu time to update palettes as frames change
             // 4 palettes 11
-            set_sprite_prop(sp_i, metasprite[ani->frame_tiles[0][tile_y][tile_x]].props & 0x03);
+            set_sprite_prop(sp_i, ani->sheet.palette_start + metasprite[ani->frame_tiles[0][tile_y][tile_x]].props & 0x03);
             sp_i++;
         }
     }
@@ -144,4 +145,121 @@ void animation_hide(struct SpriteAnimation *ani)
     {
         hide_sprite(sp_i);
     }
+}
+void animation_hide_all(void)
+{
+    for (uint8_t sp_i = 0; sp_i < 32; sp_i++)
+    {
+        hide_sprite(sp_i);
+    }
+}
+
+static uint8_t palette_last_fade = 254;
+static uint8_t bg_pal_offset = 0;
+static uint8_t sp_pal_offset = 0;
+#define PALETTE_DEFAULT_PAL { \
+    RGB8(255, 255, 255),      \
+    RGB8(120, 120, 120),      \
+    RGB8(60, 60, 60),         \
+    RGB8(0, 0, 0),            \
+    RGB8(255, 255, 255),      \
+    RGB8(120, 120, 120),      \
+    RGB8(60, 60, 60),         \
+    RGB8(0, 0, 0),            \
+    RGB8(255, 255, 255),      \
+    RGB8(120, 120, 120),      \
+    RGB8(60, 60, 60),         \
+    RGB8(0, 0, 0),            \
+    RGB8(255, 255, 255),      \
+    RGB8(120, 120, 120),      \
+    RGB8(60, 60, 60),         \
+    RGB8(0, 0, 0),            \
+    RGB8(255, 255, 255),      \
+    RGB8(120, 120, 120),      \
+    RGB8(60, 60, 60),         \
+    RGB8(0, 0, 0),            \
+    RGB8(255, 255, 255),      \
+    RGB8(120, 120, 120),      \
+    RGB8(60, 60, 60),         \
+    RGB8(0, 0, 0),            \
+    RGB8(255, 255, 255),      \
+    RGB8(120, 120, 120),      \
+    RGB8(60, 60, 60),         \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+}
+static palette_color_t bkg_pal_cache[4 * 8] = PALETTE_DEFAULT_PAL;
+static palette_color_t sp_pal_cache[4 * 8] = PALETTE_DEFAULT_PAL;
+static palette_color_t bkg_pal_cache_f1[4 * 8] = PALETTE_DEFAULT_PAL;
+static palette_color_t sp_pal_cache_f1[4 * 8] = PALETTE_DEFAULT_PAL;
+static palette_color_t bkg_pal_cache_f2[4 * 8] = PALETTE_DEFAULT_PAL;
+static palette_color_t sp_pal_cache_f2[4 * 8] = PALETTE_DEFAULT_PAL;
+static palette_color_t bkg_pal_cache_f3[4 * 8] = PALETTE_DEFAULT_PAL;
+static palette_color_t sp_pal_cache_f3[4 * 8] = PALETTE_DEFAULT_PAL;
+void palette_util_reset()
+{
+    bg_pal_offset = 0;
+    sp_pal_offset = 0;
+    const palette_color_t default_palettes[4] = {
+        RGB8(255, 255, 255), RGB8(0, 0, 0), RGB8(0, 0, 0), RGB8(0, 0, 0)};
+    palette_util_init_bkg(1, default_palettes);
+}
+static void palette_copy(palette_color_t *dest, const palette_color_t *src, uint8_t palette_count, uint8_t div)
+{
+    for (uint8_t i = 0; i < palette_count * 4; i++)
+    {
+        dest[i] = src[i] / div;
+    }
+}
+uint8_t palette_util_init_bkg(uint8_t palette_count, const palette_color_t *palettes)
+{
+    uint8_t start = bg_pal_offset;
+    palette_copy(&bkg_pal_cache[bg_pal_offset * 4], palettes, palette_count, 1);
+    palette_copy(&bkg_pal_cache_f1[bg_pal_offset * 4], palettes, palette_count, 2);
+    palette_copy(&bkg_pal_cache_f2[bg_pal_offset * 4], palettes, palette_count, 4);
+    bg_pal_offset += palette_count;
+    return start;
+}
+uint8_t palette_util_init_sp(uint8_t palette_count, const palette_color_t *palettes)
+{
+    uint8_t start = sp_pal_offset;
+    palette_copy(&sp_pal_cache[sp_pal_offset * 4], palettes, palette_count, 1);
+    palette_copy(&sp_pal_cache_f1[sp_pal_offset * 4], palettes, palette_count, 2);
+    palette_copy(&sp_pal_cache_f2[sp_pal_offset * 4], palettes, palette_count, 4);
+    sp_pal_offset += palette_count;
+    return start;
+}
+static inline void pallete_util_fade(struct SceneRenderOptions *options)
+{
+    switch (options->fade)
+    {
+    default:
+    case 0:
+        set_bkg_palette(BKGF_CGB_PAL0, 8, bkg_pal_cache);
+        set_sprite_palette(OAMF_CGB_PAL0, 8, sp_pal_cache);
+        break;
+    case 1:
+        set_bkg_palette(BKGF_CGB_PAL0, 8, bkg_pal_cache_f1);
+        set_sprite_palette(OAMF_CGB_PAL0, 8, sp_pal_cache_f1);
+        break;
+    case 2:
+        set_bkg_palette(BKGF_CGB_PAL0, 8, bkg_pal_cache_f2);
+        set_sprite_palette(OAMF_CGB_PAL0, 8, sp_pal_cache_f2);
+        break;
+    case 3:
+        set_bkg_palette(BKGF_CGB_PAL0, 8, bkg_pal_cache_f3);
+        set_sprite_palette(OAMF_CGB_PAL0, 8, sp_pal_cache_f3);
+        break;
+    }
+}
+void palette_util_maybe_fade(struct SceneRenderOptions *options)
+{
+    if (palette_last_fade != options->fade)
+    {
+        pallete_util_fade(options);
+    }
+    palette_last_fade = options->fade;
 }

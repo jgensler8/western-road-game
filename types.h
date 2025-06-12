@@ -13,10 +13,16 @@ struct PaletteArgs
 };
 void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t tile_start, struct PaletteArgs *args);
 
+struct SceneRenderOptions
+{
+    uint8_t swapped;
+    uint8_t fade;
+};
+
 struct Scene
 {
     void (*process_input)(void);
-    void (*render)(uint8_t swapped);
+    void (*render)(const struct SceneRenderOptions* options);
 };
 extern void queue_scene(struct Scene *new_next_scene, uint8_t new_bank_num);
 
@@ -43,14 +49,28 @@ struct StatCalculation
     enum StatChange change;
 };
 
+enum RoadEvent
+{
+    ROAD_EVENT_NONE,
+    ROAD_EVENT_INN,
+    ROAD_EVENT_CHERI_QUEST_1,
+    ROAD_EVENT_COUNT,
+};
+
+struct RoadEventScene
+{
+    struct Scene *scene;
+    uint8_t bank;
+};
+
 #define MAX_STAT_CALCULATIONS 32
 struct State
 {
     uint16_t stats[STAT_COUNT];
     struct StatCalculation calculations[MAX_STAT_CALCULATIONS];
-    uint8_t next_event;
+    enum RoadEvent next_event;
     uint8_t next_event_steps;
 };
 extern struct State default_state;
-void on_step(void);
-void maybe_handle_event(void);
+void state_on_step(void);
+void state_maybe_handle_event(void);

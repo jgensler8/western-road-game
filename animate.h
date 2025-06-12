@@ -12,6 +12,7 @@ struct SpriteSheet
     uint8_t sheet_frame_width_tiles;
     // how wide is the entire sheet (cached calculation of sheet_frames*sheet_frame_tile_width)
     uint8_t sheet_width_tiles;
+    // sprite palette start (0-7)
     uint8_t palette_start;
     uint8_t *palettes;
     uint8_t palettes_len;
@@ -75,3 +76,13 @@ void animation_init_sprite_animation(struct SpriteAnimation *ani, const metaspri
 void maybe_animate(struct SpriteAnimation *ani);
 void animation_show(struct SpriteAnimation *ani);
 void animation_hide(struct SpriteAnimation *ani);
+void animation_hide_all(void);
+
+#define PALETTE_UTIL_BG(SPRITE) SPRITE##_PALETTE_COUNT, SPRITE##_palettes
+#define PALETTE_UTIL_SP(SPRITE) SPRITE##_PALETTE_COUNT, SPRITE##_palettes
+void palette_util_reset();
+// returns the starting palette used
+uint8_t palette_util_init_bkg(uint8_t palette_count, const palette_color_t* palettes);
+// returns the starting palette used
+uint8_t palette_util_init_sp(uint8_t palette_count, const palette_color_t* palettes);
+void palette_util_maybe_fade(struct SceneRenderOptions *options);

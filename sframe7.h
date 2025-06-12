@@ -13,8 +13,8 @@
 #define sframe7_HEIGHT 24
 #define sframe7_TILE_COUNT 9
 #define sframe7_PALETTE_COUNT 1
-#define sframe7_COLORS_PER_PALETTE 2
-#define sframe7_TOTAL_COLORS 2
+#define sframe7_COLORS_PER_PALETTE 4
+#define sframe7_TOTAL_COLORS 4
 #define sframe7_PIVOT_X 12
 #define sframe7_PIVOT_Y 12
 #define sframe7_PIVOT_W 24
@@ -23,7 +23,7 @@ extern const metasprite_t* const sframe7_metasprites[1];
 
 BANKREF_EXTERN(sframe7)
 
-extern const palette_color_t sframe7_palettes[2];
-extern const uint8_t sframe7_tiles[72];
+extern const palette_color_t sframe7_palettes[4];
+extern const uint8_t sframe7_tiles[144];
 
 #endif

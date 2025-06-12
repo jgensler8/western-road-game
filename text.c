@@ -65,19 +65,20 @@ void clear_bkg_frame(void)
 void init_font_vram(void)
 {
     SWITCH_ROM(1);
-    set_bkg_1bpp_data(0, 'Z' - ' ' + 1, lankygitmono_tiles);
+    set_bkg_data(0, 'Z' - ' ' + 1, lankygitmono_tiles);
 }
 
 void init_frame_vram(void)
 {
     SWITCH_ROM(1);
-    set_bkg_1bpp_data('Z' - ' ' + 1, 9, sframe7_tiles);
+    set_bkg_data('Z' - ' ' + 1, 9, sframe7_tiles);
 }
 
 void text_init(void)
 {
     init_font_vram();
     init_frame_vram();
+    set_bkg_palette(BKGF_CGB_PAL0, 1, lankygitmono_palettes);
 }
 
 void text_draw_frame(char *line_1, char *line_2)
@@ -86,7 +87,6 @@ void text_draw_frame(char *line_1, char *line_2)
     draw_frame(0, 14, 20, 4);
     xy_printf(1, 15, line_1);
     xy_printf(1, 16, line_2);
-    SHOW_BKG;
 }
 
 void text_progress_init(char *line_1, char *line_2, struct ProgressableFrame *frame)

@@ -52,16 +52,16 @@ scene_gen:
 	python scene_gen.py
 
 lankygitmono.c: lankygitmono.png
-	$(PNG2ASSET) lankygitmono.png -noflip -bpp 1 -spr8x8 -sprite_no_optimize -b 1
+	$(PNG2ASSET) lankygitmono.png -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 1
 
 sframe7.c: sframe7.png
-	$(PNG2ASSET) sframe7.png -noflip -bpp 1 -spr8x8 -sprite_no_optimize -b 1
+	$(PNG2ASSET) sframe7.png -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 1
 
 bg_road.c: bg_road.png
 	$(PNG2ASSET) bg_road.png -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
 
 # bg_fade.c: bg_fade.png
-# 	$(PNG2ASSET) bg_fade.png -noflip -bpp 1 -spr8x8 -sprite_no_optimize
+# 	$(PNG2ASSET) bg_fade.png -noflip -bpp 2 -spr8x8 -sprite_no_optimize
 
 sp_cacti.c: sp_cacti.png
 	$(PNG2ASSET) sp_cacti.png -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2

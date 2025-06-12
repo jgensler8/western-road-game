@@ -14,8 +14,9 @@ static void process_input(void)
             cactus_animation_frame = 0;
         }
         play_sfx_blip();
-        on_step();
+        state_on_step();
     }
+    state_maybe_handle_event();
 }
 void render_cactus_frame(uint8_t frame, uint8_t sprite_start, uint8_t tile_start)
 {
@@ -87,22 +88,28 @@ void render_cactus_frame(uint8_t frame, uint8_t sprite_start, uint8_t tile_start
         break;
     }
 }
-static void render(uint8_t swapped)
+static void render(struct SceneRenderOptions *options)
 {
-    if (swapped)
+    if (options->swapped)
     {
+        // palettes
+        palette_util_init_bkg(PALETTE_UTIL_BG(bg_road));
+        palette_util_init_sp(PALETTE_UTIL_SP(sp_cacti));
+
+        // sprites
         set_bkg_data(SCENE_BG_TILE_DATA_START, 64, bg_road_tiles);
-        set_bkg_offset(4, 4, 8, 8, SCENE_BG_TILE_DATA_START, NULL);
+        struct PaletteArgs pargs = {
+
+            .metasprites = ANIMATE_DEFAULT_METASPRITE(bg_road),
+            .palette_start = 1,
+        };
+        set_bkg_offset(4, 4, 8, 8, SCENE_BG_TILE_DATA_START, &pargs);
         text_draw_frame("A TO STEP", EMPTY);
         // TODO: technically only need to hold two animation in sprite memroy at a time
         set_sprite_data(0, 16, sp_cacti_tiles);
-        set_sprite_palette(OAMF_CGB_PAL0, 0, sp_cacti_palettes);
         cactus_animation_frame = 0;
-        SPRITES_8x8;
-        SHOW_SPRITES;
     }
     render_cactus_frame(cactus_animation_frame, 0, 0);
-    maybe_handle_event();
 }
 BANKREF(scene_road_ref)
 struct Scene scene_road = {

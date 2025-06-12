@@ -1,4 +1,4 @@
-#pragma bank 0
+#pragma bank 5
 #include "gen_scene_customers.h"
 
 static uint8_t progress;
@@ -313,8 +313,8 @@ static void process_input(void) {
     }
 }
 
-static void render(uint8_t swapped) {
-    if(swapped){ progress = 0; progress_changed = 1; }
+static void render(const struct SceneRenderOptions* options) {
+    if(options->swapped){ progress = 0; progress_changed = 1; }
     switch(progress)
     {
         case 0:

@@ -29,15 +29,16 @@ void scene_title_process_input(void)
         }
     }
 }
-void scene_title_render(uint8_t swapped)
+void scene_title_render(struct SceneRenderOptions *options)
 {
-    if (swapped)
+    if (options->swapped)
     {
         start_menu.selection = 0;
     }
     menu_render(&start_menu);
 }
 
+BANKREF(scene_title_ref)
 struct Scene scene_title = {
     .process_input = scene_title_process_input,
     .render = scene_title_render,

@@ -17,13 +17,13 @@ static char *dialogs[DIALOGS * 2] = {
     EMPTY,
 };
 BANKREF_EXTERN(scene_road_ref)
-static void render(uint8_t swapped)
+static void render(struct SceneRenderOptions *options)
 {
-    if (swapped)
+    if (options->swapped)
     {
         scene_dialog_init(dialogs, DIALOGS, &scene_road, BANK(scene_road_ref));
     }
-    scene_dialog_render(swapped);
+    scene_dialog_render(options->swapped);
 }
 BANKREF(scene_story_ref)
 struct Scene scene_story = {

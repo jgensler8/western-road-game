@@ -58,12 +58,15 @@ static uint8_t talking_changed;
 #define SP_CHERI_METASPRITE ANIMATE_DEFAULT_METASPRITE(sp_cheri)
 static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_x, uint8_t tile_y)
 {
+    // palette
+    // set_bkg_palette(start.bg_pal_start, bg_cheri_PALETTE_COUNT, bg_cheri_palettes);
+    uint8_t pal_start = palette_util_init_bkg(PALETTE_UTIL_BG(bg_cheri));
     // bg
-    set_bkg_data(start.bg_start, bg_cheri_TILE_COUNT, bg_cheri_tiles);
-    set_bkg_palette(start.bg_pal_start, bg_cheri_PALETTE_COUNT, bg_cheri_palettes);
+    // set_bkg_data(start.bg_start, bg_cheri_TILE_COUNT, bg_cheri_tiles);
+    set_bkg_data(70, bg_cheri_TILE_COUNT, bg_cheri_tiles);
     struct PaletteArgs pargs = {
         .metasprites = BG_CHERI_METASPRITE,
-        .palette_start = start.bg_pal_start,
+        .palette_start = pal_start,
     };
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
     // sprite
@@ -100,7 +103,7 @@ static void stop_talking(void)
     talking_changed = 1;
 }
 
-static void render(void)
+static void render(struct SceneRenderOptions *options)
 {
     maybe_animate(&left_eye);
     maybe_animate(&right_eye);

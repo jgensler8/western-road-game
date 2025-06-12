@@ -9,7 +9,7 @@
 BANKREF(bg_road)
 
 const palette_color_t bg_road_palettes[4] = {
-	RGB8(  0,  0,  0), RGB8(  0,  0,  0), RGB8(  0,  0,  0), RGB8(  0,  0,  0)
+	RGB8(255,255,255), RGB8(  0,  0,  0), RGB8(  0,  0,  0), RGB8(  0,  0,  0)
 	
 };
 

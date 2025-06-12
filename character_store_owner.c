@@ -85,6 +85,11 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     animation_init_sprite_animation(&animation_mouth_talking, sp_store_owner_metasprites[0]);
     ANIMATE_TILE_OFFSET(animation_mouth_talking, 30, 48);
     talking = 0;
+    // TODO: either build custom funcs or hardcode
+    struct MemoryAllocation end = {
+        .bg_end = start.bg_start + 6,
+    };
+    return end;
 }
 static void set_expression(enum CharacterExpression expression)
 {
@@ -99,7 +104,7 @@ static void stop_talking(void)
     talking = 1;
     talking_changed = 1;
 }
-static void render(void)
+static void render(struct SceneRenderOptions *options)
 {
     maybe_animate(&animation_left_eye);
     maybe_animate(&animation_right_eye);
