@@ -72,9 +72,9 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     animation_init_sprite_animation(&left_eye, SP_CHERI_METASPRITE);
     ANIMATE_TILE_OFFSET(right_eye, 40, 22)
     animation_init_sprite_animation(&right_eye, SP_CHERI_METASPRITE);
-    ANIMATE_TILE_OFFSET(mouth_passive, 30, 45)
+    ANIMATE_TILE_OFFSET(mouth_passive, 33, 45)
     animation_init_sprite_animation(&mouth_passive, SP_CHERI_METASPRITE);
-    ANIMATE_TILE_OFFSET(mouth_talking, 30, 45)
+    ANIMATE_TILE_OFFSET(mouth_talking, 33, 45)
     animation_init_sprite_animation(&mouth_talking, SP_CHERI_METASPRITE);
     talking = 0;
     talking_changed = 1;

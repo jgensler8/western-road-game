@@ -2,6 +2,7 @@
 #include "types.h"
 #include <gbdk/platform.h>
 #include "animate.h"
+#include <gbdk/emu_debug.h>
 
 void animation_init_sprite_sheet(struct SpriteSheet *sheet)
 {
@@ -101,7 +102,7 @@ static inline void animate(struct SpriteAnimation *ani)
         {
             ani->state.direction = ANIMATION_DIRECTION_FORWARD;
         }
-        else if (ani->state.frame == ani->sheet.sheet_frames)
+        else if (ani->state.frame == ani->sheet.sheet_frames - 1)
         {
             ani->state.direction = ANIMATION_DIRECTION_BACKWARD;
         }
@@ -127,7 +128,9 @@ void maybe_animate(struct SpriteAnimation *ani)
     }
     else
     {
+        // EMU_PROFILE_BEGIN("ani_s:%TOTALCLKS%:")
         animate(ani);
+        // EMU_PROFILE_END("ani_e:%TOTALCLKS%:")
     }
 }
 void animation_show(struct SpriteAnimation *ani)

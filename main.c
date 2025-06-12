@@ -135,7 +135,9 @@ void main(void)
             if (current_scene)
             {
                 wait_vbl_done();
+                EMU_PROFILE_BEGIN("render_s:%TOTALCLKS%:")
                 current_scene->render(swapped);
+                EMU_PROFILE_END("render_e:%TOTALCLKS%:")
                 // unset swapped
                 swapped = 0;
             }
