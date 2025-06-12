@@ -55,7 +55,6 @@ void state_maybe_handle_event(void)
         enum RoadEvent event = default_state.next_event;
         // unset event
         default_state.next_event = 0;
-        SWITCH_ROM(event);
         queue_scene(road_events[event].scene, road_events[event].bank);
     }
 }

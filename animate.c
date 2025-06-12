@@ -154,37 +154,89 @@ void animation_hide_all(void)
     }
 }
 
+// Helper macro to extract R, G, B components (5 bits each)
+#define GET_R(color) ((color) & 0x1F)
+#define GET_G(color) (((color) >> 5) & 0x1F)
+#define GET_B(color) (((color) >> 10) & 0x1F)
+
+// Helper macro to combine R, G, B components into a 15-bit color
+#define MAKE_COLOR(r, g, b) (((b) << 10) | ((g) << 5) | (r))
+
+// Number of fade steps (0 to 3 for a total of 4 steps)
+#define FADE_SWAP_STEPS 4
+
+// The core fade function
+// 'step' goes from 0 (normal) to FADE_SWAP_STEPS - 1 (all black)
+static palette_color_t fade_color_to_black(palette_color_t original_color, uint8_t step)
+{
+    if (step >= FADE_SWAP_STEPS - 1)
+    {             // Last step is always black
+        return 0; // Black
+    }
+    if (step == 0)
+    { // First step is original color
+        return original_color;
+    }
+
+    uint8_t r = GET_R(original_color);
+    uint8_t g = GET_G(original_color);
+    uint8_t b = GET_B(original_color);
+
+    // Calculate fade factor.
+    // For 4 steps (0, 1, 2, 3), total "active" fade steps are 3 (from 0 to 2)
+    // Step 0: no change
+    // Step 1: (FADE_SWAP_STEPS - 1 - 1) / (FADE_SWAP_STEPS - 1) = 2/3 brightness
+    // Step 2: (FADE_SWAP_STEPS - 1 - 2) / (FADE_SWAP_STEPS - 1) = 1/3 brightness
+    // Step 3: 0 brightness (handled by if statement above)
+
+    // Using integer division, this can be tricky.
+    // A more robust way is to use a lookup table for multipliers or careful integer math.
+    // Example: (original_component * (FADE_SWAP_STEPS - 1 - step)) / (FADE_SWAP_STEPS - 1)
+    // Let's call FADE_MAX_VAL = FADE_SWAP_STEPS - 1 (which is 3 for 4 steps)
+    // new_comp = (original_comp * (FADE_MAX_VAL - step)) / FADE_MAX_VAL;
+
+    uint8_t new_r, new_g, new_b;
+    uint8_t fade_scale = FADE_SWAP_STEPS - 1 - step; // 3, 2, 1 for steps 0, 1, 2 respectively
+
+    // Perform multiplication first to retain precision before division
+    new_r = (r * fade_scale) / (FADE_SWAP_STEPS - 1);
+    new_g = (g * fade_scale) / (FADE_SWAP_STEPS - 1);
+    new_b = (b * fade_scale) / (FADE_SWAP_STEPS - 1);
+
+    return MAKE_COLOR(new_r, new_g, new_b);
+}
+
 static uint8_t palette_last_fade = 254;
 static uint8_t bg_pal_offset = 0;
 static uint8_t sp_pal_offset = 0;
 #define PALETTE_DEFAULT_PAL { \
-    RGB8(255, 255, 255),      \
-    RGB8(120, 120, 120),      \
-    RGB8(60, 60, 60),         \
     RGB8(0, 0, 0),            \
-    RGB8(255, 255, 255),      \
-    RGB8(120, 120, 120),      \
-    RGB8(60, 60, 60),         \
     RGB8(0, 0, 0),            \
-    RGB8(255, 255, 255),      \
-    RGB8(120, 120, 120),      \
-    RGB8(60, 60, 60),         \
     RGB8(0, 0, 0),            \
-    RGB8(255, 255, 255),      \
-    RGB8(120, 120, 120),      \
-    RGB8(60, 60, 60),         \
     RGB8(0, 0, 0),            \
-    RGB8(255, 255, 255),      \
-    RGB8(120, 120, 120),      \
-    RGB8(60, 60, 60),         \
     RGB8(0, 0, 0),            \
-    RGB8(255, 255, 255),      \
-    RGB8(120, 120, 120),      \
-    RGB8(60, 60, 60),         \
     RGB8(0, 0, 0),            \
-    RGB8(255, 255, 255),      \
-    RGB8(120, 120, 120),      \
-    RGB8(60, 60, 60),         \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
+    RGB8(0, 0, 0),            \
     RGB8(0, 0, 0),            \
     RGB8(0, 0, 0),            \
     RGB8(0, 0, 0),            \
@@ -207,19 +259,19 @@ void palette_util_reset()
         RGB8(255, 255, 255), RGB8(0, 0, 0), RGB8(0, 0, 0), RGB8(0, 0, 0)};
     palette_util_init_bkg(1, default_palettes);
 }
-static void palette_copy(palette_color_t *dest, const palette_color_t *src, uint8_t palette_count, uint8_t div)
+static void palette_copy(palette_color_t *dest, const palette_color_t *src, uint8_t palette_count, uint8_t step)
 {
     for (uint8_t i = 0; i < palette_count * 4; i++)
     {
-        dest[i] = src[i] / div;
+        dest[i] = fade_color_to_black(src[i], step);
     }
 }
 uint8_t palette_util_init_bkg(uint8_t palette_count, const palette_color_t *palettes)
 {
     uint8_t start = bg_pal_offset;
-    palette_copy(&bkg_pal_cache[bg_pal_offset * 4], palettes, palette_count, 1);
-    palette_copy(&bkg_pal_cache_f1[bg_pal_offset * 4], palettes, palette_count, 2);
-    palette_copy(&bkg_pal_cache_f2[bg_pal_offset * 4], palettes, palette_count, 4);
+    palette_copy(&bkg_pal_cache[bg_pal_offset * 4], palettes, palette_count, 0);
+    palette_copy(&bkg_pal_cache_f1[bg_pal_offset * 4], palettes, palette_count, 1);
+    palette_copy(&bkg_pal_cache_f2[bg_pal_offset * 4], palettes, palette_count, 2);
     bg_pal_offset += palette_count;
     return start;
 }
