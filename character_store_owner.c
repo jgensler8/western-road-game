@@ -66,12 +66,13 @@ static uint8_t talking;
 static uint8_t talking_changed;
 static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_x, uint8_t tile_y)
 {
+    // palettes
+    uint8_t pal_start = palette_util_init_bkg(PALETTE_UTIL_BG(bg_store_owner));
     // owner bg
-    set_bkg_data(start.bg_start, 64, bg_store_owner_tiles);
-    set_bkg_palette(start.bg_pal_start, 7, bg_store_owner_palettes);
+    set_bkg_data(start.bg_start, bg_store_owner_TILE_COUNT, bg_store_owner_tiles);
     struct PaletteArgs pargs = {
         .metasprites = bg_store_owner_metasprites[0],
-        .palette_start = start.bg_pal_start,
+        .palette_start = pal_start,
     };
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
     // owner sp
@@ -104,7 +105,7 @@ static void stop_talking(void)
     talking = 1;
     talking_changed = 1;
 }
-static void render(struct SceneRenderOptions *options)
+static void render(void)
 {
     maybe_animate(&animation_left_eye);
     maybe_animate(&animation_right_eye);

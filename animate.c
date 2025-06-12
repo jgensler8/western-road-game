@@ -278,9 +278,9 @@ uint8_t palette_util_init_bkg(uint8_t palette_count, const palette_color_t *pale
 uint8_t palette_util_init_sp(uint8_t palette_count, const palette_color_t *palettes)
 {
     uint8_t start = sp_pal_offset;
-    palette_copy(&sp_pal_cache[sp_pal_offset * 4], palettes, palette_count, 1);
-    palette_copy(&sp_pal_cache_f1[sp_pal_offset * 4], palettes, palette_count, 2);
-    palette_copy(&sp_pal_cache_f2[sp_pal_offset * 4], palettes, palette_count, 4);
+    palette_copy(&sp_pal_cache[sp_pal_offset * 4], palettes, palette_count, 0);
+    palette_copy(&sp_pal_cache_f1[sp_pal_offset * 4], palettes, palette_count, 1);
+    palette_copy(&sp_pal_cache_f2[sp_pal_offset * 4], palettes, palette_count, 2);
     sp_pal_offset += palette_count;
     return start;
 }

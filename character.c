@@ -14,9 +14,7 @@ void character_init(enum CharacterModel model, uint8_t tile_x, uint8_t tile_y)
     uint8_t previous_bank = CURRENT_BANK;
     struct MemoryAllocation allocation = {
         .bg_start = 70,
-        .bg_pal_start = BKGF_CGB_PAL1,
         .sp_start = 0,
-        .sp_pal_start = OAMF_CGB_PAL0,
     };
     switch (model)
     {
@@ -47,6 +45,42 @@ void character_render(enum CharacterModel model, enum CharacterExpression expres
     case CHARACTER_MODEL_CHERI:
         SWITCH_ROM(BANK(character_cheri_ref));
         character_cheri.render();
+        break;
+    }
+    SWITCH_ROM(previous_bank);
+}
+void character_start_talking(enum CharacterModel model)
+{
+    uint8_t previous_bank = CURRENT_BANK;
+    switch (model)
+    {
+    case CHARACTER_MODEL_PLAYER:
+        break;
+    case CHARACTER_MODEL_STORE_OWNER:
+        SWITCH_ROM(BANK(character_store_owner_ref));
+        character_store_owner.start_talking();
+        break;
+    case CHARACTER_MODEL_CHERI:
+        SWITCH_ROM(BANK(character_cheri_ref));
+        character_cheri.start_talking();
+        break;
+    }
+    SWITCH_ROM(previous_bank);
+}
+void character_stop_talking(enum CharacterModel model)
+{
+    uint8_t previous_bank = CURRENT_BANK;
+    switch (model)
+    {
+    case CHARACTER_MODEL_PLAYER:
+        break;
+    case CHARACTER_MODEL_STORE_OWNER:
+        SWITCH_ROM(BANK(character_store_owner_ref));
+        character_store_owner.stop_talking();
+        break;
+    case CHARACTER_MODEL_CHERI:
+        SWITCH_ROM(BANK(character_cheri_ref));
+        character_cheri.stop_talking();
         break;
     }
     SWITCH_ROM(previous_bank);

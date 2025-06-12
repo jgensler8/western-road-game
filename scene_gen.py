@@ -32,7 +32,8 @@ static void process_input(void) {{
 }}
 
 static void render(const struct SceneRenderOptions* options) {{
-    if(options.swapped){{ progress = 0; progress_changed = 1; }}
+    if(options->swapped){{ character_init({character_enum},1,1); progress = 0; progress_changed = 1; }}
+    character_render({character_enum}, CHARACTER_EXPRESSION_DEFAULT);
     switch(progress)
     {{
     {render}
@@ -66,8 +67,12 @@ template_chat_input = """    case {progress_step}:
 template_chat_render = """    case {progress_step}:
         if(progress_changed) {{
             text_progress_init("{dialog_0}", "{dialog_1}", &frame);
+            character_start_talking({character_enum});
         }}
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {{
+            character_stop_talking({character_enum});
+        }};
         break;
 """
 
@@ -273,6 +278,7 @@ def dialog_render(start: Node) -> (str, str, str):
                 progress_step=cur.id,
                 dialog_0=cur.options.dialog_0,
                 dialog_1=cur.options.dialog_1,
+                character_enum="CHARACTER_MODEL_CHERI",
             )
         elif cur.type == NodeType.MENU:
             # menu
@@ -330,6 +336,7 @@ if __name__ == "__main__":
             variables=variables,
             process_input=process_input,
             render=render,
+            character_enum="CHARACTER_MODEL_CHERI",
         )
         c_filename = os.path.join(output_dir, f"gen_scene_{scene_name}.c")
         with open(c_filename, "w") as f:

@@ -314,128 +314,209 @@ static void process_input(void) {
 }
 
 static void render(const struct SceneRenderOptions* options) {
-    if(options->swapped){ progress = 0; progress_changed = 1; }
+    if(options->swapped){ character_init(CHARACTER_MODEL_CHERI,1,1); progress = 0; progress_changed = 1; }
+    character_render(CHARACTER_MODEL_CHERI, CHARACTER_EXPRESSION_DEFAULT);
     switch(progress)
     {
         case 0:
         if(progress_changed) {
             text_progress_init("HEY THERE!", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 1:
         if(progress_changed) {
             text_progress_init("YOU MUST BE NEW", "AROUND HERE", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 2:
         if(progress_changed) {
             text_progress_init("I'M CHERI, I DON'T", "BELIEVE WE'VE MET", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 3:
         if(progress_changed) {
             text_progress_init("NICE TO MEET YOU,", "CHERI", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 4:
         if(progress_changed) {
             text_progress_init("SAY, DO YOU WANT", "TO KNOW A SECRET?", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 7:
         if(progress_changed) {
             text_progress_init("SURE", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 9:
         if(progress_changed) {
             text_progress_init("SO HEAD DOWN A BIT", "FURTHER", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 11:
         if(progress_changed) {
             text_progress_init("MAYBE 100 STEPS OR", "SO", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 13:
         if(progress_changed) {
             text_progress_init("ON THE RIGHT, YOU", "SHOULD SEE", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 15:
         if(progress_changed) {
             text_progress_init("A SMALL SHED", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 17:
         if(progress_changed) {
             text_progress_init("IT SHOULD BE OFF", "THE ROAD", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 19:
         if(progress_changed) {
             text_progress_init("DID YOU GET ALL", "THAT?", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 21:
         if(progress_changed) {
             text_progress_init("UHM... SURE!", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 8:
         if(progress_changed) {
             text_progress_init("NO, I'M FINE", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 10:
         if(progress_changed) {
             text_progress_init("REALLY? AWW...", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 12:
         if(progress_changed) {
             text_progress_init("I WAS REALLY", "HOPING", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 14:
         if(progress_changed) {
             text_progress_init("TO TELL SOMEONE", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 16:
         if(progress_changed) {
             text_progress_init("GUESS I'LL SAVE", "THAT", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 18:
         if(progress_changed) {
             text_progress_init("FOR ANOTHER DAY", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 20:
         if(progress_changed) {
             text_progress_init("UHM... OK...", "", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
     case 5:
         menu_render(&menu_5);
@@ -443,8 +524,12 @@ static void render(const struct SceneRenderOptions* options) {
     case 6:
         if(progress_changed) {
             text_progress_init("TIME TO HIT THE", "ROAD", &frame);
+            character_start_talking(CHARACTER_MODEL_CHERI);
         }
-        text_draw_frame_progress(&frame);
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_CHERI);
+        };
         break;
 
     }

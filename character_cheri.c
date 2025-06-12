@@ -31,24 +31,24 @@ static struct SpriteAnimation right_eye = {
 };
 static struct SpriteAnimation mouth_passive = {
     .sheet = SP_CHERI_SHEET,
-    .sheet_tile_x = 0,
-    .sheet_tile_y = 2,
-    .tile_width = 1,
-    .tile_height = 1,
-    .sp_index_start = 8,
-    .timings_len = 3,
-    .timings = ANIMATE_DEFAULT_TALK_TIMINGS,
-    .style = ANIMATION_STYLE_PING_PONG,
-    .state.frame = 0,
-};
-static struct SpriteAnimation mouth_talking = {
-    .sheet = SP_CHERI_SHEET,
     .sheet_tile_x = 1,
     .sheet_tile_y = 2,
     .tile_width = 1,
     .tile_height = 1,
-    .sp_index_start = 9,
+    .sp_index_start = 8,
     .style = ANIMATION_STYLE_NONE,
+    .state.frame = 0,
+};
+static struct SpriteAnimation mouth_talking = {
+    .sheet = SP_CHERI_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 2,
+    .tile_width = 1,
+    .tile_height = 1,
+    .sp_index_start = 9,
+    .timings_len = 3,
+    .timings = ANIMATE_DEFAULT_TALK_TIMINGS,
+    .style = ANIMATION_STYLE_PING_PONG,
     .state.frame = 0,
 };
 
@@ -103,7 +103,7 @@ static void stop_talking(void)
     talking_changed = 1;
 }
 
-static void render(struct SceneRenderOptions *options)
+static void render()
 {
     maybe_animate(&left_eye);
     maybe_animate(&right_eye);

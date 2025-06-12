@@ -30,9 +30,11 @@ struct Character
     void (*set_expression)(enum CharacterExpression expression);
     void (*start_talking)(void);
     void (*stop_talking)(void);
-    void (*render)(struct SceneRenderOptions *options);
+    void (*render)(void);
 };
 
 void character_reset(void);
 void character_init(enum CharacterModel model, uint8_t tile_x, uint8_t tile_y);
 void character_render(enum CharacterModel model, enum CharacterExpression expression);
+void character_start_talking(enum CharacterModel model);
+void character_stop_talking(enum CharacterModel model);
