@@ -1,4 +1,4 @@
-#pragma bank 5
+#pragma bank 2
 #include "gen_scene_intro.h"
 
 static uint8_t progress;

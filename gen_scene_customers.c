@@ -1,11 +1,11 @@
-#pragma bank 5
+#pragma bank 3
 #include "gen_scene_customers.h"
 
 static uint8_t progress;
 static uint8_t progress_changed;
 static struct ProgressableFrame frame;
 
-struct Menu menu_5 = {
+static struct Menu menu_5 = {
     .options = {
         "SURE",
         "NO, I'M FINE"

@@ -8,7 +8,7 @@ from enum import Enum
 
 
 def yml_files() -> List[str]:
-    return ["intro.yml", "inn.yml", "customers.yml"]
+    return ["intro.yml", "inn.yml", "customers.yml", "shack.yml"]
 
 
 template_h = """
@@ -17,7 +17,7 @@ template_h = """
 extern struct Scene gen_scene_{scene_name};
 """
 
-template_c = """#pragma bank 5
+template_c = """#pragma bank {bank}
 #include "gen_scene_{scene_name}.h"
 
 static uint8_t progress;
@@ -77,7 +77,7 @@ template_chat_render = """    case {progress_step}:
 """
 
 template_menu_variables = """
-struct Menu menu_{progress_step} = {{
+static struct Menu menu_{progress_step} = {{
     .options = {{
         "{menu_0_prompt}",
         "{menu_1_prompt}"
@@ -345,6 +345,7 @@ def dialog_render(start: Node, characters: any) -> (str, str, str):
 
 
 if __name__ == "__main__":
+    default_bank = 9
     output_dir = "."
     characters_yml = None
     with open("characters.yml", "r") as f:
@@ -373,6 +374,7 @@ if __name__ == "__main__":
             f.write(h_content)
         # template c file (use format)
         c_content = template_c.format(
+            bank=parsed.get("bank", default_bank),
             scene_name=scene_name,
             variables=variables,
             process_input=process_input,

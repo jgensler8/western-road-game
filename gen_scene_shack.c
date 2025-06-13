@@ -1,37 +1,19 @@
-#pragma bank 3
-#include "gen_scene_inn.h"
+#pragma bank 4
+#include "gen_scene_shack.h"
 
 static uint8_t progress;
 static uint8_t progress_changed;
 static struct ProgressableFrame frame;
 
-static struct Menu menu_11 = {
+static struct Menu menu_4 = {
     .options = {
-        "SURE IS",
-        "YOU BETCHA"
+        "LEAVE",
+        "EXPLORE"
     },
     .max_option = 1,
 };
-
-static struct Menu menu_2 = {
-    .options = {
-        "HEADED HOME",
-        "ON A VACATION"
-    },
-    .max_option = 1,
-};
-
-static struct Menu menu_6 = {
-    .options = {
-        "SHOP",
-        "CUSTOMERS"
-    },
-    .max_option = 1,
-};
-#include "scene_shop.h"
-BANKREF_EXTERN(scene_shop_ref)
-#include "gen_scene_customers.h"
-BANKREF_EXTERN(gen_scene_customers_ref)
+#include "scene_road.h"
+BANKREF_EXTERN(scene_road_ref)
 
 
 static void process_input(void) {
@@ -62,7 +44,7 @@ static void process_input(void) {
             }
         }
         break;
-    case 4:
+    case 2:
         if(joypad_a_pressed)
         {
             
@@ -70,7 +52,59 @@ static void process_input(void) {
             {
                 frame.fast_forward = 1;
             } else {
-                progress = 7;
+                progress = 3;
+                progress_changed = 1;
+            }
+        }
+        break;
+    case 3:
+        if(joypad_a_pressed)
+        {
+            
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 4;
+                progress_changed = 1;
+            }
+        }
+        break;
+    case 6:
+        if(joypad_a_pressed)
+        {
+            
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 9;
+                progress_changed = 1;
+            }
+        }
+        break;
+    case 9:
+        if(joypad_a_pressed)
+        {
+            
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 12;
+                progress_changed = 1;
+            }
+        }
+        break;
+    case 12:
+        if(joypad_a_pressed)
+        {
+            queue_scene(&scene_road, BANK(scene_road_ref));
+            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+            {
+                frame.fast_forward = 1;
+            } else {
+                progress = 5;
                 progress_changed = 1;
             }
         }
@@ -83,12 +117,12 @@ static void process_input(void) {
             {
                 frame.fast_forward = 1;
             } else {
-                progress = 11;
+                progress = 10;
                 progress_changed = 1;
             }
         }
         break;
-    case 14:
+    case 10:
         if(joypad_a_pressed)
         {
             
@@ -99,37 +133,6 @@ static void process_input(void) {
                 progress = 13;
                 progress_changed = 1;
             }
-        }
-        break;
-    case 15:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
-            {
-                frame.fast_forward = 1;
-            } else {
-                progress = 13;
-                progress_changed = 1;
-            }
-        }
-        break;
-    case 11:
-        if(menu_process_input(&menu_11))
-        {
-            switch(menu_11.selection)
-            {
-            case 0:
-                
-                progress = 14;
-                break;
-            case 1:
-                
-                progress = 15;
-                break;
-            }
-            progress_changed = 1;
-            menu_reset_state();
         }
         break;
     case 13:
@@ -140,9 +143,27 @@ static void process_input(void) {
             {
                 frame.fast_forward = 1;
             } else {
-                progress = 3;
+                progress = 5;
                 progress_changed = 1;
             }
+        }
+        break;
+    case 4:
+        if(menu_process_input(&menu_4))
+        {
+            switch(menu_4.selection)
+            {
+            case 0:
+                
+                progress = 6;
+                break;
+            case 1:
+                
+                progress = 7;
+                break;
+            }
+            progress_changed = 1;
+            menu_reset_state();
         }
         break;
     case 5:
@@ -166,12 +187,12 @@ static void process_input(void) {
             {
                 frame.fast_forward = 1;
             } else {
-                progress = 12;
+                progress = 11;
                 progress_changed = 1;
             }
         }
         break;
-    case 12:
+    case 11:
         if(joypad_a_pressed)
         {
             
@@ -179,30 +200,12 @@ static void process_input(void) {
             {
                 frame.fast_forward = 1;
             } else {
-                progress = 3;
+                progress = 14;
                 progress_changed = 1;
             }
         }
         break;
-    case 2:
-        if(menu_process_input(&menu_2))
-        {
-            switch(menu_2.selection)
-            {
-            case 0:
-                
-                progress = 4;
-                break;
-            case 1:
-                
-                progress = 5;
-                break;
-            }
-            progress_changed = 1;
-            menu_reset_state();
-        }
-        break;
-    case 3:
+    case 14:
         if(joypad_a_pressed)
         {
             
@@ -210,15 +213,15 @@ static void process_input(void) {
             {
                 frame.fast_forward = 1;
             } else {
-                progress = 6;
+                progress = 15;
                 progress_changed = 1;
             }
         }
         break;
-    case 9:
+    case 15:
         if(joypad_a_pressed)
         {
-            queue_scene(&scene_shop, BANK(scene_shop_ref));
+            
             if(text_frame_has_progress(&frame) && !frame.fast_forward)
             {
                 frame.fast_forward = 1;
@@ -226,37 +229,6 @@ static void process_input(void) {
                 progress = 254;
                 progress_changed = 1;
             }
-        }
-        break;
-    case 10:
-        if(joypad_a_pressed)
-        {
-            queue_scene(&gen_scene_customers, BANK(gen_scene_customers_ref));
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
-            {
-                frame.fast_forward = 1;
-            } else {
-                progress = 254;
-                progress_changed = 1;
-            }
-        }
-        break;
-    case 6:
-        if(menu_process_input(&menu_6))
-        {
-            switch(menu_6.selection)
-            {
-            case 0:
-                queue_scene(&scene_shop, BANK(scene_shop_ref));
-                progress = 9;
-                break;
-            case 1:
-                queue_scene(&gen_scene_customers, BANK(gen_scene_customers_ref));
-                progress = 10;
-                break;
-            }
-            progress_changed = 1;
-            menu_reset_state();
         }
         break;
 
@@ -264,33 +236,73 @@ static void process_input(void) {
 }
 
 static void render(const struct SceneRenderOptions* options) {
-    if(options->swapped){ character_init(CHARACTER_MODEL_STORE_OWNER,1,1); progress = 0; progress_changed = 1; }
-    character_render(CHARACTER_MODEL_STORE_OWNER, CHARACTER_EXPRESSION_DEFAULT);
+    if(options->swapped){  progress = 0; progress_changed = 1; }
+    
     switch(progress)
     {
         case 0:
         if(progress_changed) {
-            text_progress_init("HELLO THERE", "TRAVELER", &frame);
-            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
+            text_progress_init("OH, THIS MUST BE", "WHAT", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 1:
         if(progress_changed) {
-            text_progress_init("WHERE ARE YOU", "HEADED?", &frame);
-            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
+            text_progress_init("CHERI WAS TALKING", "ABOUT", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
-    case 4:
+    case 2:
         if(progress_changed) {
-            text_progress_init("HEADED HOME", "", &frame);
+            text_progress_init("YOU TAKE A STEP", "TOWARD THE SHACK", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 3:
+        if(progress_changed) {
+            text_progress_init("YOU HEAR A WEIRD", "HUMMING SOUND", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 6:
+        if(progress_changed) {
+            text_progress_init("LEAVE", "", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 9:
+        if(progress_changed) {
+            text_progress_init("NO WAY I AM GOING", "FURTHER", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 12:
+        if(progress_changed) {
+            text_progress_init("YOU DEPART", "", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
@@ -300,93 +312,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 7:
         if(progress_changed) {
-            text_progress_init("IS THAT SO?", "", &frame);
-            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
-        };
-        break;
-    case 14:
-        if(progress_changed) {
-            text_progress_init("SURE IS", "", &frame);
-            character_start_talking(CHARACTER_MODEL_NONE);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_NONE);
-        };
-        break;
-    case 15:
-        if(progress_changed) {
-            text_progress_init("YOU BETCHA", "", &frame);
-            character_start_talking(CHARACTER_MODEL_NONE);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_NONE);
-        };
-        break;
-    case 11:
-        menu_render(&menu_11);
-        break;
-    case 13:
-        if(progress_changed) {
-            text_progress_init("WELL, ITS A LONG", "ROAD...", &frame);
-            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
-        };
-        break;
-    case 5:
-        if(progress_changed) {
-            text_progress_init("ON A VACATION", "", &frame);
-            character_start_talking(CHARACTER_MODEL_NONE);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_NONE);
-        };
-        break;
-    case 8:
-        if(progress_changed) {
-            text_progress_init("OUT HERE?", "", &frame);
-            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
-        };
-        break;
-    case 12:
-        if(progress_changed) {
-            text_progress_init("WELL, TO EACH", "THERE OWN", &frame);
-            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
-        };
-        break;
-    case 2:
-        menu_render(&menu_2);
-        break;
-    case 3:
-        if(progress_changed) {
-            text_progress_init("ANYWAY, WHAT CAN I", "DO FOR YOU?", &frame);
-            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
-        };
-        break;
-    case 9:
-        if(progress_changed) {
-            text_progress_init("SHOP", "", &frame);
+            text_progress_init("EXPLORE", "", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
@@ -396,7 +322,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 10:
         if(progress_changed) {
-            text_progress_init("CUSTOMERS", "", &frame);
+            text_progress_init("THAT'S A BIT ODD", "", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
@@ -404,16 +330,76 @@ static void render(const struct SceneRenderOptions* options) {
             character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
-    case 6:
-        menu_render(&menu_6);
+    case 13:
+        if(progress_changed) {
+            text_progress_init("BETTER CHECK IT", "OUT!", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 4:
+        menu_render(&menu_4);
+        break;
+    case 5:
+        if(progress_changed) {
+            text_progress_init("WHAT IS THIS?", "", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 8:
+        if(progress_changed) {
+            text_progress_init("YOU OPEN THE", "DOOR...", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 11:
+        if(progress_changed) {
+            text_progress_init("IT'S THE SOURCE OF", "THE BUZZING", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 14:
+        if(progress_changed) {
+            text_progress_init("LOOKS LIKE AN OLD", "RADIO", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
+        break;
+    case 15:
+        if(progress_changed) {
+            text_progress_init("I'LL TAKE THIS", "", &frame);
+            character_start_talking(CHARACTER_MODEL_NONE);
+        }
+        if(!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_NONE);
+        };
         break;
 
     }
     progress_changed = 0;
 }
 
-BANKREF(gen_scene_inn_ref)
-struct Scene gen_scene_inn =
+BANKREF(gen_scene_shack_ref)
+struct Scene gen_scene_shack =
 {
     .process_input = process_input,
     .render = render,

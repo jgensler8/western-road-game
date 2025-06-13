@@ -1,0 +1,17 @@
+bank: 4
+dialog:
+- p oh, this must be what
+- p cheri was talking about
+- n you take a step toward the shack
+- n you hear a weird humming sound
+- - - m leave
+    - p no way i am going further
+    - SCENESWAP=scene_road n you depart
+  - - m explore
+    - p that's a bit odd
+    - p better check it out!
+- p what is this?
+- n you open the door...
+- p it's the source of the buzzing
+- p looks like an old radio
+- SWAPSCENE=scene_road p I'll take this

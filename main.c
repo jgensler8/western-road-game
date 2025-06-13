@@ -6,6 +6,7 @@
 #include "scene_road.h"
 #include "scene_inn.h"
 #include "gen_scene_inn.h"
+#include "gen_scene_shack.h"
 #include <gb/hardware.h>
 
 struct Scene *current_scene = NULL;
@@ -38,8 +39,10 @@ void main(void)
     // queue_scene(&scene_road, BANK(scene_road_ref));
     // BANKREF_EXTERN(scene_inn_ref)
     // queue_scene(&scene_inn, BANK(scene_inn_ref));
-    BANKREF_EXTERN(gen_scene_inn_ref);
-    queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
+    // BANKREF_EXTERN(gen_scene_inn_ref);
+    // queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
+    BANKREF_EXTERN(gen_scene_shack_ref);
+    queue_scene(&gen_scene_shack, BANK(gen_scene_shack_ref));
     sound_init();
     clear_bkg();
     SHOW_BKG;
