@@ -18,6 +18,8 @@ void character_init(enum CharacterModel model, uint8_t tile_x, uint8_t tile_y)
     };
     switch (model)
     {
+    case CHARACTER_MODEL_NONE:
+        break;
     case CHARACTER_MODEL_PLAYER:
         break;
     case CHARACTER_MODEL_STORE_OWNER:

@@ -32,8 +32,8 @@ static void process_input(void) {{
 }}
 
 static void render(const struct SceneRenderOptions* options) {{
-    if(options->swapped){{ character_init({character_enum},1,1); progress = 0; progress_changed = 1; }}
-    character_render({character_enum}, CHARACTER_EXPRESSION_DEFAULT);
+    if(options->swapped){{ {character_init_string} progress = 0; progress_changed = 1; }}
+    {character_render_string}
     switch(progress)
     {{
     {render}
@@ -67,11 +67,11 @@ template_chat_input = """    case {progress_step}:
 template_chat_render = """    case {progress_step}:
         if(progress_changed) {{
             text_progress_init("{dialog_0}", "{dialog_1}", &frame);
-            character_start_talking({character_enum});
+            character_start_talking({character_model});
         }}
         if(!text_draw_frame_progress(&frame))
         {{
-            character_stop_talking({character_enum});
+            character_stop_talking({character_model});
         }};
         break;
 """
@@ -82,7 +82,7 @@ struct Menu menu_{progress_step} = {{
         "{menu_0_prompt}",
         "{menu_1_prompt}"
     }},
-    .max_option = 2,
+    .max_option = 1,
 }};
 """
 
@@ -220,6 +220,39 @@ def dialog_map_all_nodes(start: Node):
     return all_nodes
 
 
+def dialog_all_character_options(start: Node):
+    chars = {}
+    for node in dialog_map_all_nodes(start):
+        chars[node.options.character] = None
+    # there are some lines without a character
+    # TODO: warn earlier?
+    return [k for k in chars.keys() if isinstance(k, str)]
+
+
+def get_character_init_string(character_options: List[str], characters: any) -> str:
+    s = ""
+    for co in character_options:
+        character_model = characters["characters"][co].get("character_model", None)
+        if character_model == None:
+            continue
+        if character_model == "CHARACTER_MODEL_NONE":
+            continue
+        s += f"character_init({character_model},1,1);"
+    return s
+
+
+def get_character_render_string(character_options: List[str], characters: any) -> str:
+    s = ""
+    for co in character_options:
+        character_model = characters["characters"][co].get("character_model", None)
+        if character_model == None:
+            continue
+        if character_model == "CHARACTER_MODEL_NONE":
+            continue
+        s += f"character_render({character_model}, CHARACTER_EXPRESSION_DEFAULT);"
+    return s
+
+
 def dialog_map_init_ids(start: Node):
     id: int = 0
     for node in dialog_map_all_nodes(start):
@@ -260,7 +293,7 @@ def get_scene_swap_call(cur: Node) -> str:
     return ""
 
 
-def dialog_render(start: Node) -> (str, str, str):
+def dialog_render(start: Node, characters: any) -> (str, str, str):
     variables = ""
     process_input = ""
     render = ""
@@ -278,15 +311,18 @@ def dialog_render(start: Node) -> (str, str, str):
                 progress_step=cur.id,
                 dialog_0=cur.options.dialog_0,
                 dialog_1=cur.options.dialog_1,
-                character_enum="CHARACTER_MODEL_CHERI",
+                # character_model="CHARACTER_MODEL_CHERI",
+                character_model=characters["characters"][cur.options.character].get(
+                    "character_model", None
+                ),
             )
         elif cur.type == NodeType.MENU:
             # menu
-            (v, pi, r) = dialog_render(cur.child[0])
+            (v, pi, r) = dialog_render(start=cur.child[0], characters=characters)
             variables += v
             process_input += pi
             render += r
-            (v, pi, r) = dialog_render(cur.child[1])
+            (v, pi, r) = dialog_render(start=cur.child[1], characters=characters)
             variables += v
             process_input += pi
             render += r
@@ -310,7 +346,9 @@ def dialog_render(start: Node) -> (str, str, str):
 
 if __name__ == "__main__":
     output_dir = "."
-
+    characters_yml = None
+    with open("characters.yml", "r") as f:
+        characters_yml = yaml.load(f.read(), Loader=yaml.Loader)
     for file in yml_files():
         parsed = None
         print(file)
@@ -319,8 +357,11 @@ if __name__ == "__main__":
         dialog_map = Node()
         dialog_build_map(parent=dialog_map, dialog_arr=parsed["dialog"])
         dialog_map_init_ids(start=dialog_map.child[0])
-        (variables, process_input, render) = dialog_render(start=dialog_map.child[0])
+        (variables, process_input, render) = dialog_render(
+            start=dialog_map.child[0], characters=characters_yml
+        )
         variables += get_scene_swap_extern(start=dialog_map.child[0])
+        character_options = dialog_all_character_options(start=dialog_map.child[0])
         # extract name root
         scene_name = os.path.splitext(file)[0]
         # template h file (use format)
@@ -336,7 +377,12 @@ if __name__ == "__main__":
             variables=variables,
             process_input=process_input,
             render=render,
-            character_enum="CHARACTER_MODEL_CHERI",
+            character_init_string=get_character_init_string(
+                character_options=character_options, characters=characters_yml
+            ),
+            character_render_string=get_character_render_string(
+                character_options=character_options, characters=characters_yml
+            ),
         )
         c_filename = os.path.join(output_dir, f"gen_scene_{scene_name}.c")
         with open(c_filename, "w") as f:

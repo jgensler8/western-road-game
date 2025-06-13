@@ -77,14 +77,14 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
     // owner sp
     animation_init_sprite_sheet(&animation_left_eye.sheet);
-    animation_init_sprite_animation(&animation_left_eye, sp_store_owner_metasprites[0]);
     ANIMATE_TILE_OFFSET(animation_left_eye, 18, 25);
-    animation_init_sprite_animation(&animation_right_eye, sp_store_owner_metasprites[0]);
+    animation_init_sprite_animation(&animation_left_eye, sp_store_owner_metasprites[0]);
     ANIMATE_TILE_OFFSET(animation_right_eye, 40, 25);
-    animation_init_sprite_animation(&animation_mouth_passive, sp_store_owner_metasprites[0]);
+    animation_init_sprite_animation(&animation_right_eye, sp_store_owner_metasprites[0]);
     ANIMATE_TILE_OFFSET(animation_mouth_passive, 30, 48);
-    animation_init_sprite_animation(&animation_mouth_talking, sp_store_owner_metasprites[0]);
+    animation_init_sprite_animation(&animation_mouth_passive, sp_store_owner_metasprites[0]);
     ANIMATE_TILE_OFFSET(animation_mouth_talking, 30, 48);
+    animation_init_sprite_animation(&animation_mouth_talking, sp_store_owner_metasprites[0]);
     talking = 0;
     // TODO: either build custom funcs or hardcode
     struct MemoryAllocation end = {
@@ -97,12 +97,12 @@ static void set_expression(enum CharacterExpression expression)
 }
 static void start_talking(void)
 {
-    talking = 0;
+    talking = 1;
     talking_changed = 1;
 }
 static void stop_talking(void)
 {
-    talking = 1;
+    talking = 0;
     talking_changed = 1;
 }
 static void render(void)

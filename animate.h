@@ -80,7 +80,7 @@ void animation_hide_all(void);
 
 #define PALETTE_UTIL_BG(SPRITE) SPRITE##_PALETTE_COUNT, SPRITE##_palettes
 #define PALETTE_UTIL_SP(SPRITE) SPRITE##_PALETTE_COUNT, SPRITE##_palettes
-void palette_util_reset();
+void palette_util_reset(void);
 // returns the starting palette used
 uint8_t palette_util_init_bkg(uint8_t palette_count, const palette_color_t* palettes);
 // returns the starting palette used

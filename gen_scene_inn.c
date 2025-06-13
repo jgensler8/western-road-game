@@ -10,7 +10,7 @@ struct Menu menu_11 = {
         "SURE IS",
         "YOU BETCHA"
     },
-    .max_option = 2,
+    .max_option = 1,
 };
 
 struct Menu menu_2 = {
@@ -18,7 +18,7 @@ struct Menu menu_2 = {
         "HEADED HOME",
         "ON A VACATION"
     },
-    .max_option = 2,
+    .max_option = 1,
 };
 
 struct Menu menu_6 = {
@@ -26,7 +26,7 @@ struct Menu menu_6 = {
         "SHOP",
         "CUSTOMERS"
     },
-    .max_option = 2,
+    .max_option = 1,
 };
 #include "scene_shop.h"
 BANKREF_EXTERN(scene_shop_ref)
@@ -264,68 +264,68 @@ static void process_input(void) {
 }
 
 static void render(const struct SceneRenderOptions* options) {
-    if(options->swapped){ character_init(CHARACTER_MODEL_CHERI,1,1); progress = 0; progress_changed = 1; }
-    character_render(CHARACTER_MODEL_CHERI, CHARACTER_EXPRESSION_DEFAULT);
+    if(options->swapped){ character_init(CHARACTER_MODEL_STORE_OWNER,1,1); progress = 0; progress_changed = 1; }
+    character_render(CHARACTER_MODEL_STORE_OWNER, CHARACTER_EXPRESSION_DEFAULT);
     switch(progress)
     {
         case 0:
         if(progress_changed) {
             text_progress_init("HELLO THERE", "TRAVELER", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
         };
         break;
     case 1:
         if(progress_changed) {
             text_progress_init("WHERE ARE YOU", "HEADED?", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
         };
         break;
     case 4:
         if(progress_changed) {
             text_progress_init("HEADED HOME", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 7:
         if(progress_changed) {
             text_progress_init("IS THAT SO?", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
         };
         break;
     case 14:
         if(progress_changed) {
             text_progress_init("SURE IS", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 15:
         if(progress_changed) {
             text_progress_init("YOU BETCHA", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 11:
@@ -334,41 +334,41 @@ static void render(const struct SceneRenderOptions* options) {
     case 13:
         if(progress_changed) {
             text_progress_init("WELL, ITS A LONG", "ROAD...", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
         };
         break;
     case 5:
         if(progress_changed) {
             text_progress_init("ON A VACATION", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 8:
         if(progress_changed) {
             text_progress_init("OUT HERE?", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
         };
         break;
     case 12:
         if(progress_changed) {
             text_progress_init("WELL, TO EACH", "THERE OWN", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
         };
         break;
     case 2:
@@ -377,31 +377,31 @@ static void render(const struct SceneRenderOptions* options) {
     case 3:
         if(progress_changed) {
             text_progress_init("ANYWAY, WHAT CAN I", "DO FOR YOU?", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_STORE_OWNER);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_STORE_OWNER);
         };
         break;
     case 9:
         if(progress_changed) {
             text_progress_init("SHOP", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 10:
         if(progress_changed) {
             text_progress_init("CUSTOMERS", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 6:

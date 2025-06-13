@@ -1,8 +1,3 @@
-characters:
-- tag: i
-  name: inn keeper
-- tag: p
-  name: player
 dialog:
 - i hello there traveler
 - i where are you headed?

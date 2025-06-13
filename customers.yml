@@ -1,8 +1,3 @@
-characters:
-- tag: p
-  name: player
-- tag: cr
-  name: cheri
 dialog:
 - cr hey there!
 - cr you must be new around here

@@ -171,128 +171,128 @@ static void process_input(void) {
 }
 
 static void render(const struct SceneRenderOptions* options) {
-    if(options->swapped){ character_init(CHARACTER_MODEL_CHERI,1,1); progress = 0; progress_changed = 1; }
-    character_render(CHARACTER_MODEL_CHERI, CHARACTER_EXPRESSION_DEFAULT);
+    if(options->swapped){  progress = 0; progress_changed = 1; }
+    
     switch(progress)
     {
         case 0:
         if(progress_changed) {
             text_progress_init("YOU WAKE UP", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 1:
         if(progress_changed) {
             text_progress_init("WHAT'S THIS? OH, A", "PIECE OF PAPER", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 2:
         if(progress_changed) {
             text_progress_init("HERE, TAKE THIS", "MONEY", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 3:
         if(progress_changed) {
             text_progress_init("I HAVE A PRESENT", "WAITING FOR YOU", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 4:
         if(progress_changed) {
             text_progress_init("ITS AT THE END OF", "THE PATH", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 5:
         if(progress_changed) {
             text_progress_init("THE END OF THE", "PATH?", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 6:
         if(progress_changed) {
             text_progress_init("BUT, I DON'T EVEN", "KNOW WHERE I AM...", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 7:
         if(progress_changed) {
             text_progress_init("...", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 8:
         if(progress_changed) {
             text_progress_init("IF I DON'T KNOW", "WHY I'M HERE...", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 9:
         if(progress_changed) {
             text_progress_init("THEN I DON'T", "REALLY HAVE MUCH", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 10:
         if(progress_changed) {
             text_progress_init("OF A CHOICE", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 11:
         if(progress_changed) {
             text_progress_init("YOU OPEN THE DOOR", "AND EMBARK", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
 

@@ -1,0 +1,14 @@
+characters:
+  p:
+    character_model: CHARACTER_MODEL_NONE
+    name: player
+  m:
+    character_model: CHARACTER_MODEL_NONE
+    name: menu
+  n:
+    character_model: CHARACTER_MODEL_NONE
+    name: narrator
+  i:
+    character_model: CHARACTER_MODEL_STORE_OWNER
+  cr:
+    character_model: CHARACTER_MODEL_CHERI

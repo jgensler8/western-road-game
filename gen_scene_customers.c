@@ -10,7 +10,7 @@ struct Menu menu_5 = {
         "SURE",
         "NO, I'M FINE"
     },
-    .max_option = 2,
+    .max_option = 1,
 };
 #include "scene_road.h"
 BANKREF_EXTERN(scene_road_ref)
@@ -351,11 +351,11 @@ static void render(const struct SceneRenderOptions* options) {
     case 3:
         if(progress_changed) {
             text_progress_init("NICE TO MEET YOU,", "CHERI", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 4:
@@ -371,11 +371,11 @@ static void render(const struct SceneRenderOptions* options) {
     case 7:
         if(progress_changed) {
             text_progress_init("SURE", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 9:
@@ -441,21 +441,21 @@ static void render(const struct SceneRenderOptions* options) {
     case 21:
         if(progress_changed) {
             text_progress_init("UHM... SURE!", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 8:
         if(progress_changed) {
             text_progress_init("NO, I'M FINE", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 10:
@@ -511,11 +511,11 @@ static void render(const struct SceneRenderOptions* options) {
     case 20:
         if(progress_changed) {
             text_progress_init("UHM... OK...", "", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
     case 5:
@@ -524,11 +524,11 @@ static void render(const struct SceneRenderOptions* options) {
     case 6:
         if(progress_changed) {
             text_progress_init("TIME TO HIT THE", "ROAD", &frame);
-            character_start_talking(CHARACTER_MODEL_CHERI);
+            character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
         {
-            character_stop_talking(CHARACTER_MODEL_CHERI);
+            character_stop_talking(CHARACTER_MODEL_NONE);
         };
         break;
 
