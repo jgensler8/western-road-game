@@ -221,7 +221,7 @@ static void process_input(void) {
     case 15:
         if(joypad_a_pressed)
         {
-            
+            queue_scene(&scene_road, BANK(scene_road_ref));
             if(text_frame_has_progress(&frame) && !frame.fast_forward)
             {
                 frame.fast_forward = 1;

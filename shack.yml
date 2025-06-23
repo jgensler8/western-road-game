@@ -14,4 +14,4 @@ dialog:
 - n you open the door...
 - p it's the source of the buzzing
 - p looks like an old radio
-- SWAPSCENE=scene_road p I'll take this
+- SCENESWAP=scene_road p I'll take this
