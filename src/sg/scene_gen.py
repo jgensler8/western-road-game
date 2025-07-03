@@ -6,9 +6,14 @@ import yaml
 import re
 from enum import Enum
 
+SRC_DIR = "src/sg"
+
 
 def yml_files() -> List[str]:
-    return ["sg_intro.yml", "sg_inn.yml", "sg_customers.yml", "sg_shack.yml"]
+    return [
+        f"{SRC_DIR}/{f}"
+        for f in ["sg_intro.yml", "sg_inn.yml", "sg_customers.yml", "sg_shack.yml"]
+    ]
 
 
 template_h = """
@@ -346,9 +351,9 @@ def dialog_render(start: Node, characters: any) -> (str, str, str):
 
 if __name__ == "__main__":
     default_bank = 9
-    output_dir = "./build"
+    output_dir = "./src/gen/scene"
     characters_yml = None
-    with open("characters.yml", "r") as f:
+    with open(f"{SRC_DIR}/characters.yml", "r") as f:
         characters_yml = yaml.load(f.read(), Loader=yaml.Loader)
     for file in yml_files():
         parsed = None
@@ -364,7 +369,8 @@ if __name__ == "__main__":
         variables += get_scene_swap_extern(start=dialog_map.child[0])
         character_options = dialog_all_character_options(start=dialog_map.child[0])
         # extract name root
-        scene_name = os.path.splitext(file)[0].removeprefix("sg_")
+        filebase = os.path.basename(file)
+        scene_name = os.path.splitext(filebase)[0].removeprefix("sg_")
         # template h file (use format)
         h_content = template_h.format(
             scene_name=scene_name, process_input=process_input, render=render

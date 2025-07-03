@@ -56,7 +56,7 @@ clean:
 	rm -f *.o *.lst *.map *.gb *.ihx *.sym *.cdb *.adb *.asm *.noi *.rst *.rel $(ASSETS)
 
 scene_gen:
-	python scene_gen.py
+	python src/sg/scene_gen.py
 
 $(ASSET_OUT)/lankygitmono.c: $(ASSET_IN)/lankygitmono.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 1
