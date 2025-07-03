@@ -38,7 +38,7 @@ compile.bat: Makefile
 %.gb:	%.o
 	$(LCC) $(LCCFLAGS) -o $@ $<
 
-ASSETS = lankygitmono.c sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c
+ASSETS = lankygitmono.c sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c
 GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c gen_scene_shack.c
 CHARACTERS = character_store_owner.c character_cheri.c character.c
 SCENES = scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_inn.c scene_shop.c $(GENERATED)
@@ -77,6 +77,13 @@ bg_cheri.c: bg_cheri.png
 
 sp_cheri.c: sp_cheri.png
 	$(PNG2ASSET) sp_cheri.png -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 4
+
+bg_veronica.c: bg_veronica.png
+	$(PNG2ASSET) bg_veronica.png -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 4
+
+sp_veronica.c: sp_veronica.png
+	$(PNG2ASSET) sp_veronica.png -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 4
+
 
 # Link file, and write 0x80 at position 0x143 in header
 compo25.gbc: $(OBJS) main.c
