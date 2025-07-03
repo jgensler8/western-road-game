@@ -8,7 +8,7 @@ from enum import Enum
 
 
 def yml_files() -> List[str]:
-    return ["intro.yml", "inn.yml", "customers.yml", "shack.yml"]
+    return ["sg_intro.yml", "sg_inn.yml", "sg_customers.yml", "sg_shack.yml"]
 
 
 template_h = """
@@ -364,7 +364,7 @@ if __name__ == "__main__":
         variables += get_scene_swap_extern(start=dialog_map.child[0])
         character_options = dialog_all_character_options(start=dialog_map.child[0])
         # extract name root
-        scene_name = os.path.splitext(file)[0]
+        scene_name = os.path.splitext(file)[0].removeprefix("sg_")
         # template h file (use format)
         h_content = template_h.format(
             scene_name=scene_name, process_input=process_input, render=render
