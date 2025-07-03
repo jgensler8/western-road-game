@@ -1,8 +1,8 @@
 #pragma bank 0
-#include "types.h"
-#include "rand.h"
+#include <rand.h>
+#include "data.h"
 #include "scene_common.h"
-#include "gen_scene_inn.h"
+#include "gen/scene/gen_scene_inn.h"
 struct State default_state;
 
 void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t tile_start, struct PaletteArgs *args)

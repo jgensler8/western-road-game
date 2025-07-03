@@ -1,7 +1,7 @@
 #pragma bank 2
 #include "scene_road.h"
-#include "bg_road.h"
-#include "sp_cacti.h"
+#include "gen/png2asset/bg_road.h"
+#include "gen/png2asset/sp_cacti.h"
 
 uint8_t cactus_animation_frame;
 static void process_input(void)

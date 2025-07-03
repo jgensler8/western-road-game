@@ -1,12 +1,12 @@
-#include "types.h"
+#include "data.h"
 #include "input.h"
 #include "text.h"
 #include "sound.h"
 #include "scene_start_menu.h"
 #include "scene_road.h"
 #include "scene_inn.h"
-#include "gen_scene_inn.h"
-#include "gen_scene_shack.h"
+#include "gen/scene/gen_scene_inn.h"
+#include "gen/scene/gen_scene_shack.h"
 #include <gb/hardware.h>
 
 struct Scene *current_scene = NULL;

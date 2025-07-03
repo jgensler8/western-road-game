@@ -1,7 +1,7 @@
 #pragma bank 4
 #include "character_cheri.h"
-#include "bg_cheri.h"
-#include "sp_cheri.h"
+#include "gen/png2asset/bg_cheri.h"
+#include "gen/png2asset/sp_cheri.h"
 
 #define SP_CHERI_SHEET ANIMATE_SPRITE_SHEET_COMMON(sp_cheri)
 

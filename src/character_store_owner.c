@@ -1,7 +1,7 @@
 #pragma bank 3
 #include "character_store_owner.h"
-#include "bg_store_owner.h"
-#include "sp_store_owner.h"
+#include "gen/png2asset/bg_store_owner.h"
+#include "gen/png2asset/sp_store_owner.h"
 
 #define SP_STORE_OWNER_SHEET {                    \
     .tiles = sp_store_owner_tiles,                \

@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "sp_store_owner.h": "c",
+        "bg_store_owner.h": "c",
+        "sp_cheri.h": "c",
+        "sp_cacti.h": "c",
+        "gen_scene_shack.h": "c",
+        "types.h": "c",
+        "scene_common.h": "c",
+        "gen_scene_inn.h": "c",
+        "lankygitmono.h": "c",
+        "sframe7.h": "c",
+        "sound.h": "c"
+    }
+}

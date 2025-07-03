@@ -8,4 +8,5 @@
 *.ihx
 *.sav
 *.gbc
-assets/
+assets_3p/
+build/

@@ -2,8 +2,8 @@
 #include "text.h"
 #include <string.h>
 #include <gbdk/platform.h>
-#include "lankygitmono.h"
-#include "sframe7.h"
+#include "gen/png2asset/lankygitmono.h"
+#include "gen/png2asset/sframe7.h"
 #include "sound.h"
 #include "input.h"
 

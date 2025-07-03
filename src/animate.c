@@ -1,5 +1,5 @@
 #pragma bank 0
-#include "types.h"
+#include "data.h"
 #include <gbdk/platform.h>
 #include "animate.h"
 #include <gbdk/emu_debug.h>

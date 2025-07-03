@@ -1,6 +1,6 @@
 #pragma bank 0
 #include <gb/hardware.h>
-#include "hUGEDriver.h"
+#include "3p/hUGEDriver.h"
 
 extern const hUGESong_t single_beep;
 

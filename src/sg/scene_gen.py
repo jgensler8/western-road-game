@@ -346,7 +346,7 @@ def dialog_render(start: Node, characters: any) -> (str, str, str):
 
 if __name__ == "__main__":
     default_bank = 9
-    output_dir = "."
+    output_dir = "./build"
     characters_yml = None
     with open("characters.yml", "r") as f:
         characters_yml = yaml.load(f.read(), Loader=yaml.Loader)
