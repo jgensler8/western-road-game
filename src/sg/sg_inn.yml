@@ -1,6 +1,8 @@
 bank: 3
 dialog:
-- i hello there traveler
+- RENDERIF=default_state.inn_visits==0 i hello there traveler
+- RENDERIF=default_state.inn_visits>0 i we meet again
+# - CODE=default_state.inn_visits+=1 RENDERIF=0 n
 - i where are you headed?
 - - - p headed home
     - i is that so?
@@ -10,6 +12,6 @@ dialog:
   - - p on a vacation
     - i out here?
     - i well, to each there own
-- i anyway, what can i do for you?
+- CODE=default_state.inn_visits+=1 i anyway, what can i do for you?
 - - - SCENESWAP=scene_shop m shop
   - - SCENESWAP=gen_scene_customers m customers

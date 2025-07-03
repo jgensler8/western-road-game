@@ -10,6 +10,8 @@
         "gen_scene_inn.h": "c",
         "lankygitmono.h": "c",
         "sframe7.h": "c",
-        "sound.h": "c"
+        "sound.h": "c",
+        "data.h": "c",
+        "emu_debug.h": "c"
     }
 }

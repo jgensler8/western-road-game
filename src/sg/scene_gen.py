@@ -27,6 +27,7 @@ template_c = """#pragma bank {bank}
 
 static uint8_t progress;
 static uint8_t progress_changed;
+static uint8_t code_ready = 1;
 static struct ProgressableFrame frame;
 {variables}
 
@@ -37,7 +38,7 @@ static void process_input(void) {{
 }}
 
 static void render(const struct SceneRenderOptions* options) {{
-    if(options->swapped){{ {character_init_string} progress = 0; progress_changed = 1; }}
+    if(options->swapped){{ {character_init_string} progress = 0; progress_changed = 1; code_ready = 1; }}
     {character_render_string}
     switch(progress)
     {{
@@ -55,16 +56,24 @@ struct Scene gen_scene_{scene_name} =
 """
 
 template_chat_input = """    case {progress_step}:
-        if(joypad_a_pressed)
-        {{
-            {optional_scene_swap}
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) {{ {code_flag}; code_ready = 0; }}
+        if({render_if_condition}) {{
+            if(joypad_a_pressed)
             {{
-                frame.fast_forward = 1;
-            }} else {{
-                progress = {next_progress_step};
-                progress_changed = 1;
+                {optional_scene_swap}
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {{
+                    frame.fast_forward = 1;
+                }} else {{
+                    progress = {next_progress_step};
+                    progress_changed = 1;
+                    code_ready = 1;
+                }}
             }}
+        }} else {{
+            progress = {next_progress_step};
+            progress_changed = 1;
+            code_ready = 1;
         }}
         break;
 """
@@ -142,7 +151,7 @@ class Node:
         self.id: int = -1
 
 
-dialog_re = re.compile(r"^((?:\w+=\w+\s+)*)(\S+)\s*(.*)$")
+dialog_re = re.compile(r"^((?:\w+=\S+\s+)*)(\S+)\s*(.*)$")
 
 
 def parse_dialog(dialog: str) -> DialogOptions:
@@ -154,7 +163,7 @@ def parse_dialog(dialog: str) -> DialogOptions:
     # print(f"fs:{flag_string}:", f":{m.group(2)}:")
     if flag_string:
         for pair_string in flag_string.strip().split(" "):
-            kv_parts = pair_string.split("=")
+            kv_parts = pair_string.split("=", 1)
             flags[kv_parts[0]] = kv_parts[1]
     character = m.group(2)
     line = m.group(3)
@@ -298,6 +307,14 @@ def get_scene_swap_call(cur: Node) -> str:
     return ""
 
 
+def get_render_if_condition(cur: Node) -> str:
+    return cur.options.flags.get("RENDERIF", "1")
+
+
+def get_code_flag(options: DialogOptions) -> str:
+    return options.flags.get("CODE", "")
+
+
 def dialog_render(start: Node, characters: any) -> (str, str, str):
     variables = ""
     process_input = ""
@@ -311,6 +328,8 @@ def dialog_render(start: Node, characters: any) -> (str, str, str):
                 progress_step=cur.id,
                 next_progress_step=next_progress_step,
                 optional_scene_swap=get_scene_swap_call(cur),
+                render_if_condition=get_render_if_condition(cur),
+                code_flag=get_code_flag(cur.options),
             )
             render += template_chat_render.format(
                 progress_step=cur.id,

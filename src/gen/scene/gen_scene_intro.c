@@ -3,6 +3,7 @@
 
 static uint8_t progress;
 static uint8_t progress_changed;
+static uint8_t code_ready = 1;
 static struct ProgressableFrame frame;
 #include "scene_road.h"
 BANKREF_EXTERN(scene_road_ref)
@@ -11,159 +12,255 @@ BANKREF_EXTERN(scene_road_ref)
 static void process_input(void) {
     switch(progress){
             case 0:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 1;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 1;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 1;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 1:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 2;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 2;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 2;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 2:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 3;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 3;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 3;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 3:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 4;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 4;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 4;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 4:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 5;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 5;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 5;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 5:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 6;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 6;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 6;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 6:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 7;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 7;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 7;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 7:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 8;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 8;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 8;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 8:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 9;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 9;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 9;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 9:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 10;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 10;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 10;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 10:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 11;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 11;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 11;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 11:
-        if(joypad_a_pressed)
-        {
-            queue_scene(&scene_road, BANK(scene_road_ref));
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 254;
-                progress_changed = 1;
+                queue_scene(&scene_road, BANK(scene_road_ref));
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 254;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 254;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
 
@@ -171,7 +268,7 @@ static void process_input(void) {
 }
 
 static void render(const struct SceneRenderOptions* options) {
-    if(options->swapped){  progress = 0; progress_changed = 1; }
+    if(options->swapped){  progress = 0; progress_changed = 1; code_ready = 1; }
     
     switch(progress)
     {

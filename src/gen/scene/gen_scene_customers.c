@@ -3,6 +3,7 @@
 
 static uint8_t progress;
 static uint8_t progress_changed;
+static uint8_t code_ready = 1;
 static struct ProgressableFrame frame;
 
 static struct Menu menu_5 = {
@@ -19,263 +20,423 @@ BANKREF_EXTERN(scene_road_ref)
 static void process_input(void) {
     switch(progress){
             case 0:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 1;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 1;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 1;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 1:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 2;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 2;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 2;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 2:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 3;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 3;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 3;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 3:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 4;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 4;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 4;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 4:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 5;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 5;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 5;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 7:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 9;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 9;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 9;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 9:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 11;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 11;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 11;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 11:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 13;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 13;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 13;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 13:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 15;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 15;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 15;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 15:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 17;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 17;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 17;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 17:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 19;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 19;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 19;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 19:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 21;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 21;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 21;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 21:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 6;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 6;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 6;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 8:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 10;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 10;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 10;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 10:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 12;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 12;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 12;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 12:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 14;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 14;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 14;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 14:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 16;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 16;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 16;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 16:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 18;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 18;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 18;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 18:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 20;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 20;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 20;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 20:
-        if(joypad_a_pressed)
-        {
-            
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 6;
-                progress_changed = 1;
+                
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 6;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 6;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
     case 5:
@@ -297,16 +458,24 @@ static void process_input(void) {
         }
         break;
     case 6:
-        if(joypad_a_pressed)
-        {
-            queue_scene(&scene_road, BANK(scene_road_ref));
-            if(text_frame_has_progress(&frame) && !frame.fast_forward)
+        if(code_ready != 0) { ; code_ready = 0; }
+        if(1) {
+            if(joypad_a_pressed)
             {
-                frame.fast_forward = 1;
-            } else {
-                progress = 254;
-                progress_changed = 1;
+                queue_scene(&scene_road, BANK(scene_road_ref));
+                if(text_frame_has_progress(&frame) && !frame.fast_forward)
+                {
+                    frame.fast_forward = 1;
+                } else {
+                    progress = 254;
+                    progress_changed = 1;
+                    code_ready = 1;
+                }
             }
+        } else {
+            progress = 254;
+            progress_changed = 1;
+            code_ready = 1;
         }
         break;
 
@@ -314,7 +483,7 @@ static void process_input(void) {
 }
 
 static void render(const struct SceneRenderOptions* options) {
-    if(options->swapped){ character_init(CHARACTER_MODEL_CHERI,1,1); progress = 0; progress_changed = 1; }
+    if(options->swapped){ character_init(CHARACTER_MODEL_CHERI,1,1); progress = 0; progress_changed = 1; code_ready = 1; }
     character_render(CHARACTER_MODEL_CHERI, CHARACTER_EXPRESSION_DEFAULT);
     switch(progress)
     {
