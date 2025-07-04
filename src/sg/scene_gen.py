@@ -58,6 +58,11 @@ struct Scene gen_scene_{scene_name} =
 template_chat_input = """    case {progress_step}:
         if(code_ready != 0) {{ {code_flag}; code_ready = 0; }}
         if({render_if_condition}) {{
+            if({jump_enabled}){{
+                progress = {jump_progress_step};
+                progress_changed = 1;
+                code_ready = 1;
+            }}
             if(joypad_a_pressed)
             {{
                 {optional_scene_swap}
@@ -315,6 +320,23 @@ def get_code_flag(options: DialogOptions) -> str:
     return options.flags.get("CODE", "")
 
 
+def get_jump_enabled(cur: Node) -> str:
+    if cur.options.flags.get("JUMP", None):
+        return "1"
+    return "0"
+
+
+def get_progress_for_label(cur: Node) -> int:
+    label = cur.options.flags.get("JUMP", None)
+    if not label:
+        return 254
+    for node in dialog_map_all_nodes(cur):
+        if node.options.flags.get("LABEL", None) == label:
+            print(f"found {node.id}")
+            return node.id
+    raise ValueError(f"jump specified but label not found: {label}")
+
+
 def dialog_render(start: Node, characters: any) -> (str, str, str):
     variables = ""
     process_input = ""
@@ -330,6 +352,8 @@ def dialog_render(start: Node, characters: any) -> (str, str, str):
                 optional_scene_swap=get_scene_swap_call(cur),
                 render_if_condition=get_render_if_condition(cur),
                 code_flag=get_code_flag(cur.options),
+                jump_enabled=get_jump_enabled(cur),
+                jump_progress_step=get_progress_for_label(cur),
             )
             render += template_chat_render.format(
                 progress_step=cur.id,

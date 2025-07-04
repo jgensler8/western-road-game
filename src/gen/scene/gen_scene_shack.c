@@ -22,6 +22,11 @@ static void process_input(void) {
             case 0:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -43,6 +48,11 @@ static void process_input(void) {
     case 1:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -64,6 +74,11 @@ static void process_input(void) {
     case 2:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -85,6 +100,11 @@ static void process_input(void) {
     case 3:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -106,6 +126,11 @@ static void process_input(void) {
     case 6:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -127,6 +152,11 @@ static void process_input(void) {
     case 9:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -148,6 +178,11 @@ static void process_input(void) {
     case 12:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 queue_scene(&scene_road, BANK(scene_road_ref));
@@ -169,6 +204,11 @@ static void process_input(void) {
     case 7:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -190,6 +230,11 @@ static void process_input(void) {
     case 10:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -211,6 +256,11 @@ static void process_input(void) {
     case 13:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -250,6 +300,11 @@ static void process_input(void) {
     case 5:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -271,6 +326,11 @@ static void process_input(void) {
     case 8:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -292,6 +352,11 @@ static void process_input(void) {
     case 11:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -313,6 +378,11 @@ static void process_input(void) {
     case 14:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 
@@ -334,6 +404,11 @@ static void process_input(void) {
     case 15:
         if(code_ready != 0) { ; code_ready = 0; }
         if(1) {
+            if(0){
+                progress = 254;
+                progress_changed = 1;
+                code_ready = 1;
+            }
             if(joypad_a_pressed)
             {
                 queue_scene(&scene_road, BANK(scene_road_ref));
