@@ -69,7 +69,7 @@ struct State
     uint16_t stats[STAT_COUNT];
     struct StatCalculation calculations[MAX_STAT_CALCULATIONS];
     enum RoadEvent next_event;
-    uint8_t next_event_steps;
+    uint16_t next_event_steps;
     uint16_t inn_visits;
 };
 extern struct State default_state;

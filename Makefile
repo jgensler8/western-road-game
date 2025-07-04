@@ -54,7 +54,8 @@ ASSET_IN = assets
 
 clean:
 	# rm -f *.o *.lst *.map *.gb *.ihx *.sym *.cdb *.adb *.asm *.noi *.rst *.rel $(ASSETS)
-	rmdir build
+	# rmdir build
+	@powershell.exe Remove-Item -Force -Recurse -Confirm build
 	mkdir build
 
 scene_gen:
