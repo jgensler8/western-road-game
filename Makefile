@@ -53,7 +53,9 @@ ASSET_OUT = src/gen/png2asset
 ASSET_IN = assets
 
 clean:
-	rm -f *.o *.lst *.map *.gb *.ihx *.sym *.cdb *.adb *.asm *.noi *.rst *.rel $(ASSETS)
+	# rm -f *.o *.lst *.map *.gb *.ihx *.sym *.cdb *.adb *.asm *.noi *.rst *.rel $(ASSETS)
+	rmdir build
+	mkdir build
 
 scene_gen:
 	python src/sg/scene_gen.py

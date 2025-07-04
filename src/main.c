@@ -33,7 +33,7 @@ void main(void)
         .change = STAT_CHANGE_INC,
     };
     default_state.calculations[0] = default_calculation;
-    default_state.inn_visits = 10;
+    default_state.inn_visits = 0;
     // BANKREF_EXTERN(scene_title_ref)
     // queue_scene(&scene_title, BANK(scene_title_ref));
     BANKREF_EXTERN(scene_road_ref)
@@ -100,10 +100,10 @@ void main(void)
         if (current_scene)
         {
             wait_vbl_done();
-            EMU_PROFILE_BEGIN("render_s:%TOTALCLKS%:")
+            // EMU_PROFILE_BEGIN("render_s:%TOTALCLKS%:")
             current_scene->render(&options);
             palette_util_maybe_fade(&options);
-            EMU_PROFILE_END("render_e:%TOTALCLKS%:")
+            // EMU_PROFILE_END("render_e:%TOTALCLKS%:")
             // unset swapped
             options.swapped = 0;
         }

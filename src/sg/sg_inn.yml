@@ -2,7 +2,6 @@ bank: 3
 dialog:
 - RENDERIF=default_state.inn_visits==0 i hello there traveler
 - RENDERIF=default_state.inn_visits>0 i we meet again
-# - CODE=default_state.inn_visits+=1 RENDERIF=0 n
 - i where are you headed?
 - - - p headed home
     - i is that so?
