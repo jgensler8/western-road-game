@@ -5,6 +5,7 @@
 #include "scene_start_menu.h"
 #include "scene_road.h"
 #include "scene_inn.h"
+#include "scene_shop.h"
 #include "gen/scene/gen_scene_inn.h"
 #include "gen/scene/gen_scene_shack.h"
 #include <gb/hardware.h>
@@ -36,14 +37,16 @@ void main(void)
     default_state.inn_visits = 0;
     // BANKREF_EXTERN(scene_title_ref)
     // queue_scene(&scene_title, BANK(scene_title_ref));
-    BANKREF_EXTERN(scene_road_ref)
-    queue_scene(&scene_road, BANK(scene_road_ref));
+    // BANKREF_EXTERN(scene_road_ref)
+    // queue_scene(&scene_road, BANK(scene_road_ref));
     // BANKREF_EXTERN(scene_inn_ref)
     // queue_scene(&scene_inn, BANK(scene_inn_ref));
     // BANKREF_EXTERN(gen_scene_inn_ref);
     // queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
     // BANKREF_EXTERN(gen_scene_shack_ref);
     // queue_scene(&gen_scene_shack, BANK(gen_scene_shack_ref));
+    BANKREF_EXTERN(scene_shop_ref);
+    queue_scene(&scene_shop, BANK(scene_shop_ref));
     sound_init();
     clear_bkg();
     SHOW_BKG;

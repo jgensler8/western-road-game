@@ -12,6 +12,8 @@
         "sframe7.h": "c",
         "sound.h": "c",
         "data.h": "c",
-        "emu_debug.h": "c"
+        "emu_debug.h": "c",
+        "platform.h": "c",
+        "scene_shop.h": "c"
     }
 }

@@ -3,6 +3,8 @@
 
 void text_init(void);
 
+void xy_printf(uint8_t screen_x, uint8_t screen_y, char *word);
+
 // frames
 
 void clear_bkg(void);
