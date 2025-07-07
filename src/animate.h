@@ -47,8 +47,10 @@ struct SpriteAnimationState
     enum AnimationDirection direction;
 };
 #define ANIMATION_MAX_FRAMES 8
-#define ANIMATION_MAX_HEIGHT 2
-#define ANIMATION_MAX_WIDTH 2
+#define ANIMATION_MAX_HEIGHT 4
+#define ANIMATION_MAX_WIDTH 4
+// #define ANIMATION_MAX_HEIGHT 2
+// #define ANIMATION_MAX_WIDTH 2
 struct SpriteAnimation
 {
     struct SpriteSheet sheet;
