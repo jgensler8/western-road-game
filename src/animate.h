@@ -72,10 +72,12 @@ struct SpriteAnimation
 #define ANIMATE_DEFAULT_BLINK_TIMINGS {128, 4, 4}
 #define ANIMATE_DEFAULT_TALK_TIMINGS {10, 1, 2}
 void animation_init_sprite_sheet(struct SpriteSheet *sheet);
+void animation_move_sprite(struct SpriteAnimation *ani);
 void animation_init_sprite_animation(struct SpriteAnimation *ani, const metasprite_t *metasprite);
 void maybe_animate(struct SpriteAnimation *ani);
 void animation_show(struct SpriteAnimation *ani);
 void animation_hide(struct SpriteAnimation *ani);
+void animation_hide_range(uint8_t start, uint8_t end);
 void animation_hide_all(void);
 
 #define PALETTE_UTIL_BG(SPRITE) SPRITE##_PALETTE_COUNT, SPRITE##_palettes

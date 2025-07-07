@@ -64,18 +64,18 @@ static void process_input_shop(void)
 }
 static void process_input_purchase_confirm(void)
 {
-    if (menu_process_input(&confirm_purchase_menu))
+    if (menu_process_input(&confirm_purchase_menu) || joypad_b_pressed)
     {
         switch (confirm_purchase_menu.selection)
         {
         case 0:
             // do the purchase
-            set_focus(SHOP);
             break;
         case 1:
-            set_focus(SHOP);
             break;
         }
+        set_focus(SHOP);
+        confirm_purchase_menu.selection = 0;
     }
 }
 static void process_input_leave_confirm(void)
@@ -91,6 +91,10 @@ static void process_input_leave_confirm(void)
             set_focus(SHOP);
             break;
         }
+    }
+    if(joypad_b_pressed)
+    {
+        set_focus(SHOP);
     }
 }
 static void process_input(void)

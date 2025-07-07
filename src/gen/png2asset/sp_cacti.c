@@ -9,7 +9,7 @@
 BANKREF(sp_cacti)
 
 const palette_color_t sp_cacti_palettes[4] = {
-	RGB8(  0,  0,  0), RGB8(255,173, 99), RGB8(  0,  0,  0), RGB8(  0,  0,  0)
+	RGB8(255,255,255), RGB8(255,173, 99), RGB8(  0,  0,  0), RGB8(  0,  0,  0)
 	
 };
 

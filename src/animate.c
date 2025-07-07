@@ -76,7 +76,7 @@ static inline void animate(struct SpriteAnimation *ani)
     switch (ani->style)
     {
     case ANIMATION_STYLE_NONE:
-        // alread rendered in init
+        // already rendered in init
         return;
     case ANIMATION_STYLE_ONCE:
         if (ani->state.frame == ani->sheet.sheet_frames)
@@ -146,12 +146,16 @@ void animation_hide(struct SpriteAnimation *ani)
         hide_sprite(sp_i);
     }
 }
-void animation_hide_all(void)
+void animation_hide_range(uint8_t start, uint8_t end)
 {
-    for (uint8_t sp_i = 0; sp_i < 32; sp_i++)
+    for (uint8_t sp_i = start; sp_i < end; sp_i++)
     {
         hide_sprite(sp_i);
     }
+}
+void animation_hide_all(void)
+{
+    animation_hide_range(0, 32);
 }
 
 // Helper macro to extract R, G, B components (5 bits each)
