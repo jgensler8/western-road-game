@@ -4,8 +4,10 @@
 #include "gen/png2asset/sp_cheri.h"
 
 #define SP_CHERI_SHEET ANIMATE_SPRITE_SHEET_COMMON(sp_cheri)
-
-static struct SpriteAnimation left_eye = {
+#define CHERI_FRAMES(tile_x, tile_y) ANI_FRAMES(0, (4 * 3), 4, tile_x, tile_y)
+#define SP_CHERI_X 8
+#define SP_CHERI_Y 8
+static const struct SpriteAnimationConst animation_left_eye_const = {
     .sheet = SP_CHERI_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 0,
@@ -15,9 +17,15 @@ static struct SpriteAnimation left_eye = {
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_BLINK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
+    .screen_x = SP_CHERI_X + 19,
+    .screen_y = SP_CHERI_Y + 22,
+    .frame_tiles = CHERI_FRAMES(0,0),
+};
+static struct SpriteAnimation left_eye = {
+    .con = &animation_left_eye_const,
     .state.frame = 0,
 };
-static struct SpriteAnimation right_eye = {
+static const struct SpriteAnimationConst animation_right_eye_const = {
     .sheet = SP_CHERI_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 0,
@@ -27,9 +35,15 @@ static struct SpriteAnimation right_eye = {
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_BLINK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
+    .screen_x = SP_CHERI_X + 40,
+    .screen_y = SP_CHERI_Y + 22,
+    .frame_tiles = CHERI_FRAMES(0,0),
+};
+static struct SpriteAnimation right_eye = {
+    .con = &animation_right_eye_const,
     .state.frame = 0,
 };
-static struct SpriteAnimation mouth_passive = {
+static const struct SpriteAnimationConst animation_mouth_passive_const = {
     .sheet = SP_CHERI_SHEET,
     .sheet_tile_x = 1,
     .sheet_tile_y = 2,
@@ -37,9 +51,15 @@ static struct SpriteAnimation mouth_passive = {
     .tile_height = 1,
     .sp_index_start = 8,
     .style = ANIMATION_STYLE_NONE,
+    .screen_x = SP_CHERI_X + 33,
+    .screen_y = SP_CHERI_Y + 45,
+    .frame_tiles = CHERI_FRAMES(1,2),
+};
+static struct SpriteAnimation mouth_passive = {
+    .con = &animation_mouth_passive_const,
     .state.frame = 0,
 };
-static struct SpriteAnimation mouth_talking = {
+static const struct SpriteAnimationConst animation_mouth_talking_const = {
     .sheet = SP_CHERI_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 2,
@@ -49,6 +69,12 @@ static struct SpriteAnimation mouth_talking = {
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_TALK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
+    .screen_x = SP_CHERI_X + 33,
+    .screen_y = SP_CHERI_Y + 45,
+    .frame_tiles = CHERI_FRAMES(0,2),
+};
+static struct SpriteAnimation mouth_talking = {
+    .con = &animation_mouth_talking_const,
     .state.frame = 0,
 };
 
@@ -59,10 +85,8 @@ static uint8_t talking_changed;
 static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_x, uint8_t tile_y)
 {
     // palette
-    // set_bkg_palette(start.bg_pal_start, bg_cheri_PALETTE_COUNT, bg_cheri_palettes);
     uint8_t pal_start = palette_util_init_bkg(PALETTE_UTIL_BG(bg_cheri));
     // bg
-    // set_bkg_data(start.bg_start, bg_cheri_TILE_COUNT, bg_cheri_tiles);
     set_bkg_data(70, bg_cheri_TILE_COUNT, bg_cheri_tiles);
     struct PaletteArgs pargs = {
         .metasprites = BG_CHERI_METASPRITE,
@@ -70,14 +94,10 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     };
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
     // sprite
-    animation_init_sprite_sheet(&left_eye.sheet);
-    ANIMATE_TILE_OFFSET(left_eye, 19, 22)
+    animation_init_sprite_sheet(&left_eye.con->sheet);
     animation_init_sprite_animation(&left_eye, SP_CHERI_METASPRITE);
-    ANIMATE_TILE_OFFSET(right_eye, 40, 22)
     animation_init_sprite_animation(&right_eye, SP_CHERI_METASPRITE);
-    ANIMATE_TILE_OFFSET(mouth_passive, 33, 45)
     animation_init_sprite_animation(&mouth_passive, SP_CHERI_METASPRITE);
-    ANIMATE_TILE_OFFSET(mouth_talking, 33, 45)
     animation_init_sprite_animation(&mouth_talking, SP_CHERI_METASPRITE);
     talking = 0;
     talking_changed = 1;

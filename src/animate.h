@@ -51,7 +51,7 @@ struct SpriteAnimationState
 #define ANIMATION_MAX_WIDTH 4
 // #define ANIMATION_MAX_HEIGHT 2
 // #define ANIMATION_MAX_WIDTH 2
-struct SpriteAnimation
+struct SpriteAnimationConst
 {
     struct SpriteSheet sheet;
     // these are tile units
@@ -64,8 +64,45 @@ struct SpriteAnimation
     uint8_t screen_y;
     uint8_t timings_len;
     uint8_t timings[ANIMATION_MAX_FRAMES];
-    uint8_t frame_tiles[ANIMATION_MAX_FRAMES][ANIMATION_MAX_HEIGHT][ANIMATION_MAX_WIDTH];
     enum AnimationStyle style;
+    uint8_t frame_tiles[ANIMATION_MAX_FRAMES][ANIMATION_MAX_HEIGHT][ANIMATION_MAX_WIDTH];
+};
+#define ANI_FRAME_TILE(tile_start, sheet_width_tiles, sheet_frame_width_tiles, x, y, frame) ((((y) * sheet_width_tiles) + (x)) + (frame * sheet_frame_width_tiles) + tile_start)
+#define ANI_FRAME(ts, swt, sfwt, tile_x, tile_y, frame) {             \
+    {                                                                 \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 0, tile_y + 0, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 1, tile_y + 0, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 2, tile_y + 0, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 3, tile_y + 0, frame), \
+    },                                                                \
+    {                                                                 \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 0, tile_y + 1, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 1, tile_y + 1, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 2, tile_y + 1, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 3, tile_y + 1, frame), \
+    },                                                                \
+    {                                                                 \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 0, tile_y + 2, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 1, tile_y + 2, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 2, tile_y + 2, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 3, tile_y + 2, frame), \
+    },                                                                \
+    {                                                                 \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 0, tile_y + 3, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 1, tile_y + 3, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 2, tile_y + 3, frame), \
+        ANI_FRAME_TILE(ts, swt, sfwt, tile_x + 3, tile_y + 3, frame), \
+    },                                                                \
+}
+#define ANI_FRAMES(tile_start, sheet_width_tiles, sheet_frame_width_tiles, tile_x, tile_y) { \
+    ANI_FRAME(tile_start, sheet_width_tiles, sheet_frame_width_tiles, tile_x, tile_y, 0),    \
+    ANI_FRAME(tile_start, sheet_width_tiles, sheet_frame_width_tiles, tile_x, tile_y, 1),    \
+    ANI_FRAME(tile_start, sheet_width_tiles, sheet_frame_width_tiles, tile_x, tile_y, 2),    \
+    ANI_FRAME(tile_start, sheet_width_tiles, sheet_frame_width_tiles, tile_x, tile_y, 3),    \
+}
+struct SpriteAnimation
+{
+    const struct SpriteAnimationConst *con;
     struct SpriteAnimationState state;
 };
 
@@ -75,7 +112,7 @@ struct SpriteAnimation
     animation.screen_y = tile_y * 8 + offset_y;
 #define ANIMATE_DEFAULT_BLINK_TIMINGS {128, 4, 4}
 #define ANIMATE_DEFAULT_TALK_TIMINGS {10, 1, 2}
-void animation_init_sprite_sheet(struct SpriteSheet *sheet);
+void animation_init_sprite_sheet(const struct SpriteSheet *sheet);
 void animation_move_sprite(struct SpriteAnimation *ani);
 void animation_init_sprite_animation(struct SpriteAnimation *ani, const metasprite_t *metasprite);
 void maybe_animate(struct SpriteAnimation *ani);
@@ -89,6 +126,5 @@ void animation_hide_all(void);
 void palette_util_reset(void);
 // returns the starting palette used
 uint8_t palette_util_init_bkg(uint8_t palette_count, const palette_color_t *palettes);
-// returns the starting palette used
-uint8_t palette_util_init_sp(uint8_t palette_count, const palette_color_t *palettes);
+void palette_util_init_sp(const uint8_t palette_start, const uint8_t palette_count, const palette_color_t *palettes);
 void palette_util_maybe_fade(struct SceneRenderOptions *options);

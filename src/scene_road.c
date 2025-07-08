@@ -6,21 +6,13 @@
 #include "gen/png2asset/sp_inn.h"
 #include "gen/png2asset/sp_shack.h"
 
-static enum RoadSpriteIndexing {
-    // layout sprites in contiguous sprite indices; load once and move after
-    ROAD_SPRITE_INDEXING_SEQUENTIAL,
-    // layout sprites with overlapping sprite indivies; reload each frame
-    ROAD_SPRITE_INDEXING_OVERLAP,
-};
-
 #define ROAD_SPRITE_MAX_FRAMES 4
 static struct RoadSprite
 {
-    uint8_t frame;
     struct SpriteAnimation frames[ROAD_SPRITE_MAX_FRAMES];
     const metasprite_t *metasprite;
-    enum RoadSpriteIndexing indexing;
     uint8_t sp_start;
+    uint8_t frame;
     uint8_t last_render;
 };
 
@@ -28,48 +20,17 @@ static void render_road_sprite(struct RoadSprite *rs)
 {
     if (rs->last_render != rs->frame)
     {
-        if (rs->indexing == ROAD_SPRITE_INDEXING_SEQUENTIAL)
-        {
-
-            uint8_t max_frames = rs->frames[3].sp_index_start + rs->frames[3].tile_height * rs->frames[3].tile_width;
-            animation_hide_range(rs->frames[0].sp_index_start, max_frames);
-            animation_move_sprite(&rs->frames[rs->frame]);
-        }
-        else if (rs->indexing == ROAD_SPRITE_INDEXING_OVERLAP)
-        {
-            // given that i am overlapping road events with the sp_cacti, always clear 8 sprites even if we only use 4
-            uint8_t max_frames = rs->frames[0].sp_index_start + 8;
-            animation_hide_range(rs->frames[3].sp_index_start, max_frames);
-            animation_init_sprite_animation(&rs->frames[rs->frame], rs->metasprite);
-        }
+        // given that i am overlapping road events with the sp_cacti, always clear 8 sprites even if we only use 4
+        uint8_t max_frames = rs->frames[0].con->sp_index_start + 8;
+        animation_hide_range(rs->frames[3].con->sp_index_start, max_frames);
+        animation_init_sprite_animation(&rs->frames[rs->frame], rs->metasprite);
         rs->last_render = rs->frame;
     }
 }
 
 static void init_road_sprite(struct RoadSprite *rs)
 {
-    animation_init_sprite_sheet(&rs->frames[0].sheet);
-    for (uint8_t frame = 0; frame < ROAD_SPRITE_MAX_FRAMES; frame++)
-    {
-        // animation_init_sprite_sheet sets the palette_start, copy to other sheets
-        rs->frames[frame].sheet.palette_start = rs->frames[0].sheet.palette_start;
-        if (rs->indexing == ROAD_SPRITE_INDEXING_SEQUENTIAL)
-        {
-            if (frame == 0)
-            {
-                rs->frames[frame].sp_index_start = rs->sp_start;
-            }
-            else
-            {
-                rs->frames[frame].sp_index_start = rs->frames[frame - 1].sp_index_start + rs->frames[frame - 1].tile_height * rs->frames[frame - 1].tile_width;
-            }
-            animation_init_sprite_animation(&rs->frames[frame], rs->metasprite);
-        }
-        else if (rs->indexing == ROAD_SPRITE_INDEXING_OVERLAP)
-        {
-            rs->frames[frame].sp_index_start = rs->sp_start;
-        }
-    }
+    animation_init_sprite_sheet(&rs->frames[0].con->sheet);
     // force render by setting an impossible last_render
     rs->last_render = ROAD_SPRITE_MAX_FRAMES + 1;
     rs->frame = 0;
@@ -88,48 +49,60 @@ static void init_road_sprite(struct RoadSprite *rs)
     .sheet_width_tiles = sp_cacti_WIDTH / 8,       \
     .palettes = sp_cacti_palettes,                 \
     .palettes_len = sp_cacti_PALETTE_COUNT,        \
+    .palette_start = 0,                            \
 }
 
+static const struct SpriteAnimationConst rs_cacti_frame_0 = {
+    .sheet = SP_CACTI_SHEET,
+    .sheet_tile_x = 3,
+    .sheet_tile_y = 1,
+    .tile_width = 1,
+    .tile_height = 1,
+    .screen_x = 36,
+    .screen_y = 22,
+    .sp_index_start = 0,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(0), 4, 4, 3, 1),
+};
+static const struct SpriteAnimationConst rs_cacti_frame_1 = {
+    .sheet = SP_CACTI_SHEET,
+    .sheet_tile_x = 3,
+    .sheet_tile_y = 2,
+    .tile_width = 1,
+    .tile_height = 2,
+    .screen_x = 34,
+    .screen_y = 28,
+    .sp_index_start = 0,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(0), 4, 4, 3, 2),
+};
+static const struct SpriteAnimationConst rs_cacti_frame_2 = {
+    .sheet = SP_CACTI_SHEET,
+    .sheet_tile_x = 2,
+    .sheet_tile_y = 1,
+    .tile_width = 1,
+    .tile_height = 3,
+    .screen_x = 22,
+    .screen_y = 50,
+    .sp_index_start = 0,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(0), 4, 4, 2, 1),
+};
+static const struct SpriteAnimationConst rs_cacti_frame_3 = {
+    .sheet = SP_CACTI_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 0,
+    .tile_width = 2,
+    .tile_height = 4,
+    .screen_x = 14,
+    .screen_y = 60,
+    .sp_index_start = 0,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(0), 4, 4, 0, 0),
+};
 struct RoadSprite rs_cacti = {
     .frames = {
-        {
-            .sheet = SP_CACTI_SHEET,
-            .sheet_tile_x = 3,
-            .sheet_tile_y = 1,
-            .tile_width = 1,
-            .tile_height = 1,
-            .screen_x = 36,
-            .screen_y = 22,
-        },
-        {
-            .sheet = SP_CACTI_SHEET,
-            .sheet_tile_x = 3,
-            .sheet_tile_y = 2,
-            .tile_width = 1,
-            .tile_height = 2,
-            .screen_x = 34,
-            .screen_y = 28,
-        },
-        {
-            .sheet = SP_CACTI_SHEET,
-            .sheet_tile_x = 2,
-            .sheet_tile_y = 1,
-            .tile_width = 1,
-            .tile_height = 3,
-            .screen_x = 22,
-            .screen_y = 50,
-        },
-        {
-            .sheet = SP_CACTI_SHEET,
-            .sheet_tile_x = 0,
-            .sheet_tile_y = 0,
-            .tile_width = 2,
-            .tile_height = 4,
-            .screen_x = 14,
-            .screen_y = 60,
-        },
+        {.con = &rs_cacti_frame_0},
+        {.con = &rs_cacti_frame_1},
+        {.con = &rs_cacti_frame_2},
+        {.con = &rs_cacti_frame_3},
     },
-    .indexing = ROAD_SPRITE_INDEXING_OVERLAP,
     .sp_start = ROAD_EVENT_LEFT_SP_START,
 };
 
@@ -142,53 +115,65 @@ struct RoadSprite rs_cacti = {
     .sheet_width_tiles = sp_rock_WIDTH / 8,       \
     .palettes = sp_rock_palettes,                 \
     .palettes_len = sp_rock_PALETTE_COUNT,        \
+    .palette_start = 1,                           \
 }
 
+static const struct SpriteAnimationConst rs_rock_frame_0 = {
+    .sheet = SP_ROCK_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 0,
+    .tile_width = 1,
+    .tile_height = 1,
+    .screen_x = 88,
+    .screen_y = 24,
+    .sp_index_start = 8,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(1), 4, 4, 0, 0),
+};
+static const struct SpriteAnimationConst rs_rock_frame_1 = {
+    .sheet = SP_ROCK_SHEET,
+    .sheet_tile_x = 2,
+    .sheet_tile_y = 0,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 94,
+    .screen_y = 28,
+    .sp_index_start = 8,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(1), 4, 4, 2, 0),
+};
+static const struct SpriteAnimationConst rs_rock_frame_2 = {
+    .sheet = SP_ROCK_SHEET,
+    .sheet_tile_x = 2,
+    .sheet_tile_y = 2,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 94,
+    .screen_y = 40,
+    .sp_index_start = 8,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(1), 4, 4, 2, 2),
+};
+static const struct SpriteAnimationConst rs_rock_frame_3 = {
+    .sheet = SP_ROCK_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 2,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 104,
+    .screen_y = 60,
+    .sp_index_start = 8,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(1), 4, 4, 0, 2),
+};
 static struct RoadSprite rs_rock = {
     .frames = {
-        {
-            .sheet = SP_ROCK_SHEET,
-            .sheet_tile_x = 0,
-            .sheet_tile_y = 0,
-            .tile_width = 1,
-            .tile_height = 1,
-            .screen_x = 88,
-            .screen_y = 24,
-        },
-        {
-            .sheet = SP_ROCK_SHEET,
-            .sheet_tile_x = 2,
-            .sheet_tile_y = 0,
-            .tile_width = 2,
-            .tile_height = 2,
-            .screen_x = 94,
-            .screen_y = 28,
-        },
-        {
-            .sheet = SP_ROCK_SHEET,
-            .sheet_tile_x = 2,
-            .sheet_tile_y = 2,
-            .tile_width = 2,
-            .tile_height = 2,
-            .screen_x = 94,
-            .screen_y = 40,
-        },
-        {
-            .sheet = SP_ROCK_SHEET,
-            .sheet_tile_x = 0,
-            .sheet_tile_y = 2,
-            .tile_width = 2,
-            .tile_height = 2,
-            .screen_x = 104,
-            .screen_y = 60,
-        },
+        {.con = &rs_rock_frame_0},
+        {.con = &rs_rock_frame_1},
+        {.con = &rs_rock_frame_2},
+        {.con = &rs_rock_frame_3},
     },
-    .indexing = ROAD_SPRITE_INDEXING_OVERLAP,
     .sp_start = ROAD_EVENT_RIGHT_SP_START,
 };
 
 #define SP_EVENT_SHEET_TILES 16
-#define SP_EVENT_SLOT SHEET_SLOT(3)
+#define SP_EVENT_SLOT SHEET_SLOT(2)
 
 #define SP_INN_SHEET {                           \
     .tiles = sp_inn_tiles,                       \
@@ -199,6 +184,7 @@ static struct RoadSprite rs_rock = {
     .sheet_width_tiles = sp_inn_WIDTH / 8,       \
     .palettes = sp_inn_palettes,                 \
     .palettes_len = sp_inn_PALETTE_COUNT,        \
+    .palette_start = 2,                          \
 }
 
 #define SP_SHACK_SHEET {                           \
@@ -210,9 +196,98 @@ static struct RoadSprite rs_rock = {
     .sheet_width_tiles = sp_shack_WIDTH / 8,       \
     .palettes = sp_shack_palettes,                 \
     .palettes_len = sp_shack_PALETTE_COUNT,        \
+    .palette_start = 2,                            \
 }
 
 #define ROAD_EVENT_SP_START 16
+static const struct SpriteAnimationConst rs_inn_frame_0 = {
+    .sheet = SP_INN_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 0,
+    .tile_width = 1,
+    .tile_height = 1,
+    .screen_x = 36,
+    .screen_y = 22,
+    .sp_index_start = ROAD_EVENT_SP_START,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
+};
+static const struct SpriteAnimationConst rs_inn_frame_1 = {
+    .sheet = SP_INN_SHEET,
+    .sheet_tile_x = 2,
+    .sheet_tile_y = 0,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 34,
+    .screen_y = 28,
+    .sp_index_start = ROAD_EVENT_SP_START,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 2, 0),
+};
+static const struct SpriteAnimationConst rs_inn_frame_2 = {
+    .sheet = SP_INN_SHEET,
+    .sheet_tile_x = 2,
+    .sheet_tile_y = 2,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 26,
+    .screen_y = 34,
+    .sp_index_start = ROAD_EVENT_SP_START,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 2, 2),
+};
+static const struct SpriteAnimationConst rs_inn_frame_3 = {
+    .sheet = SP_INN_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 2,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 18,
+    .screen_y = 50,
+    .sp_index_start = ROAD_EVENT_SP_START,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 2),
+};
+static const struct SpriteAnimationConst rs_shack_frame_0 = {
+    .sheet = SP_SHACK_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 0,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 60,
+    .screen_y = 5,
+    .sp_index_start = ROAD_EVENT_SP_START,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
+};
+static const struct SpriteAnimationConst rs_shack_frame_1 = {
+    .sheet = SP_SHACK_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 0,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 60,
+    .screen_y = 5,
+    .sp_index_start = ROAD_EVENT_SP_START,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
+};
+static const struct SpriteAnimationConst rs_shack_frame_2 = {
+    .sheet = SP_SHACK_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 0,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 60,
+    .screen_y = 5,
+    .sp_index_start = ROAD_EVENT_SP_START,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
+};
+static const struct SpriteAnimationConst rs_shack_frame_3 = {
+    .sheet = SP_SHACK_SHEET,
+    .sheet_tile_x = 0,
+    .sheet_tile_y = 0,
+    .tile_width = 2,
+    .tile_height = 2,
+    .screen_x = 60,
+    .screen_y = 5,
+    .sp_index_start = ROAD_EVENT_SP_START,
+    .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
+};
 static struct RoadSprite rs_events[ROAD_EVENT_COUNT] = {
     {
         .sp_start = 0,
@@ -220,60 +295,21 @@ static struct RoadSprite rs_events[ROAD_EVENT_COUNT] = {
     // ROAD_EVENT_INN
     {
         .frames = {
-            {
-                .sheet = SP_INN_SHEET,
-                .sheet_tile_x = 0,
-                .sheet_tile_y = 0,
-                .tile_width = 1,
-                .tile_height = 1,
-                .screen_x = 36,
-                .screen_y = 22,
-            },
-            {
-                .sheet = SP_INN_SHEET,
-                .sheet_tile_x = 2,
-                .sheet_tile_y = 0,
-                .tile_width = 2,
-                .tile_height = 2,
-                .screen_x = 34,
-                .screen_y = 28,
-            },
-            {
-                .sheet = SP_INN_SHEET,
-                .sheet_tile_x = 2,
-                .sheet_tile_y = 2,
-                .tile_width = 2,
-                .tile_height = 2,
-                .screen_x = 26,
-                .screen_y = 34,
-            },
-            {
-                .sheet = SP_INN_SHEET,
-                .sheet_tile_x = 0,
-                .sheet_tile_y = 2,
-                .tile_width = 2,
-                .tile_height = 2,
-                .screen_x = 18,
-                .screen_y = 50,
-            },
+            {.con = &rs_inn_frame_0},
+            {.con = &rs_inn_frame_1},
+            {.con = &rs_inn_frame_2},
+            {.con = &rs_inn_frame_3},
         },
-        .indexing = ROAD_SPRITE_INDEXING_OVERLAP,
         .sp_start = ROAD_EVENT_SP_START,
     },
     // ROAD_EVENT_CHERI_QUEST_1
     {
         .frames = {
-            {
-                .sheet = SP_SHACK_SHEET,
-                .sheet_tile_x = 0,
-                .sheet_tile_y = 0,
-                .tile_width = 2,
-                .tile_height = 2,
-                .screen_x = 60,
-                .screen_y = 5,
-            },
+            {.con = &rs_shack_frame_0},
+            {.con = &rs_shack_frame_1},
+            {.con = &rs_shack_frame_2},
+            {.con = &rs_shack_frame_3},
         },
-        .indexing = ROAD_SPRITE_INDEXING_OVERLAP,
         .sp_start = ROAD_EVENT_SP_START,
     },
 };

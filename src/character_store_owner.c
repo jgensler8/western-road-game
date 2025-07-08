@@ -14,8 +14,10 @@
     .palettes = sp_store_owner_palettes,          \
     .palettes_len = sp_store_owner_PALETTE_COUNT, \
 }
-
-static struct SpriteAnimation animation_left_eye = {
+#define STORE_OWNER_FRAMES(tile_x, tile_y) ANI_FRAMES(0, (4 * 3), 4, tile_x, tile_y)
+#define SP_STORE_OWNER_X 8
+#define SP_STORE_OWNER_Y 8
+static const struct SpriteAnimationConst animation_left_eye_const = {
     .sheet = SP_STORE_OWNER_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 0,
@@ -25,9 +27,15 @@ static struct SpriteAnimation animation_left_eye = {
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_BLINK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
+    .screen_x = SP_STORE_OWNER_X + 18,
+    .screen_y = SP_STORE_OWNER_Y + 25,
+    .frame_tiles = STORE_OWNER_FRAMES(0, 0),
+};
+static struct SpriteAnimation animation_left_eye = {
+    .con = &animation_left_eye_const,
     .state.frame = 0,
 };
-static struct SpriteAnimation animation_right_eye = {
+static const struct SpriteAnimationConst animation_right_eye_const = {
     .sheet = SP_STORE_OWNER_SHEET,
     .sheet_tile_x = 2,
     .sheet_tile_y = 0,
@@ -37,9 +45,15 @@ static struct SpriteAnimation animation_right_eye = {
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_BLINK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
+    .screen_x = SP_STORE_OWNER_X + 40,
+    .screen_y = SP_STORE_OWNER_Y + 25,
+    .frame_tiles = STORE_OWNER_FRAMES(2, 0),
+};
+static struct SpriteAnimation animation_right_eye = {
+    .con = &animation_right_eye_const,
     .state.frame = 0,
 };
-static struct SpriteAnimation animation_mouth_talking = {
+static const struct SpriteAnimationConst animation_mouth_talking_const = {
     .sheet = SP_STORE_OWNER_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 1,
@@ -49,9 +63,15 @@ static struct SpriteAnimation animation_mouth_talking = {
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_TALK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
+    .screen_x = SP_STORE_OWNER_X + 30,
+    .screen_y = SP_STORE_OWNER_Y + 48,
+    .frame_tiles = STORE_OWNER_FRAMES(0, 1),
+};
+static struct SpriteAnimation animation_mouth_talking = {
+    .con = &animation_mouth_talking_const,
     .state.frame = 0,
 };
-static struct SpriteAnimation animation_mouth_passive = {
+static const struct SpriteAnimationConst animation_mouth_passive_const = {
     .sheet = SP_STORE_OWNER_SHEET,
     .sheet_tile_x = 2,
     .sheet_tile_y = 1,
@@ -59,6 +79,12 @@ static struct SpriteAnimation animation_mouth_passive = {
     .tile_height = 1,
     .sp_index_start = 6,
     .style = ANIMATION_STYLE_NONE,
+    .screen_x = SP_STORE_OWNER_X + 30,
+    .screen_y = SP_STORE_OWNER_Y + 48,
+    .frame_tiles = STORE_OWNER_FRAMES(2, 1),
+};
+static struct SpriteAnimation animation_mouth_passive = {
+    .con = &animation_mouth_passive_const,
     .state.frame = 0,
 };
 
@@ -76,14 +102,14 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     };
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
     // owner sp
-    animation_init_sprite_sheet(&animation_left_eye.sheet);
-    ANIMATE_TILE_OFFSET(animation_left_eye, 18, 25);
+    animation_init_sprite_sheet(&animation_left_eye.con->sheet);
+    // ANIMATE_TILE_OFFSET(animation_left_eye, 18, 25);
     animation_init_sprite_animation(&animation_left_eye, sp_store_owner_metasprites[0]);
-    ANIMATE_TILE_OFFSET(animation_right_eye, 40, 25);
+    // ANIMATE_TILE_OFFSET(animation_right_eye, 40, 25);
     animation_init_sprite_animation(&animation_right_eye, sp_store_owner_metasprites[0]);
-    ANIMATE_TILE_OFFSET(animation_mouth_passive, 30, 48);
+    // ANIMATE_TILE_OFFSET(animation_mouth_passive, 30, 48);
     animation_init_sprite_animation(&animation_mouth_passive, sp_store_owner_metasprites[0]);
-    ANIMATE_TILE_OFFSET(animation_mouth_talking, 30, 48);
+    // ANIMATE_TILE_OFFSET(animation_mouth_talking, 30, 48);
     animation_init_sprite_animation(&animation_mouth_talking, sp_store_owner_metasprites[0]);
     talking = 0;
     // TODO: either build custom funcs or hardcode

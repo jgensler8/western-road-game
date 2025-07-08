@@ -4,49 +4,49 @@
 #include "animate.h"
 #include <gbdk/emu_debug.h>
 
-void animation_init_sprite_sheet(struct SpriteSheet *sheet)
+void animation_init_sprite_sheet(const struct SpriteSheet *sheet)
 {
     set_sprite_data(sheet->sheet_start, sheet->tiles_len, sheet->tiles);
-    sheet->palette_start = palette_util_init_sp(sheet->palettes_len, sheet->palettes);
+    palette_util_init_sp(sheet->palette_start, sheet->palettes_len, sheet->palettes);
 }
 void animation_update(struct SpriteAnimation *ani)
 {
-    uint8_t sp_i = ani->sp_index_start;
-    for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
+    uint8_t sp_i = ani->con->sp_index_start;
+    for (uint8_t tile_y = 0; tile_y < ani->con->tile_height; tile_y++)
     {
-        for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
+        for (uint8_t tile_x = 0; tile_x < ani->con->tile_width; tile_x++)
         {
-            set_sprite_tile(sp_i, ani->frame_tiles[ani->state.frame][tile_y][tile_x]);
+            set_sprite_tile(sp_i, ani->con->frame_tiles[ani->state.frame][tile_y][tile_x]);
             sp_i++;
         }
     }
-    ani->state.frame_wait = ani->timings[ani->state.frame];
+    ani->state.frame_wait = ani->con->timings[ani->state.frame];
 }
 #define FRAME_TILE(x, y, frame, sheet) ((((y) * sheet.sheet_width_tiles) + (x)) + frame * sheet.sheet_frame_width_tiles)
 void animation_move_sprite(struct SpriteAnimation *ani)
 {
-    uint8_t sp_i = ani->sp_index_start;
-    for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
+    uint8_t sp_i = ani->con->sp_index_start;
+    for (uint8_t tile_y = 0; tile_y < ani->con->tile_height; tile_y++)
     {
-        for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
+        for (uint8_t tile_x = 0; tile_x < ani->con->tile_width; tile_x++)
         {
-            move_sprite(sp_i, ani->screen_x + 8 * tile_x + ADJUST_X, ani->screen_y + 8 * tile_y + ADJUST_Y);
+            move_sprite(sp_i, ani->con->screen_x + 8 * tile_x + ADJUST_X, ani->con->screen_y + 8 * tile_y + ADJUST_Y);
             sp_i++;
         }
     }
 }
 void animation_set_palette(struct SpriteAnimation *ani, const metasprite_t *metasprite)
 {
-    uint8_t sp_i = ani->sp_index_start;
-    for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
+    uint8_t sp_i = ani->con->sp_index_start;
+    for (uint8_t tile_y = 0; tile_y < ani->con->tile_height; tile_y++)
     {
-        for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
+        for (uint8_t tile_x = 0; tile_x < ani->con->tile_width; tile_x++)
         {
             // TODO: possibly support multiple palettes
             // let's use the same palette across the animation
             // i suspect this would require too much cpu time to update palettes as frames change
             // 4 palettes 11
-            set_sprite_prop(sp_i, ani->sheet.palette_start + (metasprite[ani->frame_tiles[0][tile_y][tile_x] - ani->sheet.sheet_start].props & 0x07));
+            set_sprite_prop(sp_i, ani->con->sheet.palette_start + (metasprite[ani->con->frame_tiles[0][tile_y][tile_x] - ani->con->sheet.sheet_start].props & 0x07));
             sp_i++;
         }
     }
@@ -54,16 +54,16 @@ void animation_set_palette(struct SpriteAnimation *ani, const metasprite_t *meta
 void animation_init_sprite_animation(struct SpriteAnimation *ani, const metasprite_t *metasprite)
 {
     // init frame data
-    for (uint8_t frame = 0; frame < ANIMATION_MAX_FRAMES; frame++)
-    {
-        for (uint8_t tile_y = 0; tile_y < ani->tile_height; tile_y++)
-        {
-            for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
-            {
-                ani->frame_tiles[frame][tile_y][tile_x] = ani->sheet.sheet_start + FRAME_TILE(ani->sheet_tile_x + tile_x, ani->sheet_tile_y + tile_y, frame, ani->sheet);
-            }
-        }
-    }
+    // for (uint8_t frame = 0; frame < ANIMATION_MAX_FRAMES; frame++)
+    // {
+    //     for (uint8_t tile_y = 0; tile_y < ani->con->tile_height; tile_y++)
+    //     {
+    //         for (uint8_t tile_x = 0; tile_x < ani->con->tile_width; tile_x++)
+    //         {
+    //             ani->con->frame_tiles[frame][tile_y][tile_x] = ani->con->sheet.sheet_start + FRAME_TILE(ani->sheet_tile_x + tile_x, ani->sheet_tile_y + tile_y, frame, ani->sheet);
+    //         }
+    //     }
+    // }
     // move current sp
     animation_move_sprite(ani);
     animation_set_palette(ani, metasprite);
@@ -72,13 +72,13 @@ void animation_init_sprite_animation(struct SpriteAnimation *ani, const metaspri
 }
 static inline void animate(struct SpriteAnimation *ani)
 {
-    switch (ani->style)
+    switch (ani->con->style)
     {
     case ANIMATION_STYLE_NONE:
         // already rendered in init
         return;
     case ANIMATION_STYLE_ONCE:
-        if (ani->state.frame == ani->sheet.sheet_frames)
+        if (ani->state.frame == ani->con->sheet.sheet_frames)
         {
             return;
         }
@@ -86,7 +86,7 @@ static inline void animate(struct SpriteAnimation *ani)
         animation_update(ani);
         return;
     case ANIMATION_STYLE_LOOP:
-        if (ani->state.frame == ani->sheet.sheet_frames)
+        if (ani->state.frame == ani->con->sheet.sheet_frames)
         {
             ani->state.frame = 0;
         }
@@ -102,7 +102,7 @@ static inline void animate(struct SpriteAnimation *ani)
         {
             ani->state.direction = ANIMATION_DIRECTION_FORWARD;
         }
-        else if (ani->state.frame == ani->sheet.sheet_frames - 1)
+        else if (ani->state.frame == ani->con->sheet.sheet_frames - 1)
         {
             ani->state.direction = ANIMATION_DIRECTION_BACKWARD;
         }
@@ -139,8 +139,8 @@ void animation_show(struct SpriteAnimation *ani)
 }
 void animation_hide(struct SpriteAnimation *ani)
 {
-    uint8_t num_sprites = ani->tile_width * ani->tile_height;
-    for (uint8_t sp_i = ani->sp_index_start; sp_i < ani->sp_index_start + num_sprites; sp_i++)
+    uint8_t num_sprites = ani->con->tile_width * ani->con->tile_height;
+    for (uint8_t sp_i = ani->con->sp_index_start; sp_i < ani->con->sp_index_start + num_sprites; sp_i++)
     {
         hide_sprite(sp_i);
     }
@@ -278,20 +278,11 @@ uint8_t palette_util_init_bkg(uint8_t palette_count, const palette_color_t *pale
     bg_pal_offset += palette_count;
     return start;
 }
-uint8_t palette_util_init_sp(uint8_t palette_count, const palette_color_t *palettes)
+void palette_util_init_sp(const uint8_t palette_start, const uint8_t palette_count, const palette_color_t *palettes)
 {
-    // EMU_printf("setting pal %d with %d from %08x", sp_pal_offset, palette_count, palettes);
-    if ((sp_pal_offset + palette_count) > 8)
-    {
-        // EMU_printf("can not write more than 8 palettes");
-        return 0;
-    }
-    uint8_t start = sp_pal_offset;
-    palette_copy(&sp_pal_cache[sp_pal_offset * 4], palettes, palette_count, 0);
-    palette_copy(&sp_pal_cache_f1[sp_pal_offset * 4], palettes, palette_count, 1);
-    palette_copy(&sp_pal_cache_f2[sp_pal_offset * 4], palettes, palette_count, 2);
-    sp_pal_offset += palette_count;
-    return start;
+    palette_copy(&sp_pal_cache[palette_start * 4], palettes, palette_count, 0);
+    palette_copy(&sp_pal_cache_f1[palette_start * 4], palettes, palette_count, 1);
+    palette_copy(&sp_pal_cache_f2[palette_start * 4], palettes, palette_count, 2);
 }
 static inline void pallete_util_fade(struct SceneRenderOptions *options)
 {
