@@ -41,7 +41,7 @@ build/%.o:	src/%.s
 # %.gb:	%.o
 # 	$(LCC) $(LCCFLAGS) -o $@ ./build/$<
 
-ASSETS = lankygitmono.c sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c
+ASSETS = lankygitmono.c sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c
 CHARACTERS = character_store_owner.c character_cheri.c character.c
 SCENES_GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c gen_scene_shack.c
 SCENES_CORE = scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_inn.c scene_shop.c
@@ -71,6 +71,15 @@ $(ASSET_OUT)/bg_road.c: $(ASSET_IN)/bg_road.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
 
 $(ASSET_OUT)/sp_cacti.c: $(ASSET_IN)/sp_cacti.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
+
+$(ASSET_OUT)/sp_rock.c: $(ASSET_IN)/sp_rock.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
+
+$(ASSET_OUT)/sp_inn.c: $(ASSET_IN)/sp_inn.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
+
+$(ASSET_OUT)/sp_shack.c: $(ASSET_IN)/sp_shack.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
 
 $(ASSET_OUT)/bg_store_owner.c: $(ASSET_IN)/bg_store_owner.png

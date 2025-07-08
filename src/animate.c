@@ -61,7 +61,7 @@ void animation_init_sprite_animation(struct SpriteAnimation *ani, const metaspri
         {
             for (uint8_t tile_x = 0; tile_x < ani->tile_width; tile_x++)
             {
-                ani->frame_tiles[frame][tile_y][tile_x] = FRAME_TILE(ani->sheet_tile_x + tile_x, ani->sheet_tile_y + tile_y, frame, ani->sheet);
+                ani->frame_tiles[frame][tile_y][tile_x] = ani->sheet.sheet_start + FRAME_TILE(ani->sheet_tile_x + tile_x, ani->sheet_tile_y + tile_y, frame, ani->sheet);
             }
         }
     }
