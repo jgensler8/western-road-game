@@ -100,8 +100,8 @@ MGBA=c:\Users\jgens\Downloads\mGBA-0.10.5-win64\mGBA-0.10.5-win64\mGBA.exe
 BGB=c:\Users\jgens\Downloads\bgbw64\bgb64.exe
 
 run: compo25.gbc
-	$(MGBA) compo25.gbc
-	# $(BGB) compo25.gbc
+	# $(MGBA) compo25.gbc
+	$(BGB) compo25.gbc
 
 usage: compo25.gbc
 	$(ROMUSAGE) .\compo25.gbc
