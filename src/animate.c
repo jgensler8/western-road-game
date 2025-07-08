@@ -8,7 +8,6 @@ void animation_init_sprite_sheet(struct SpriteSheet *sheet)
 {
     set_sprite_data(sheet->sheet_start, sheet->tiles_len, sheet->tiles);
     sheet->palette_start = palette_util_init_sp(sheet->palettes_len, sheet->palettes);
-    // set_sprite_palette(sheet->palette_start, sheet->palettes_len, sheet->palettes);
 }
 void animation_update(struct SpriteAnimation *ani)
 {
@@ -47,7 +46,7 @@ void animation_set_palette(struct SpriteAnimation *ani, const metasprite_t *meta
             // let's use the same palette across the animation
             // i suspect this would require too much cpu time to update palettes as frames change
             // 4 palettes 11
-            set_sprite_prop(sp_i, ani->sheet.palette_start + metasprite[ani->frame_tiles[0][tile_y][tile_x]].props & 0x03);
+            set_sprite_prop(sp_i, ani->sheet.palette_start + (metasprite[ani->frame_tiles[0][tile_y][tile_x] - ani->sheet.sheet_start].props & 0x07));
             sp_i++;
         }
     }
@@ -210,9 +209,9 @@ static palette_color_t fade_color_to_black(palette_color_t original_color, uint8
     return MAKE_COLOR(new_r, new_g, new_b);
 }
 
-static uint8_t palette_last_fade = 254;
-static uint8_t bg_pal_offset = 0;
-static uint8_t sp_pal_offset = 0;
+static uint16_t palette_last_fade = 254;
+static uint16_t bg_pal_offset = 0;
+static uint16_t sp_pal_offset = 0;
 #define PALETTE_DEFAULT_PAL { \
     RGB8(0, 0, 0),            \
     RGB8(0, 0, 0),            \
@@ -255,7 +254,7 @@ static palette_color_t bkg_pal_cache_f2[4 * 8] = PALETTE_DEFAULT_PAL;
 static palette_color_t sp_pal_cache_f2[4 * 8] = PALETTE_DEFAULT_PAL;
 static palette_color_t bkg_pal_cache_f3[4 * 8] = PALETTE_DEFAULT_PAL;
 static palette_color_t sp_pal_cache_f3[4 * 8] = PALETTE_DEFAULT_PAL;
-void palette_util_reset()
+void palette_util_reset(void)
 {
     bg_pal_offset = 0;
     sp_pal_offset = 0;
@@ -281,6 +280,12 @@ uint8_t palette_util_init_bkg(uint8_t palette_count, const palette_color_t *pale
 }
 uint8_t palette_util_init_sp(uint8_t palette_count, const palette_color_t *palettes)
 {
+    // EMU_printf("setting pal %d with %d from %08x", sp_pal_offset, palette_count, palettes);
+    if ((sp_pal_offset + palette_count) > 8)
+    {
+        // EMU_printf("can not write more than 8 palettes");
+        return 0;
+    }
     uint8_t start = sp_pal_offset;
     palette_copy(&sp_pal_cache[sp_pal_offset * 4], palettes, palette_count, 0);
     palette_copy(&sp_pal_cache_f1[sp_pal_offset * 4], palettes, palette_count, 1);

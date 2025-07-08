@@ -12,9 +12,9 @@
 #define sp_inn_WIDTH 32
 #define sp_inn_HEIGHT 32
 #define sp_inn_TILE_COUNT 16
-#define sp_inn_PALETTE_COUNT 3
+#define sp_inn_PALETTE_COUNT 1
 #define sp_inn_COLORS_PER_PALETTE 4
-#define sp_inn_TOTAL_COLORS 12
+#define sp_inn_TOTAL_COLORS 4
 #define sp_inn_PIVOT_X 16
 #define sp_inn_PIVOT_Y 16
 #define sp_inn_PIVOT_W 32
@@ -23,7 +23,7 @@ extern const metasprite_t* const sp_inn_metasprites[1];
 
 BANKREF_EXTERN(sp_inn)
 
-extern const palette_color_t sp_inn_palettes[12];
+extern const palette_color_t sp_inn_palettes[4];
 extern const uint8_t sp_inn_tiles[256];
 
 #endif

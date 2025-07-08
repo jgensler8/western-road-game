@@ -35,6 +35,8 @@ void main(void)
     };
     default_state.calculations[0] = default_calculation;
     default_state.inn_visits = 0;
+    default_state.next_event = ROAD_EVENT_NONE;
+    default_state.next_event_steps = 0;
     // BANKREF_EXTERN(scene_title_ref)
     // queue_scene(&scene_title, BANK(scene_title_ref));
     BANKREF_EXTERN(scene_road_ref)

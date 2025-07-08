@@ -22,7 +22,7 @@ struct SceneRenderOptions
 struct Scene
 {
     void (*process_input)(void);
-    void (*render)(const struct SceneRenderOptions* options);
+    void (*render)(const struct SceneRenderOptions *options);
 };
 extern void queue_scene(struct Scene *new_next_scene, uint8_t new_bank_num);
 
@@ -73,5 +73,6 @@ struct State
     uint16_t inn_visits;
 };
 extern struct State default_state;
+void state_generate_next_event(void);
 void state_on_step(void);
 void state_maybe_handle_event(void);
