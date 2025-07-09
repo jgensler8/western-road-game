@@ -6,6 +6,7 @@
 *.asm
 *.lst
 *.ihx
+*.cdb
 *.sav
 *.gbc
 assets_3p/

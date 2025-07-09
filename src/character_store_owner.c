@@ -4,6 +4,7 @@
 #include "gen/png2asset/sp_store_owner.h"
 #include "gen/metasprite_fix/bg_store_owner.h"
 #include "gen/metasprite_fix/sp_store_owner.h"
+#include "character_simple.h"
 
 #define SP_STORE_OWNER_SHEET {                    \
     .tiles = sp_store_owner_tiles,                \
@@ -91,75 +92,18 @@ static struct SpriteAnimation animation_mouth_passive = {
     .state.frame = 0,
 };
 
-static uint8_t talking;
-static uint8_t talking_changed;
-static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_x, uint8_t tile_y)
-{
-    // palettes
-    uint8_t pal_start = palette_util_init_bkg(PALETTE_UTIL_BG(bg_store_owner));
-    // owner bg
-    set_bkg_data(start.bg_start, bg_store_owner_TILE_COUNT, bg_store_owner_tiles);
-    struct PaletteArgs pargs = {
-        .palette_map = bg_store_owner_palette_map,
-        .palette_start = pal_start,
-    };
-    set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
-    // owner sp
-    animation_init_sprite_sheet(&animation_left_eye.con->sheet);
-    animation_init_sprite_animation(&animation_left_eye);
-    animation_init_sprite_animation(&animation_right_eye);
-    animation_init_sprite_animation(&animation_mouth_passive);
-    animation_init_sprite_animation(&animation_mouth_talking);
-    talking = 0;
-    // TODO: either build custom funcs or hardcode
-    struct MemoryAllocation end = {
-        .bg_end = start.bg_start + 6,
-    };
-    return end;
-}
-static void set_expression(enum CharacterExpression expression)
-{
-}
-static void start_talking(void)
-{
-    talking = 1;
-    talking_changed = 1;
-}
-static void stop_talking(void)
-{
-    talking = 0;
-    talking_changed = 1;
-}
-static void render(void)
-{
-    maybe_animate(&animation_left_eye);
-    maybe_animate(&animation_right_eye);
-    if (talking)
-    {
-        maybe_animate(&animation_mouth_talking);
-        if (talking_changed)
-        {
-            animation_show(&animation_mouth_talking);
-            animation_hide(&animation_mouth_passive);
-        }
-    }
-    else
-    {
-        maybe_animate(&animation_mouth_passive);
-        if (talking_changed)
-        {
-            animation_show(&animation_mouth_passive);
-            animation_hide(&animation_mouth_talking);
-        }
-    }
-    talking_changed = 0;
-}
-
-BANKREF(character_store_owner_ref)
-struct Character character_store_owner = {
-    .init = init,
-    .set_expression = set_expression,
-    .start_talking = start_talking,
-    .stop_talking = stop_talking,
-    .render = render,
+static const struct CharacterSimpleConst character_store_owner_simple_const = {
+    // bg
+    .bg_palette_count = bg_store_owner_PALETTE_COUNT,
+    .bg_palettes = bg_store_owner_palettes,
+    .bg_tile_count = bg_store_owner_TILE_COUNT,
+    .bg_tiles = bg_store_owner_tiles,
+    .bg_palette_map = bg_store_owner_palette_map,
+    // sp
+    .left_eye = &animation_left_eye,
+    .right_eye = &animation_right_eye,
+    .mouth_passive = &animation_mouth_passive,
+    .mouth_talking = &animation_mouth_talking,
 };
+
+CHARACTER_SIMPLE_TEMPLATE(store_owner)

@@ -16,10 +16,9 @@ struct BankedCharacter
     const struct Character *character;
     const uint32_t bank;
 };
-const struct BankedCharacter bankedCharacters[CHARACTER_MODEL_COUNT + 1] = {
+const struct BankedCharacter bankedCharacters[CHARACTER_MODEL_COUNT] = {
     {.character = &character_noop, .bank = 1},
     {.character = &character_noop, .bank = 1},
-    {.character = &character_veronica, .bank = BANK(character_veronica_ref)},
     {.character = &character_store_owner, .bank = BANK(character_store_owner_ref)},
     {.character = &character_cheri, .bank = BANK(character_cheri_ref)},
     {.character = &character_veronica, .bank = BANK(character_veronica_ref)},
