@@ -13,10 +13,11 @@ struct MemoryAllocation cs_init(struct CharacterSimple *cs, struct MemoryAllocat
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
     // sp
     animation_init_sprite_sheet(&cs->con->left_eye->con->sheet);
-    animation_init_sprite_animation(&cs->con->left_eye);
-    animation_init_sprite_animation(&cs->con->right_eye);
-    animation_init_sprite_animation(&cs->con->mouth_passive);
-    animation_init_sprite_animation(&cs->con->mouth_talking);
+
+    animation_init_sprite_animation(cs->con->left_eye);
+    animation_init_sprite_animation(cs->con->right_eye);
+    animation_init_sprite_animation(cs->con->mouth_passive);
+    animation_init_sprite_animation(cs->con->mouth_talking);
     cs->state.talking = 0;
     // TODO: either build custom funcs or hardcode
     struct MemoryAllocation end = {

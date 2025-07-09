@@ -2,57 +2,9 @@
 #include "character_store_owner.h"
 #include "gen/png2asset/bg_store_owner.h"
 #include "gen/png2asset/sp_store_owner.h"
+#include "gen/metasprite_fix/bg_store_owner.h"
+#include "gen/metasprite_fix/sp_store_owner.h"
 
-static const uint8_t sp_store_owner_palette_map[sp_store_owner_TILE_COUNT] = {
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    0,
-    0,
-    1,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-};
 #define SP_STORE_OWNER_SHEET {                    \
     .tiles = sp_store_owner_tiles,                \
     .tiles_len = 4 * 4 * 3,                       \
@@ -148,7 +100,7 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     // owner bg
     set_bkg_data(start.bg_start, bg_store_owner_TILE_COUNT, bg_store_owner_tiles);
     struct PaletteArgs pargs = {
-        .metasprites = bg_store_owner_metasprites[0],
+        .palette_map = bg_store_owner_palette_map,
         .palette_start = pal_start,
     };
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);

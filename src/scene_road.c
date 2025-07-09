@@ -1,10 +1,15 @@
 #pragma bank 2
 #include "scene_road.h"
 #include "gen/png2asset/bg_road.h"
+#include "gen/metasprite_fix/bg_road.h"
 #include "gen/png2asset/sp_cacti.h"
+#include "gen/metasprite_fix/sp_cacti.h"
 #include "gen/png2asset/sp_rock.h"
+#include "gen/metasprite_fix/sp_rock.h"
 #include "gen/png2asset/sp_inn.h"
+#include "gen/metasprite_fix/sp_inn.h"
 #include "gen/png2asset/sp_shack.h"
+#include "gen/metasprite_fix/sp_shack.h"
 
 #define ROAD_SPRITE_MAX_FRAMES 4
 static struct RoadSprite
@@ -39,24 +44,6 @@ static void init_road_sprite(struct RoadSprite *rs)
 #define ROAD_EVENT_LEFT_SP_START 0
 #define ROAD_EVENT_RIGHT_SP_START 8
 
-const uint8_t sp_cacti_palette_map[] = {
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-};
 #define SP_CACTI_SHEET {                           \
     .tiles = sp_cacti_tiles,                       \
     .tiles_len = sp_cacti_TILE_COUNT,              \
@@ -193,24 +180,6 @@ static struct RoadSprite rs_rock = {
 #define SP_EVENT_SHEET_TILES 16
 #define SP_EVENT_SLOT SHEET_SLOT(2)
 
-const uint8_t sp_inn_palette_map[] = {
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-};
 #define SP_INN_SHEET {                           \
     .tiles = sp_inn_tiles,                       \
     .tiles_len = sp_inn_TILE_COUNT,              \
@@ -390,7 +359,7 @@ static void render(struct SceneRenderOptions *options)
         // sprites
         set_bkg_data(SCENE_BG_TILE_DATA_START, 64, bg_road_tiles);
         struct PaletteArgs pargs = {
-            .metasprites = ANIMATE_DEFAULT_METASPRITE(bg_road),
+            .palette_map = bg_road_palette_map,
             .palette_start = 1,
         };
         set_bkg_offset(4, 4, 8, 8, SCENE_BG_TILE_DATA_START, &pargs);

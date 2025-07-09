@@ -18,6 +18,7 @@
         "character_store_owner.h": "c",
         "character.h": "c",
         "animate.h": "c",
-        "bg_veronica.h": "c"
+        "bg_veronica.h": "c",
+        "character_simple.h": "c"
     }
 }

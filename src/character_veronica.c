@@ -3,8 +3,9 @@
 #include "character_simple.h"
 #include "gen/png2asset/bg_veronica.h"
 #include "gen/png2asset/sp_veronica.h"
+#include "gen/metasprite_fix/bg_veronica.h"
+#include "gen/metasprite_fix/sp_veronica.h"
 
-static const uint8_t sp_veronica_palette_map[sp_veronica_TILE_COUNT] = {0};
 #define SP_VERONICA_SHEET {                    \
     .tiles = sp_veronica_tiles,                \
     .tiles_len = 4 * 4 * 3,                    \
@@ -20,7 +21,7 @@ static const uint8_t sp_veronica_palette_map[sp_veronica_TILE_COUNT] = {0};
 #define VERONICA_FRAMES(tile_x, tile_y) ANI_FRAMES(0, (4 * 3), 4, tile_x, tile_y)
 #define SP_VERONICA_X 8
 #define SP_VERONICA_Y 8
-static const struct SpriteAnimationConst animation_left_eye_const = {
+static const struct SpriteAnimationConst veronica_left_eye_const = {
     .sheet = SP_VERONICA_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 0,
@@ -30,17 +31,17 @@ static const struct SpriteAnimationConst animation_left_eye_const = {
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_BLINK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
-    .screen_x = SP_VERONICA_X + 18,
-    .screen_y = SP_VERONICA_Y + 25,
+    .screen_x = SP_VERONICA_X + 17,
+    .screen_y = SP_VERONICA_Y + 29,
     .frame_tiles = VERONICA_FRAMES(0, 0),
 };
-static struct SpriteAnimation animation_left_eye = {
-    .con = &animation_left_eye_const,
+static struct SpriteAnimation veronica_left_eye = {
+    .con = &veronica_left_eye_const,
     .state.frame = 0,
 };
-static const struct SpriteAnimationConst animation_right_eye_const = {
+static const struct SpriteAnimationConst veronica_right_eye_const = {
     .sheet = SP_VERONICA_SHEET,
-    .sheet_tile_x = 2,
+    .sheet_tile_x = 0,
     .sheet_tile_y = 0,
     .tile_width = 2,
     .tile_height = 1,
@@ -48,115 +49,49 @@ static const struct SpriteAnimationConst animation_right_eye_const = {
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_BLINK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
-    .screen_x = SP_VERONICA_X + 40,
-    .screen_y = SP_VERONICA_Y + 25,
-    .frame_tiles = VERONICA_FRAMES(2, 0),
+    .screen_x = SP_VERONICA_X + 33,
+    .screen_y = SP_VERONICA_Y + 30,
+    .frame_tiles = VERONICA_FRAMES(0, 0),
 };
-static struct SpriteAnimation animation_right_eye = {
-    .con = &animation_right_eye_const,
+static struct SpriteAnimation veronica_right_eye = {
+    .con = &veronica_right_eye_const,
     .state.frame = 0,
 };
-static const struct SpriteAnimationConst animation_mouth_talking_const = {
+static const struct SpriteAnimationConst veronica_mouth_talking_const = {
     .sheet = SP_VERONICA_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 1,
-    .tile_width = 2,
+    .tile_width = 1,
     .tile_height = 1,
     .sp_index_start = 4,
     .timings_len = 3,
     .timings = ANIMATE_DEFAULT_TALK_TIMINGS,
     .style = ANIMATION_STYLE_PING_PONG,
-    .screen_x = SP_VERONICA_X + 30,
-    .screen_y = SP_VERONICA_Y + 48,
+    .screen_x = SP_VERONICA_X + 24,
+    .screen_y = SP_VERONICA_Y + 46,
     .frame_tiles = VERONICA_FRAMES(0, 1),
 };
-static struct SpriteAnimation animation_mouth_talking = {
-    .con = &animation_mouth_talking_const,
+static struct SpriteAnimation veronica_mouth_talking = {
+    .con = &veronica_mouth_talking_const,
     .state.frame = 0,
 };
-static const struct SpriteAnimationConst animation_mouth_passive_const = {
+static const struct SpriteAnimationConst veronica_mouth_passive_const = {
     .sheet = SP_VERONICA_SHEET,
-    .sheet_tile_x = 2,
+    .sheet_tile_x = 1,
     .sheet_tile_y = 1,
-    .tile_width = 2,
+    .tile_width = 1,
     .tile_height = 1,
-    .sp_index_start = 6,
+    .sp_index_start = 5,
     .style = ANIMATION_STYLE_NONE,
-    .screen_x = SP_VERONICA_X + 30,
-    .screen_y = SP_VERONICA_Y + 48,
-    .frame_tiles = VERONICA_FRAMES(2, 1),
+    .screen_x = SP_VERONICA_X + 24,
+    .screen_y = SP_VERONICA_Y + 46,
+    .frame_tiles = VERONICA_FRAMES(1, 1),
 };
-static struct SpriteAnimation animation_mouth_passive = {
-    .con = &animation_mouth_passive_const,
+static struct SpriteAnimation veronica_mouth_passive = {
+    .con = &veronica_mouth_passive_const,
     .state.frame = 0,
 };
 
-static const uint8_t bg_veronica_palette_map[bg_veronica_TILE_COUNT] = {
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-};
 static const struct CharacterSimpleConst character_veronica_simple_const = {
     // bg
     .bg_palette_count = bg_veronica_PALETTE_COUNT,
@@ -165,10 +100,10 @@ static const struct CharacterSimpleConst character_veronica_simple_const = {
     .bg_tiles = bg_veronica_tiles,
     .bg_palette_map = bg_veronica_palette_map,
     // sp
-    .left_eye = &animation_left_eye,
-    .right_eye = &animation_right_eye,
-    .mouth_talking = &animation_mouth_talking,
-    .mouth_passive = &animation_mouth_passive,
+    .left_eye = &veronica_left_eye,
+    .right_eye = &veronica_right_eye,
+    .mouth_talking = &veronica_mouth_talking,
+    .mouth_passive = &veronica_mouth_passive,
 };
 static struct CharacterSimple character_veronica_simple = {
     .con = &character_veronica_simple_const,
