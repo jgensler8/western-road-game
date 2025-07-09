@@ -7,6 +7,8 @@ enum CharacterModel
     CHARACTER_MODEL_PLAYER,
     CHARACTER_MODEL_STORE_OWNER,
     CHARACTER_MODEL_CHERI,
+    CHARACTER_MODEL_VERONICA,
+    CHARACTER_MODEL_COUNT,
 };
 
 enum CharacterExpression
@@ -39,3 +41,4 @@ void character_init(enum CharacterModel model, uint8_t tile_x, uint8_t tile_y);
 void character_render(enum CharacterModel model, enum CharacterExpression expression);
 void character_start_talking(enum CharacterModel model);
 void character_stop_talking(enum CharacterModel model);
+extern struct Character character_noop;

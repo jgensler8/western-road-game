@@ -3,6 +3,56 @@
 #include "gen/png2asset/bg_cheri.h"
 #include "gen/png2asset/sp_cheri.h"
 
+static const uint8_t sp_cheri_palette_map[sp_cheri_TILE_COUNT] = {
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+};
 #define SP_CHERI_SHEET ANIMATE_SPRITE_SHEET_COMMON(sp_cheri)
 #define CHERI_FRAMES(tile_x, tile_y) ANI_FRAMES(0, (4 * 3), 4, tile_x, tile_y)
 #define SP_CHERI_X 8
@@ -19,7 +69,7 @@ static const struct SpriteAnimationConst animation_left_eye_const = {
     .style = ANIMATION_STYLE_PING_PONG,
     .screen_x = SP_CHERI_X + 19,
     .screen_y = SP_CHERI_Y + 22,
-    .frame_tiles = CHERI_FRAMES(0,0),
+    .frame_tiles = CHERI_FRAMES(0, 0),
 };
 static struct SpriteAnimation left_eye = {
     .con = &animation_left_eye_const,
@@ -37,7 +87,7 @@ static const struct SpriteAnimationConst animation_right_eye_const = {
     .style = ANIMATION_STYLE_PING_PONG,
     .screen_x = SP_CHERI_X + 40,
     .screen_y = SP_CHERI_Y + 22,
-    .frame_tiles = CHERI_FRAMES(0,0),
+    .frame_tiles = CHERI_FRAMES(0, 0),
 };
 static struct SpriteAnimation right_eye = {
     .con = &animation_right_eye_const,
@@ -53,7 +103,7 @@ static const struct SpriteAnimationConst animation_mouth_passive_const = {
     .style = ANIMATION_STYLE_NONE,
     .screen_x = SP_CHERI_X + 33,
     .screen_y = SP_CHERI_Y + 45,
-    .frame_tiles = CHERI_FRAMES(1,2),
+    .frame_tiles = CHERI_FRAMES(1, 2),
 };
 static struct SpriteAnimation mouth_passive = {
     .con = &animation_mouth_passive_const,
@@ -71,7 +121,7 @@ static const struct SpriteAnimationConst animation_mouth_talking_const = {
     .style = ANIMATION_STYLE_PING_PONG,
     .screen_x = SP_CHERI_X + 33,
     .screen_y = SP_CHERI_Y + 45,
-    .frame_tiles = CHERI_FRAMES(0,2),
+    .frame_tiles = CHERI_FRAMES(0, 2),
 };
 static struct SpriteAnimation mouth_talking = {
     .con = &animation_mouth_talking_const,
@@ -95,10 +145,10 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
     // sprite
     animation_init_sprite_sheet(&left_eye.con->sheet);
-    animation_init_sprite_animation(&left_eye, SP_CHERI_METASPRITE);
-    animation_init_sprite_animation(&right_eye, SP_CHERI_METASPRITE);
-    animation_init_sprite_animation(&mouth_passive, SP_CHERI_METASPRITE);
-    animation_init_sprite_animation(&mouth_talking, SP_CHERI_METASPRITE);
+    animation_init_sprite_animation(&left_eye);
+    animation_init_sprite_animation(&right_eye);
+    animation_init_sprite_animation(&mouth_passive);
+    animation_init_sprite_animation(&mouth_talking);
     talking = 0;
     talking_changed = 1;
     struct MemoryAllocation done = {

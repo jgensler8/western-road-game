@@ -3,6 +3,56 @@
 #include "gen/png2asset/bg_store_owner.h"
 #include "gen/png2asset/sp_store_owner.h"
 
+static const uint8_t sp_store_owner_palette_map[sp_store_owner_TILE_COUNT] = {
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+};
 #define SP_STORE_OWNER_SHEET {                    \
     .tiles = sp_store_owner_tiles,                \
     .tiles_len = 4 * 4 * 3,                       \
@@ -13,6 +63,7 @@
     .palette_start = OAMF_CGB_PAL0,               \
     .palettes = sp_store_owner_palettes,          \
     .palettes_len = sp_store_owner_PALETTE_COUNT, \
+    .palette_map = sp_store_owner_palette_map,    \
 }
 #define STORE_OWNER_FRAMES(tile_x, tile_y) ANI_FRAMES(0, (4 * 3), 4, tile_x, tile_y)
 #define SP_STORE_OWNER_X 8
@@ -103,14 +154,10 @@ static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_
     set_bkg_offset(tile_x, tile_y, 8, 8, start.bg_start, &pargs);
     // owner sp
     animation_init_sprite_sheet(&animation_left_eye.con->sheet);
-    // ANIMATE_TILE_OFFSET(animation_left_eye, 18, 25);
-    animation_init_sprite_animation(&animation_left_eye, sp_store_owner_metasprites[0]);
-    // ANIMATE_TILE_OFFSET(animation_right_eye, 40, 25);
-    animation_init_sprite_animation(&animation_right_eye, sp_store_owner_metasprites[0]);
-    // ANIMATE_TILE_OFFSET(animation_mouth_passive, 30, 48);
-    animation_init_sprite_animation(&animation_mouth_passive, sp_store_owner_metasprites[0]);
-    // ANIMATE_TILE_OFFSET(animation_mouth_talking, 30, 48);
-    animation_init_sprite_animation(&animation_mouth_talking, sp_store_owner_metasprites[0]);
+    animation_init_sprite_animation(&animation_left_eye);
+    animation_init_sprite_animation(&animation_right_eye);
+    animation_init_sprite_animation(&animation_mouth_passive);
+    animation_init_sprite_animation(&animation_mouth_talking);
     talking = 0;
     // TODO: either build custom funcs or hardcode
     struct MemoryAllocation end = {

@@ -15,8 +15,8 @@ void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t
             set_bkg_tile_xy(x + x_s, y + y_s, tile_start + tile_offset);
             if (args != NULL)
             {
-                uint8_t metasprite_props = args->metasprites[tile_offset].props;
-                set_bkg_attribute_xy(x + x_s, y + y_s, args->palette_start + metasprite_props);
+                uint8_t metasprite_palette = args->palette_map[tile_offset];
+                set_bkg_attribute_xy(x + x_s, y + y_s, args->palette_start + metasprite_palette);
             }
         }
     }

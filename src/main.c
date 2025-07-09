@@ -39,12 +39,12 @@ void main(void)
     default_state.next_event_steps = 0;
     // BANKREF_EXTERN(scene_title_ref)
     // queue_scene(&scene_title, BANK(scene_title_ref));
-    BANKREF_EXTERN(scene_road_ref)
-    queue_scene(&scene_road, BANK(scene_road_ref));
+    // BANKREF_EXTERN(scene_road_ref)
+    // queue_scene(&scene_road, BANK(scene_road_ref));
     // BANKREF_EXTERN(scene_inn_ref)
     // queue_scene(&scene_inn, BANK(scene_inn_ref));
-    // BANKREF_EXTERN(gen_scene_inn_ref);
-    // queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
+    BANKREF_EXTERN(gen_scene_inn_ref);
+    queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
     // BANKREF_EXTERN(gen_scene_shack_ref);
     // queue_scene(&gen_scene_shack, BANK(gen_scene_shack_ref));
     // BANKREF_EXTERN(scene_shop_ref);

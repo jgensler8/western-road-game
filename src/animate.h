@@ -4,7 +4,7 @@ struct SpriteSheet
 {
     const uint8_t *tiles;
     uint8_t tiles_len;
-    // sprite_data tile start
+    // set_sprite_data tile start
     uint8_t sheet_start;
     // how many frames of animation
     uint8_t sheet_frames;
@@ -16,6 +16,7 @@ struct SpriteSheet
     uint8_t palette_start;
     uint8_t *palettes;
     uint8_t palettes_len;
+    uint8_t *palette_map;
 };
 #define ANIMATE_SPRITE_SHEET_COMMON(SPRITE) { \
     .tiles = SPRITE##_tiles,                  \
@@ -26,6 +27,7 @@ struct SpriteSheet
     .sheet_width_tiles = 4 * 3,               \
     .palettes = SPRITE##_palettes,            \
     .palettes_len = SPRITE##_PALETTE_COUNT,   \
+    .palette_map = SPRITE##_palette_map,      \
 }
 
 enum AnimationStyle
@@ -53,7 +55,7 @@ struct SpriteAnimationState
 // #define ANIMATION_MAX_WIDTH 2
 struct SpriteAnimationConst
 {
-    struct SpriteSheet sheet;
+    const struct SpriteSheet sheet;
     // these are tile units
     uint8_t sheet_tile_x;
     uint8_t sheet_tile_y;
@@ -65,6 +67,7 @@ struct SpriteAnimationConst
     uint8_t timings_len;
     uint8_t timings[ANIMATION_MAX_FRAMES];
     enum AnimationStyle style;
+    // absolute sp tile_data to use (macro generations include tile_start)
     uint8_t frame_tiles[ANIMATION_MAX_FRAMES][ANIMATION_MAX_HEIGHT][ANIMATION_MAX_WIDTH];
 };
 #define ANI_FRAME_TILE(tile_start, sheet_width_tiles, sheet_frame_width_tiles, x, y, frame) ((((y) * sheet_width_tiles) + (x)) + (frame * sheet_frame_width_tiles) + tile_start)
@@ -114,7 +117,7 @@ struct SpriteAnimation
 #define ANIMATE_DEFAULT_TALK_TIMINGS {10, 1, 2}
 void animation_init_sprite_sheet(const struct SpriteSheet *sheet);
 void animation_move_sprite(struct SpriteAnimation *ani);
-void animation_init_sprite_animation(struct SpriteAnimation *ani, const metasprite_t *metasprite);
+void animation_init_sprite_animation(struct SpriteAnimation *ani);
 void maybe_animate(struct SpriteAnimation *ani);
 void animation_show(struct SpriteAnimation *ani);
 void animation_hide(struct SpriteAnimation *ani);

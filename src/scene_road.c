@@ -10,7 +10,6 @@
 static struct RoadSprite
 {
     struct SpriteAnimation frames[ROAD_SPRITE_MAX_FRAMES];
-    const metasprite_t *metasprite;
     uint8_t sp_start;
     uint8_t frame;
     uint8_t last_render;
@@ -23,7 +22,7 @@ static void render_road_sprite(struct RoadSprite *rs)
         // given that i am overlapping road events with the sp_cacti, always clear 8 sprites even if we only use 4
         uint8_t max_frames = rs->frames[0].con->sp_index_start + 8;
         animation_hide_range(rs->frames[3].con->sp_index_start, max_frames);
-        animation_init_sprite_animation(&rs->frames[rs->frame], rs->metasprite);
+        animation_init_sprite_animation(&rs->frames[rs->frame]);
         rs->last_render = rs->frame;
     }
 }
@@ -40,6 +39,24 @@ static void init_road_sprite(struct RoadSprite *rs)
 #define ROAD_EVENT_LEFT_SP_START 0
 #define ROAD_EVENT_RIGHT_SP_START 8
 
+const uint8_t sp_cacti_palette_map[] = {
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+};
 #define SP_CACTI_SHEET {                           \
     .tiles = sp_cacti_tiles,                       \
     .tiles_len = sp_cacti_TILE_COUNT,              \
@@ -50,6 +67,7 @@ static void init_road_sprite(struct RoadSprite *rs)
     .palettes = sp_cacti_palettes,                 \
     .palettes_len = sp_cacti_PALETTE_COUNT,        \
     .palette_start = 0,                            \
+    .palette_map = sp_cacti_palette_map,           \
 }
 
 static const struct SpriteAnimationConst rs_cacti_frame_0 = {
@@ -175,6 +193,24 @@ static struct RoadSprite rs_rock = {
 #define SP_EVENT_SHEET_TILES 16
 #define SP_EVENT_SLOT SHEET_SLOT(2)
 
+const uint8_t sp_inn_palette_map[] = {
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+};
 #define SP_INN_SHEET {                           \
     .tiles = sp_inn_tiles,                       \
     .tiles_len = sp_inn_TILE_COUNT,              \
@@ -185,6 +221,7 @@ static struct RoadSprite rs_rock = {
     .palettes = sp_inn_palettes,                 \
     .palettes_len = sp_inn_PALETTE_COUNT,        \
     .palette_start = 2,                          \
+    .palette_map = sp_inn_palette_map,           \
 }
 
 #define SP_SHACK_SHEET {                           \
@@ -364,16 +401,12 @@ static void render(struct SceneRenderOptions *options)
         EMU_printf("frame: %d", rs_cacti.frame);
 
         // road sprites
-        rs_cacti.metasprite = ANIMATE_DEFAULT_METASPRITE(sp_cacti);
         init_road_sprite(&rs_cacti);
-        rs_rock.metasprite = ANIMATE_DEFAULT_METASPRITE(sp_rock);
         init_road_sprite(&rs_rock);
         rs_rock.frame = 2;
         // generate road event
         state_generate_next_event();
         // road event init
-        rs_events[ROAD_EVENT_INN].metasprite = ANIMATE_DEFAULT_METASPRITE(sp_inn);
-        rs_events[ROAD_EVENT_CHERI_QUEST_1].metasprite = ANIMATE_DEFAULT_METASPRITE(sp_shack);
         rs_event_item = &rs_events[default_state.next_event];
         init_road_sprite(rs_event_item);
     }
@@ -386,7 +419,7 @@ static void render(struct SceneRenderOptions *options)
         hide_sprites_range(0, 8);
         render_road_sprite(rs_event_item);
     }
-    render_road_sprite(&rs_rock);
+    // render_road_sprite(&rs_rock);
 }
 
 BANKREF(scene_road_ref)

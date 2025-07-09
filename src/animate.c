@@ -35,38 +35,29 @@ void animation_move_sprite(struct SpriteAnimation *ani)
         }
     }
 }
-void animation_set_palette(struct SpriteAnimation *ani, const metasprite_t *metasprite)
+void animation_set_palette(struct SpriteAnimation *ani)
 {
     uint8_t sp_i = ani->con->sp_index_start;
     for (uint8_t tile_y = 0; tile_y < ani->con->tile_height; tile_y++)
     {
         for (uint8_t tile_x = 0; tile_x < ani->con->tile_width; tile_x++)
         {
-            // TODO: possibly support multiple palettes
-            // let's use the same palette across the animation
-            // i suspect this would require too much cpu time to update palettes as frames change
-            // 4 palettes 11
-            set_sprite_prop(sp_i, ani->con->sheet.palette_start + (metasprite[ani->con->frame_tiles[0][tile_y][tile_x] - ani->con->sheet.sheet_start].props & 0x07));
+            // TODO: supporting changing palettes during the animation
+            uint8_t source_frame = 0;
+            uint8_t metasprite_tile = ani->con->frame_tiles[source_frame][tile_y][tile_x] - ani->con->sheet.sheet_start;
+            // TODO: fix whatever alignment or pointer math wrong with default metasprites
+            // uint8_t metasprite_palette = ani->con->sheet.metasprite[metasprite_tile].props & 0x07;
+            uint8_t metasprite_palette = ani->con->sheet.palette_map[metasprite_tile];
+            set_sprite_prop(sp_i, ani->con->sheet.palette_start + metasprite_palette);
             sp_i++;
         }
     }
 }
-void animation_init_sprite_animation(struct SpriteAnimation *ani, const metasprite_t *metasprite)
+void animation_init_sprite_animation(struct SpriteAnimation *ani)
 {
-    // init frame data
-    // for (uint8_t frame = 0; frame < ANIMATION_MAX_FRAMES; frame++)
-    // {
-    //     for (uint8_t tile_y = 0; tile_y < ani->con->tile_height; tile_y++)
-    //     {
-    //         for (uint8_t tile_x = 0; tile_x < ani->con->tile_width; tile_x++)
-    //         {
-    //             ani->con->frame_tiles[frame][tile_y][tile_x] = ani->con->sheet.sheet_start + FRAME_TILE(ani->sheet_tile_x + tile_x, ani->sheet_tile_y + tile_y, frame, ani->sheet);
-    //         }
-    //     }
-    // }
     // move current sp
     animation_move_sprite(ani);
-    animation_set_palette(ani, metasprite);
+    animation_set_palette(ani);
     // animate current frame
     animation_update(ani);
 }

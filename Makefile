@@ -42,7 +42,7 @@ build/%.o:	src/%.s
 # 	$(LCC) $(LCCFLAGS) -o $@ ./build/$<
 
 ASSETS = lankygitmono.c sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c
-CHARACTERS = character_store_owner.c character_cheri.c character.c
+CHARACTERS = character_store_owner.c character_cheri.c character_veronica.c character_simple.c character.c
 SCENES_GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c gen_scene_shack.c
 SCENES_CORE = scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_inn.c scene_shop.c
 SCENES = $(addprefix src/,$(SCENES_CORE)) $(addprefix src/gen/scene/,$(SCENES_GENERATED))
