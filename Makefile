@@ -5,7 +5,7 @@ ifndef GBDK_HOME
 endif
 
 LCC_FLAGS_HUGEDRIVER = -Wl-lsrc/3p/hUGEDriver.lib
-LCC_FLAGS_GBC = -Wm-yc -Wl-yt0x1B $(LCC_FLAGS_HUGEDRIVER)
+LCC_FLAGS_GBC = -Wm-yc -Wl-yt0x1B -debug $(LCC_FLAGS_HUGEDRIVER)
 LCCFLAGS = -Wl-j -Wm-yoA -Wm-ya4 -Wb-ext=.rel -Wb-v $(LCC_FLAGS_GBC)
 LCC = $(GBDK_HOME)bin/lcc.exe
 PNG2ASSET = $(GBDK_HOME)bin/png2asset.exe
@@ -41,7 +41,9 @@ build/%.o:	src/%.s
 # %.gb:	%.o
 # 	$(LCC) $(LCCFLAGS) -o $@ ./build/$<
 
-ASSETS = lankygitmono.c sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c
+# FONT = lankygitmono.c
+FONT = lankygitmono_short.c
+ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c
 METASPRITE_FIX_SOURCE = $(addprefix src/gen/metasprite_fix/,$(ASSETS))
 METASPRITE_FIX_HEADER = $(patsubst %.c,%.h,$(METASPRITE_FIX_SOURCE))
 CHARACTERS = character_store_owner.c character_cheri.c character_veronica.c character_simple.c character.c
@@ -65,6 +67,9 @@ scene_gen:
 	python src/sg/scene_gen.py
 
 $(ASSET_OUT)/lankygitmono.c: $(ASSET_IN)/lankygitmono.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 1
+
+$(ASSET_OUT)/lankygitmono_short.c: $(ASSET_IN)/lankygitmono_short.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 1
 
 $(ASSET_OUT)/sframe7.c: $(ASSET_IN)/sframe7.png

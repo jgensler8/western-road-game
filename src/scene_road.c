@@ -367,7 +367,6 @@ static void render(struct SceneRenderOptions *options)
 
         // unforunately, can't be initialized in struct declaration
         init_road_sprite(&rs_cacti);
-        EMU_printf("frame: %d", rs_cacti.frame);
 
         // road sprites
         init_road_sprite(&rs_cacti);

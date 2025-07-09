@@ -105,37 +105,5 @@ static const struct CharacterSimpleConst character_veronica_simple_const = {
     .mouth_talking = &veronica_mouth_talking,
     .mouth_passive = &veronica_mouth_passive,
 };
-static struct CharacterSimple character_veronica_simple = {
-    .con = &character_veronica_simple_const,
-    .state = {0},
-};
-static struct MemoryAllocation init(struct MemoryAllocation start, uint8_t tile_x, uint8_t tile_y)
-{
-    // return start;
-    struct MemoryAllocation ret = cs_init(&character_veronica_simple, start, tile_x, tile_y);
-    return ret;
-}
-static void set_expression(enum CharacterExpression expression)
-{
-    cs_set_expression(&character_veronica_simple, expression);
-}
-static void start_talking(void)
-{
-    cs_start_talking(&character_veronica_simple);
-}
-static void stop_talking(void)
-{
-    cs_stop_talking(&character_veronica_simple);
-}
-static void render(void)
-{
-    cs_render(&character_veronica_simple);
-}
-BANKREF(character_veronica_ref)
-struct Character character_veronica = {
-    .init = init,
-    .set_expression = set_expression,
-    .start_talking = start_talking,
-    .stop_talking = stop_talking,
-    .render = render,
-};
+
+CHARACTER_SIMPLE_TEMPLATE(veronica)

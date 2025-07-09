@@ -2,7 +2,8 @@
 #include "text.h"
 #include <string.h>
 #include <gbdk/platform.h>
-#include "gen/png2asset/lankygitmono.h"
+#include "gen/png2asset/lankygitmono_short.h"
+// #include "gen/png2asset/lankygitmono.h"
 #include "gen/png2asset/sframe7.h"
 #include "sound.h"
 #include "input.h"
@@ -65,7 +66,8 @@ void clear_bkg_frame(void)
 void init_font_vram(void)
 {
     SWITCH_ROM(1);
-    set_bkg_data(0, 'Z' - ' ' + 1, lankygitmono_tiles);
+    set_bkg_data(0, 'Z' - ' ' + 1, lankygitmono_short_tiles);
+    // set_bkg_data(0, 'Z' - ' ' + 1, lankygitmono_tiles);
 }
 
 void init_frame_vram(void)
@@ -78,7 +80,8 @@ void text_init(void)
 {
     init_font_vram();
     init_frame_vram();
-    set_bkg_palette(BKGF_CGB_PAL0, 1, lankygitmono_palettes);
+    set_bkg_palette(BKGF_CGB_PAL0, 1, lankygitmono_short_palettes);
+    // set_bkg_palette(BKGF_CGB_PAL0, 1, lankygitmono_palettes);
 }
 
 void text_draw_frame(char *line_1, char *line_2)
