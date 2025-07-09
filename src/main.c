@@ -4,7 +4,6 @@
 #include "sound.h"
 #include "scene_start_menu.h"
 #include "scene_road.h"
-#include "scene_inn.h"
 #include "scene_shop.h"
 #include "gen/scene/gen_scene_inn.h"
 #include "gen/scene/gen_scene_shack.h"
@@ -41,8 +40,6 @@ void main(void)
     // queue_scene(&scene_title, BANK(scene_title_ref));
     // BANKREF_EXTERN(scene_road_ref)
     // queue_scene(&scene_road, BANK(scene_road_ref));
-    // BANKREF_EXTERN(scene_inn_ref)
-    // queue_scene(&scene_inn, BANK(scene_inn_ref));
     BANKREF_EXTERN(gen_scene_inn_ref);
     queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
     // BANKREF_EXTERN(gen_scene_shack_ref);
