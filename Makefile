@@ -67,7 +67,8 @@ scene_gen:
 	python src/sg/scene_gen.py
 
 check_sizes:
-	python tools/check_sizes.py > check_sizes.out
+	python tools/check_size_rom.py > check_sizes_rom.out
+	python tools/check_size_asm.py > check_sizes_asm.out
 
 $(ASSET_OUT)/lankygitmono.c: $(ASSET_IN)/lankygitmono.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 1
