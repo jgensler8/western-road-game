@@ -50,8 +50,10 @@ if __name__ == "__main__":
         map_data = read_map_file(map_filepath)
         # print(map_data) # Uncomment to see the raw parsed data
         file_usage = get_file_usage(map_data)
-        print(file_usage)
-        for section in file_usage:
+        # print(file_usage) # Uncomment to see the raw file usage data
+        # Sort sections by their total size (largest first)
+        sorted_sections = sorted(file_usage.keys(), key=lambda s: sum(file_usage[s].values()), reverse=True)
+        for section in sorted_sections:
             print(f"Section: {section}")
             sorted_usage = sorted(file_usage[section].items(), key=lambda item: item[1], reverse=True)
             max_name_len = max([len(name) for name, _ in sorted_usage])

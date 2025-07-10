@@ -3,16 +3,6 @@
 #include <gbdk/platform.h>
 #include <stdint.h>
 
-// common bkg operations
-#define ADJUST_X 8
-#define ADJUST_Y 16
-struct PaletteArgs
-{
-    const uint8_t *palette_map;
-    uint8_t palette_start;
-};
-void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t tile_start, struct PaletteArgs *args);
-
 struct SceneRenderOptions
 {
     uint8_t swapped;

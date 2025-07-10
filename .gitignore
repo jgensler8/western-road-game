@@ -9,5 +9,6 @@
 *.cdb
 *.sav
 *.gbc
+*.out
 assets_3p/
 build/

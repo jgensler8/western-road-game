@@ -4,6 +4,23 @@
 #include "animate.h"
 #include <gbdk/emu_debug.h>
 
+void set_bkg_offset(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t tile_start, struct PaletteArgs *args)
+{
+    for (uint8_t y_s = 0; y_s < height; y_s++)
+    {
+        for (uint8_t x_s = 0; x_s < width; x_s++)
+        {
+            uint8_t tile_offset = y_s * width + x_s;
+            set_bkg_tile_xy(x + x_s, y + y_s, tile_start + tile_offset);
+            if (args != NULL)
+            {
+                uint8_t metasprite_palette = args->palette_map[tile_offset];
+                set_bkg_attribute_xy(x + x_s, y + y_s, args->palette_start + metasprite_palette);
+            }
+        }
+    }
+}
+
 void animation_init_sprite_sheet(const struct SpriteSheet *sheet)
 {
     set_sprite_data(sheet->sheet_start, sheet->tiles_len, sheet->tiles);
