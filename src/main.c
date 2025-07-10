@@ -36,6 +36,9 @@ void main(void)
     default_state.inn_visits = 0;
     default_state.next_event = ROAD_EVENT_NONE;
     default_state.next_event_steps = 0;
+    // objective init
+    default_state.goal = GOAL_NONE;
+    default_state.quest = QUEST_NONE;
     SCENE_OPTIONS_INIT
     // BANKREF_EXTERN(scene_title_ref)
     // queue_scene(&scene_title, BANK(scene_title_ref));

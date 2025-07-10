@@ -33,6 +33,10 @@ void text_progress_init(char *line_1, char *line_2, struct ProgressableFrame *fr
 uint8_t text_frame_has_progress(struct ProgressableFrame *frame);
 uint8_t text_draw_frame_progress(struct ProgressableFrame *frame);
 
+// number util
+
+char *fixed_itoa(uint8_t value);
+
 // menu
 
 #define MENU_MAX_OPTIONS 8

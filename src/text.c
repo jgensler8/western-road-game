@@ -199,6 +199,36 @@ uint8_t text_draw_frame_progress(struct ProgressableFrame *frame)
     return 0;
 }
 
+// Function to convert uint8_t to string without sprintf to save RAM
+// This is a simplified itoa for positive integers only
+static inline char *uint8_to_str(uint8_t value)
+{
+    static char buffer[4]; // Max 3 digits for uint8_t (255) + null terminator
+    uint8_t i = 0;
+
+    if (value == 0) {
+        buffer[i++] = '0';
+    } else {
+        while (value > 0) {
+            buffer[i++] = (value % 10) + '0';
+            value /= 10;
+        }
+    }
+    buffer[i] = '\0';
+    // Reverse the string in place
+    for (uint8_t j = 0; j < i / 2; j++) {
+        char temp = buffer[j];
+        buffer[j] = buffer[i - 1 - j];
+        buffer[i - 1 - j] = temp;
+    }
+    return buffer;
+}
+
+char *fixed_itoa(uint8_t value)
+{
+    return uint8_to_str(value);
+}
+
 uint8_t menu_process_input(struct Menu *menu)
 {
     if (joypad_down_pressed)

@@ -53,11 +53,41 @@ struct RoadEventScene
     uint8_t bank;
 };
 
+enum Goal
+{
+    GOAL_NONE,
+    GOAL_DEFAULT,
+    GOAL_100_STEPS,
+    GOAL_100_GOLD,
+    GOAL_MINUS_100_STEPS,
+    GOAL_MINUS_100_GOLD,
+    GOAL_COUNT,
+};
+
+enum Quest
+{
+    QUEST_NONE,
+    QUEST_CHERI_QUEST_1,
+    QUEST_COUNT,
+};
+
+enum Item
+{
+    ITEM_NONE,
+    ITEM_OVERALLS,
+    ITEM_BAG,
+    ITEM_CRYSTAL,
+    ITEM_COUNT,
+};
+
 #define MAX_STAT_CALCULATIONS 32
 struct State
 {
     uint16_t stats[STAT_COUNT];
     struct StatCalculation calculations[MAX_STAT_CALCULATIONS];
+    uint8_t items[ITEM_COUNT];
+    enum Quest quest;
+    enum Goal goal;
     enum RoadEvent next_event;
     uint16_t next_event_steps;
     uint16_t inn_visits;
