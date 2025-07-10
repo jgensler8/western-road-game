@@ -4,6 +4,7 @@
 void text_init(void);
 
 void xy_printf(uint8_t screen_x, uint8_t screen_y, char *word);
+void xy_printf_win(uint8_t screen_x, uint8_t screen_y, char *word);
 
 // frames
 
@@ -13,6 +14,7 @@ void clear_bkg_frame(void);
 #define EMPTY "\0"
 
 void draw_frame(uint8_t screen_x, uint8_t screen_y, uint8_t width, uint8_t height);
+void draw_frame_win(uint8_t screen_x, uint8_t screen_y, uint8_t width, uint8_t height);
 void text_draw_frame(char *line_1, char *line_2);
 
 #define PROGRESS_FRAME_WAIT 4

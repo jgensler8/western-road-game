@@ -18,6 +18,15 @@ void xy_printf(uint8_t screen_x, uint8_t screen_y, char *word)
     }
 }
 
+void xy_printf_win(uint8_t screen_x, uint8_t screen_y, char *word)
+{
+    uint8_t len = strlen(word);
+    for (uint8_t c = 0; c < len; c++)
+    {
+        set_win_tile_xy(screen_x + c, screen_y, ALPHABET_TILE_START + word[c] - ' ');
+    }
+}
+
 void xy_printf_progress(uint8_t screen_x, uint8_t screen_y, char *word, uint8_t *progress)
 {
     set_bkg_tile_xy(screen_x + *progress, screen_y, ALPHABET_TILE_START + word[*progress] - ' ');
@@ -46,6 +55,33 @@ void draw_frame(uint8_t screen_x, uint8_t screen_y, uint8_t width, uint8_t heigh
         set_bkg_tile_xy(screen_x, screen_y + c, frame_tile_start + 3);
         // right
         set_bkg_tile_xy(screen_x + width - 1, screen_y + c, frame_tile_start + 5);
+    }
+}
+
+
+void draw_frame_win(uint8_t screen_x, uint8_t screen_y, uint8_t width, uint8_t height)
+{
+    uint8_t frame_tile_start = 'Z' - ' ' + 1;
+    // corners
+    set_win_tile_xy(screen_x, screen_y, frame_tile_start + 0);
+    set_win_tile_xy(screen_x + width - 1, screen_y, frame_tile_start + 2);
+    set_win_tile_xy(screen_x, screen_y + height - 1, frame_tile_start + 6);
+    set_win_tile_xy(screen_x + width - 1, screen_y + height - 1, frame_tile_start + 8);
+    // row
+    for (uint8_t c = 1; c < width - 1; c++)
+    {
+        // top
+        set_win_tile_xy(screen_x + c, screen_y, frame_tile_start + 1);
+        // bottom
+        set_win_tile_xy(screen_x + c, screen_y + height - 1, frame_tile_start + 7);
+    }
+    // columns
+    for (uint8_t c = 1; c < height - 1; c++)
+    {
+        // left
+        set_win_tile_xy(screen_x, screen_y + c, frame_tile_start + 3);
+        // right
+        set_win_tile_xy(screen_x + width - 1, screen_y + c, frame_tile_start + 5);
     }
 }
 

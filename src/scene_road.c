@@ -332,6 +332,7 @@ static inline void road_sprite_step(struct RoadSprite *rs)
 static uint8_t should_reinit_left = 0;
 static void process_input(void)
 {
+    SCENE_OPTIONS_PROCESS_INPUT_TAKEOVER;
     if (joypad_a_pressed)
     {
         state_on_step();
@@ -378,6 +379,7 @@ static void render(struct SceneRenderOptions *options)
         rs_event_item = &rs_events[default_state.next_event];
         init_road_sprite(rs_event_item);
     }
+    SCENE_OPTIONS_RENDER_TAKEOVER;
     if (default_state.next_event_steps > ROAD_SPRITE_MAX_FRAMES)
     {
         render_road_sprite(&rs_cacti);

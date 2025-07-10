@@ -5,4 +5,5 @@
 #include "animate.h"
 #include "character.h"
 #include <gbdk/emu_debug.h>
+#include "scene_options.h"
 #define SCENE_BG_TILE_DATA_START 70
