@@ -44,6 +44,7 @@ enum RoadEvent
     ROAD_EVENT_NONE,
     ROAD_EVENT_INN,
     ROAD_EVENT_CHERI_QUEST_1,
+    ROAD_EVENT_BLUE_HOUSE,
     ROAD_EVENT_COUNT,
 };
 
@@ -77,6 +78,7 @@ enum Item
     ITEM_OVERALLS,
     ITEM_BAG,
     ITEM_CRYSTAL,
+    ITEM_BLUE_PACKAGE,
     ITEM_COUNT,
 };
 

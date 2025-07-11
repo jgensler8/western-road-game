@@ -10,5 +10,6 @@
 *.sav
 *.gbc
 *.out
+Gemini.md
 assets_3p/
 build/

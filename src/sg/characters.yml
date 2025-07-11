@@ -12,3 +12,5 @@ characters:
     character_model: CHARACTER_MODEL_STORE_OWNER
   cr:
     character_model: CHARACTER_MODEL_CHERI
+  v:
+    character_model: CHARACTER_MODEL_VERONICA

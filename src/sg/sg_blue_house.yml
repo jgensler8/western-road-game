@@ -1,0 +1,36 @@
+bank: 4
+dialog:
+- v hello there, traveler
+- v have we met before?
+- - - p i don't think so
+    - v well, nice to meet you!
+    - v i'm veronica
+  - - p you seem familiar
+    - v hmm...
+    - v i don't seem to recall...
+    - v anyway, I'm Veronica
+- n pleased to meet you
+- v so what brings you this way?
+- - - n why do you live here
+    - n isn't this place a bit remote?
+    - v haha... it's easy to think that
+    - v its a longer story than
+    - v i'd like to admit
+    - v but i was doing some work out here
+    - v and year after year passed by
+    - v i figured...
+    - v this is as good a place as any
+    - v so why bother moving, right?
+    - n right
+  - - n any quests?
+    - v do i have a quest for you?
+    - v let me think...
+    - v sure, bring this item to the shop
+    - v i haven't had time to do it myself
+    - p sure, sounds easy enough
+    - ADDITEM=ITEM_BLUE_PACKAGE n she hands you a blue package
+- v i have some chores to attend to
+- v hopefully i'll see you around
+- p take care veronica!
+- v see you!
+- SCENESWAP=scene_road n you head back on the road

@@ -6,14 +6,13 @@ import yaml
 import re
 from enum import Enum
 
+import glob
+
 SRC_DIR = "src/sg"
 
 
 def yml_files() -> List[str]:
-    return [
-        f"{SRC_DIR}/{f}"
-        for f in ["sg_intro.yml", "sg_inn.yml", "sg_customers.yml", "sg_shack.yml"]
-    ]
+    return glob.glob(f"{SRC_DIR}/sg_*.yml")
 
 
 template_h = """
