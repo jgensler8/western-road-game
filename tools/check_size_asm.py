@@ -70,16 +70,20 @@ if __name__ == "__main__":
     asm_files = glob.glob("build/*.asm")
 
     all_funcs = {}
+    
+    file_max_len = 32
+    func_max_len = 36
     for asm_filepath in asm_files:
         if os.path.exists(asm_filepath):
             # print(f"Reading map file: {asm_filepath}")
             map_data = read_map_file(asm_filepath)
+            asm_file_short = asm_filepath.removeprefix("build\\").removesuffix(".asm")
             for func, instrs in map_data.items():
                 sum_width = sum([get_instruction_width(i)*c for i, c in instrs.items()])
                 # print(f"  {func}: {sum_width} width")
-                all_funcs[f"{asm_filepath}:{func}"] = sum_width
+                all_funcs[f"{asm_file_short:<{file_max_len+1}} {func:<{func_max_len+1}}"] = sum_width
         else:
             print(f"File not found: {asm_filepath}")
     for k, v in sorted(all_funcs.items(), key=lambda x: x[1], reverse=True):
-        print(f"{k}: {v}")
+        print(f"{k:<40} {v}")
 
