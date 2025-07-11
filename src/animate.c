@@ -262,6 +262,16 @@ static palette_color_t bkg_pal_cache_f2[4 * 8] = PALETTE_DEFAULT_PAL;
 static palette_color_t sp_pal_cache_f2[4 * 8] = PALETTE_DEFAULT_PAL;
 static palette_color_t bkg_pal_cache_f3[4 * 8] = PALETTE_DEFAULT_PAL;
 static palette_color_t sp_pal_cache_f3[4 * 8] = PALETTE_DEFAULT_PAL;
+void palette_util_reset_bkg_palettes(void)
+{
+    for (uint8_t y = 0; y < 18; y++)
+    {
+        for (uint8_t x = 0; x < 20; x++)
+        {
+            set_bkg_attribute_xy(x, y, BKGF_CGB_PAL0);
+        }
+    }
+}
 void palette_util_reset(void)
 {
     bg_pal_offset = 0;
@@ -269,6 +279,7 @@ void palette_util_reset(void)
     const palette_color_t default_palettes[4] = {
         RGB8(255, 255, 255), RGB8(0, 0, 0), RGB8(0, 0, 0), RGB8(0, 0, 0)};
     palette_util_init_bkg(1, default_palettes);
+    palette_util_reset_bkg_palettes();
 }
 static void palette_copy(palette_color_t *dest, const palette_color_t *src, uint8_t palette_count, uint8_t step)
 {

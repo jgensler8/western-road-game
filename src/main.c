@@ -51,7 +51,7 @@ void main(void)
     // queue_scene(&gen_scene_shack, BANK(gen_scene_shack_ref));
     BANKREF_EXTERN(scene_shop_ref);
     queue_scene(&scene_shop, BANK(scene_shop_ref));
-    sound_init();
+    // sound_init();
     clear_bkg();
     SHOW_BKG;
     SHOW_SPRITES;
