@@ -13,21 +13,6 @@ static void generate_store_items(void)
     store_items[2] = ITEM_CRYSTAL;
 }
 
-static uint8_t item_price(enum Item item)
-{
-    switch (item)
-    {
-    case ITEM_OVERALLS:
-        return 1;
-    case ITEM_BAG:
-        return 2;
-    case ITEM_CRYSTAL:
-        return 3;
-    default:
-        return 0;
-    }
-}
-
 static uint8_t cursor_index = 0;
 static uint8_t cursor_index_last = 1;
 static struct Menu confirm_purchase_menu = {
@@ -169,9 +154,17 @@ static void render_cursor(void)
     xy_printf(1, 1 + cursor_index, ">");
 }
 
+uint8_t last_details_render = 254;
 static inline void render_item_hover_details(void)
 {
-    draw_frame(0, SHOP_LINES + 2, 15, 4);
+    if (cursor_index != last_details_render)
+    {
+        draw_frame(0, SHOP_LINES + 2, 15, 4);
+        fill_bkg_rect(1, SHOP_LINES + 3, 13, 2, 0);
+        xy_printf(1, SHOP_LINES + 3, item_details[store_items[cursor_index]][0]);
+        xy_printf(1, SHOP_LINES + 4, item_details[store_items[cursor_index]][1]);
+        last_details_render = cursor_index;
+    }
 }
 
 static inline void render_item(uint8_t line, char *name, uint8_t cost)

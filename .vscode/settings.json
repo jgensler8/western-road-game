@@ -20,6 +20,8 @@
         "animate.h": "c",
         "bg_veronica.h": "c",
         "character_simple.h": "c",
-        "lankygitmono_short.h": "c"
+        "lankygitmono_short.h": "c",
+        "items.h": "c",
+        "scene_options.h": "c"
     }
 }
