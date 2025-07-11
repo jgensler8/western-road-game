@@ -82,6 +82,8 @@ enum Item
     ITEM_COUNT,
 };
 
+char* item_name(enum Item item);
+
 #define MAX_STAT_CALCULATIONS 32
 struct State
 {

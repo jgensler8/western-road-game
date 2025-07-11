@@ -3,7 +3,33 @@
 #include "scene_road.h"
 #include <stdio.h>
 
+#define SHOP_LINES 12
+static enum Item store_items[SHOP_LINES] = {0};
+
+static void generate_store_items(void)
+{
+    store_items[0] = ITEM_OVERALLS;
+    store_items[1] = ITEM_BAG;
+    store_items[2] = ITEM_CRYSTAL;
+}
+
+static uint8_t item_price(enum Item item)
+{
+    switch (item)
+    {
+    case ITEM_OVERALLS:
+        return 1;
+    case ITEM_BAG:
+        return 2;
+    case ITEM_CRYSTAL:
+        return 3;
+    default:
+        return 0;
+    }
+}
+
 static uint8_t cursor_index = 0;
+static uint8_t cursor_index_last = 1;
 static struct Menu confirm_purchase_menu = {
     .options = {
         "CONFIRM PURCHASE",
@@ -47,11 +73,13 @@ static void process_input_shop(void)
         // do not wrap cursor
         if (cursor_index > 0)
         {
+            cursor_index_last = cursor_index;
             cursor_index--;
         }
     }
     else if (joypad_down_pressed)
     {
+        cursor_index_last = cursor_index;
         cursor_index++;
     }
     if (cursor_index > 2)
@@ -60,20 +88,41 @@ static void process_input_shop(void)
     }
     if (joypad_a_pressed)
     {
+        if (default_state.stats[STAT_GOLD] < item_price(store_items[cursor_index]))
+        {
+            return;
+        }
+        if (store_items[cursor_index] == ITEM_NONE)
+        {
+            return;
+        }
         set_focus(PURCHASE_CONFIRM);
     }
 }
+
+static inline void do_purchase(void)
+{
+    if (store_items[cursor_index] == ITEM_NONE)
+    {
+        return;
+    }
+    default_state.stats[STAT_GOLD] -= item_price(store_items[cursor_index]);
+    default_state.items[store_items[cursor_index]] += 1;
+    store_items[cursor_index] = ITEM_NONE;
+}
+
 static void process_input_purchase_confirm(void)
 {
-    if (menu_process_input(&confirm_purchase_menu) || joypad_b_pressed)
+    if (joypad_b_pressed)
     {
-        switch (confirm_purchase_menu.selection)
+        set_focus(SHOP);
+        confirm_purchase_menu.selection = 0;
+    }
+    if (menu_process_input(&confirm_purchase_menu))
+    {
+        if (confirm_purchase_menu.selection == 0)
         {
-        case 0:
-            // do the purchase
-            break;
-        case 1:
-            break;
+            do_purchase();
         }
         set_focus(SHOP);
         confirm_purchase_menu.selection = 0;
@@ -93,7 +142,7 @@ static void process_input_leave_confirm(void)
             break;
         }
     }
-    if(joypad_b_pressed)
+    if (joypad_b_pressed)
     {
         set_focus(SHOP);
     }
@@ -114,27 +163,43 @@ static void process_input(void)
     }
 }
 
-#define SHOP_LINES 12
 static void render_cursor(void)
 {
-    // clear cursor column
-    for (uint8_t i = 0; i < SHOP_LINES; i++)
-    {
-        xy_printf(1, 1 + i, " ");
-    }
-    // render cursor
+    xy_printf(1, 1 + cursor_index_last, " ");
     xy_printf(1, 1 + cursor_index, ">");
 }
 
-static void render_item_hover_details(void)
+static inline void render_item_hover_details(void)
 {
     draw_frame(0, SHOP_LINES + 2, 15, 4);
 }
 
-static void render_item(uint8_t line, char *name, uint8_t cost)
+static inline void render_item(uint8_t line, char *name, uint8_t cost)
 {
     xy_printf(2, 1 + line, name);
     xy_printf(12, 1 + line, fixed_itoa(cost));
+}
+
+static inline void draw_money(void)
+{
+    fill_bkg_rect(16, 1, 3, 1, 0);
+    xy_printf(17, 1, fixed_itoa(default_state.stats[STAT_GOLD]));
+}
+
+static inline void draw_items(void)
+{
+    // item line (name, price)
+    for (uint8_t i = 0; i < SHOP_LINES; i++)
+    {
+        if (store_items[i] == ITEM_NONE)
+        {
+            fill_bkg_rect(2, 1 + i, 12, 1, 0);
+        }
+        else
+        {
+            render_item(i, item_name(store_items[i]), item_price(store_items[i]));
+        }
+    }
 }
 
 static void render(struct SceneRenderOptions *options)
@@ -143,20 +208,19 @@ static void render(struct SceneRenderOptions *options)
     {
         set_focus(SHOP);
         cursor_index = 0;
+        generate_store_items();
+        // item frame
+        draw_frame(0, 0, 15, SHOP_LINES + 2);
+        // money frame
+        draw_frame(15, 0, 5, 3);
     }
     if (focus_changed)
     {
         clear_bkg_frame();
+        draw_money();
+        draw_items();
         focus_changed = 0;
     }
-    // render money in the top right
-    draw_frame(15, 0, 5, 3);
-    xy_printf(17, 1, "12");
-    // item cabinet
-    draw_frame(0, 0, 15, SHOP_LINES + 2);
-    render_item(0, "OVERALLS", 0);
-    render_item(1, "BAG", 5);
-    render_item(2, "CRYSTAL", 10);
 
     switch (focus)
     {

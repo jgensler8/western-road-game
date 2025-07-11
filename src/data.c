@@ -3,7 +3,26 @@
 #include "data.h"
 #include "scene_common.h"
 #include "gen/scene/gen_scene_inn.h"
+
+// the global state struct
 struct State default_state;
+
+char* item_name(enum Item item)
+{
+    switch (item)
+    {
+    case ITEM_OVERALLS:
+        return "OVERALLS";
+    case ITEM_BAG:
+        return "BAG";
+    case ITEM_CRYSTAL:
+        return "CRYSTAL";
+    case ITEM_BLUE_PACKAGE:
+        return "BLUE PACKAGE";
+    default:
+        return "NONE";
+    }
+}
 
 void state_generate_next_event(void)
 {

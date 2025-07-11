@@ -33,6 +33,7 @@ void main(void)
         .change = STAT_CHANGE_INC,
     };
     default_state.calculations[0] = default_calculation;
+    default_state.stats[STAT_GOLD] = 1;
     default_state.inn_visits = 0;
     default_state.next_event = ROAD_EVENT_NONE;
     default_state.next_event_steps = 0;
@@ -42,14 +43,14 @@ void main(void)
     SCENE_OPTIONS_INIT
     // BANKREF_EXTERN(scene_title_ref)
     // queue_scene(&scene_title, BANK(scene_title_ref));
-    BANKREF_EXTERN(gen_scene_blue_house_ref);
-    queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
+    // BANKREF_EXTERN(gen_scene_blue_house_ref);
+    // queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
     // BANKREF_EXTERN(gen_scene_inn_ref);
     // queue_scene(&gen_scene_inn, BANK(gen_scene_inn_ref));
     // BANKREF_EXTERN(gen_scene_shack_ref);
     // queue_scene(&gen_scene_shack, BANK(gen_scene_shack_ref));
-    // BANKREF_EXTERN(scene_shop_ref);
-    // queue_scene(&scene_shop, BANK(scene_shop_ref));
+    BANKREF_EXTERN(scene_shop_ref);
+    queue_scene(&scene_shop, BANK(scene_shop_ref));
     sound_init();
     clear_bkg();
     SHOW_BKG;
