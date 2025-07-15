@@ -22,6 +22,7 @@
         "character_simple.h": "c",
         "lankygitmono_short.h": "c",
         "items.h": "c",
-        "scene_options.h": "c"
+        "scene_options.h": "c",
+        "scene_road.h": "c"
     }
 }
