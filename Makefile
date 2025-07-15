@@ -43,10 +43,10 @@ build/%.o:	src/%.s
 
 # FONT = lankygitmono.c
 FONT = lankygitmono_short.c
-ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c
+ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c
 METASPRITE_FIX_SOURCE = $(addprefix src/gen/metasprite_fix/,$(ASSETS))
 METASPRITE_FIX_HEADER = $(patsubst %.c,%.h,$(METASPRITE_FIX_SOURCE))
-CHARACTERS = character_store_owner.c character_cheri.c character_veronica.c character_simple.c character.c
+CHARACTERS = character_store_owner.c character_cheri.c character_veronica.c character_trader.c character_simple.c character.c
 SCENES_GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c gen_scene_shack.c gen_scene_blue_house.c
 SCENES_CORE = scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_shop.c scene_options.c scene_trader.c
 SCENES = $(addprefix src/,$(SCENES_CORE)) $(addprefix src/gen/scene/,$(SCENES_GENERATED))
@@ -111,6 +111,13 @@ $(ASSET_OUT)/bg_veronica.c: $(ASSET_IN)/bg_veronica.png
 
 $(ASSET_OUT)/sp_veronica.c: $(ASSET_IN)/sp_veronica.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 4
+
+$(ASSET_OUT)/bg_trader.c: $(ASSET_IN)/bg_trader.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 2
+
+$(ASSET_OUT)/sp_trader.c: $(ASSET_IN)/sp_trader.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 2
+
 
 $(METASPRITE_FIX_OUT)/%.c: $(ASSET_OUT)/%.c
 	@mkdir -p $(METASPRITE_FIX_OUT)

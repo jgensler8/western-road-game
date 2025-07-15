@@ -23,6 +23,8 @@
         "lankygitmono_short.h": "c",
         "items.h": "c",
         "scene_options.h": "c",
-        "scene_road.h": "c"
+        "scene_road.h": "c",
+        "sp_trader.h": "c",
+        "bg_trader.h": "c"
     }
 }

@@ -30,7 +30,7 @@ struct SpriteSheet
 };
 #define ANIMATE_SPRITE_SHEET_COMMON(SPRITE) { \
     .tiles = SPRITE##_tiles,                  \
-    .tiles_len = 4 * 4 * 3,                   \
+    .tiles_len = SPRITE##_TILE_COUNT,         \
     .sheet_start = 0,                         \
     .sheet_frames = 3,                        \
     .sheet_frame_width_tiles = 4,             \

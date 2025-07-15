@@ -1,3 +1,4 @@
+#pragma bank 2
 #include "scene_trader.h"
 #include "scene_road.h"
 BANKREF_EXTERN(scene_road_ref)
@@ -10,7 +11,7 @@ enum ProgressType
     DIALOG,
     MENU,
 };
-enum ProgressType progress_types[13] = {
+const enum ProgressType progress_types[13] = {
     DIALOG,
     DIALOG,
     MENU,
@@ -29,7 +30,7 @@ enum ProgressType progress_types[13] = {
     MENU,
 };
 
-char *dialogs[13][2] = {
+const char *dialogs[13][2] = {
     {"HELLO THERE", "TRAVELER"},
     {"MIGHT I INTEREST", "YOU IN A TRADE?"},
     {0},
@@ -135,6 +136,7 @@ static void render(struct SceneRenderOptions *options)
     if (options->swapped)
     {
         menu_reset_state();
+        character_init(CHARACTER_MODEL_TRADER, 1, 1);
         progress = 0;
         last_progress = 254;
     }
@@ -142,13 +144,18 @@ static void render(struct SceneRenderOptions *options)
     {
         menu_reset_state();
     }
+    character_render(CHARACTER_MODEL_TRADER, CHARACTER_EXPRESSION_DEFAULT);
     if (progress_types[progress] == DIALOG)
     {
         if (progress != last_progress)
         {
             text_progress_init(dialogs[progress][0], dialogs[progress][1], &frame);
+            character_start_talking(CHARACTER_MODEL_TRADER);
         }
-        text_draw_frame_progress(&frame);
+        if (!text_draw_frame_progress(&frame))
+        {
+            character_stop_talking(CHARACTER_MODEL_TRADER);
+        };
     }
     else if (progress_types[progress] == MENU)
     {

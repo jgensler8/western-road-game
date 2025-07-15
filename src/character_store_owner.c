@@ -8,7 +8,7 @@
 
 #define SP_STORE_OWNER_SHEET {                    \
     .tiles = sp_store_owner_tiles,                \
-    .tiles_len = 4 * 4 * 3,                       \
+    .tiles_len = sp_store_owner_TILE_COUNT,       \
     .sheet_start = 0,                             \
     .sheet_frames = 3,                            \
     .sheet_frame_width_tiles = 4,                 \
