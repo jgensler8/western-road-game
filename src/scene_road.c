@@ -121,6 +121,7 @@ struct RoadSprite rs_cacti = {
     .palettes = sp_rock_palettes,                 \
     .palettes_len = sp_rock_PALETTE_COUNT,        \
     .palette_start = 1,                           \
+    .palette_map = sp_rock_palette_map,           \
 }
 
 static const struct SpriteAnimationConst rs_rock_frame_0 = {
@@ -389,7 +390,7 @@ static void render(struct SceneRenderOptions *options)
         hide_sprites_range(0, 8);
         render_road_sprite(rs_event_item);
     }
-    // render_road_sprite(&rs_rock);
+    render_road_sprite(&rs_rock);
 }
 
 BANKREF(scene_road_ref)

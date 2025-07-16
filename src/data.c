@@ -3,6 +3,9 @@
 #include "data.h"
 #include "scene_common.h"
 #include "gen/scene/gen_scene_inn.h"
+#include "gen/scene/gen_scene_shack.h"
+#include "gen/scene/gen_scene_blue_house.h"
+#include "scene_trader.h"
 
 // the global state struct
 struct State default_state;
@@ -25,11 +28,26 @@ void state_on_step(void)
 }
 
 BANKREF_EXTERN(gen_scene_inn_ref)
+BANKREF_EXTERN(gen_scene_shack_ref)
+BANKREF_EXTERN(gen_scene_blue_house_ref)
+BANKREF_EXTERN(scene_trader_ref)
 const struct RoadEventScene road_events[ROAD_EVENT_COUNT] = {
     {},
     {
         .scene = &gen_scene_inn,
         .bank = BANK(gen_scene_inn_ref),
+    },
+    {
+        .scene = &gen_scene_shack,
+        .bank = BANK(gen_scene_shack_ref),
+    },
+    {
+        .scene = &gen_scene_blue_house,
+        .bank = BANK(gen_scene_blue_house_ref),
+    },
+    {
+        .scene = &scene_trader,
+        .bank = BANK(scene_trader_ref),
     },
 };
 
