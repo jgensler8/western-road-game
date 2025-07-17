@@ -17,6 +17,8 @@ uint8_t item_price(enum Item item)
     }
 }
 
+// get the item name for printing on screen
+// NOTE: max name lenght should be 9 to fit in trader window
 char* item_name(enum Item item)
 {
     switch (item)
@@ -28,7 +30,7 @@ char* item_name(enum Item item)
     case ITEM_CRYSTAL:
         return "CRYSTAL";
     case ITEM_BLUE_PACKAGE:
-        return "BLUE PACKAGE";
+        return "BLUE PKG";
     default:
         return "NONE";
     }

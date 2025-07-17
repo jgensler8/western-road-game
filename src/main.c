@@ -53,10 +53,10 @@ void main(void)
     // queue_scene(&gen_scene_shack, BANK(gen_scene_shack_ref));
     // BANKREF_EXTERN(scene_shop_ref);
     // queue_scene(&scene_shop, BANK(scene_shop_ref));
-    // BANKREF_EXTERN(scene_trader_ref);
-    // queue_scene(&scene_trader, BANK(scene_trader_ref));
-    BANKREF_EXTERN(scene_road_ref);
-    queue_scene(&scene_road, BANK(scene_road_ref));
+    BANKREF_EXTERN(scene_trader_ref);
+    queue_scene(&scene_trader, BANK(scene_trader_ref));
+    // BANKREF_EXTERN(scene_road_ref);
+    // queue_scene(&scene_road, BANK(scene_road_ref));
     // sound_init();
     clear_bkg();
     SHOW_BKG;
