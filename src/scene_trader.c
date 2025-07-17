@@ -196,6 +196,7 @@ static void process_input(void)
             queue_scene(&scene_road, BANK(scene_road_ref));
             break;
         case 16:
+            default_state.items[item_receive] = 1;
             progress = 12;
             break;
         }

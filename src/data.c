@@ -14,11 +14,11 @@ void state_generate_next_event(void)
 {
     // pick random event
     uint8_t r = rand();
-    if (r < 100)
+    if (r < 50)
     {
         default_state.next_event = ROAD_EVENT_TRADER;
     }
-    else if (r < 150)
+    else if (r < 100)
     {
         default_state.next_event = ROAD_EVENT_BLUE_HOUSE;
     }
@@ -40,7 +40,7 @@ BANKREF_EXTERN(gen_scene_shack_ref)
 BANKREF_EXTERN(gen_scene_blue_house_ref)
 BANKREF_EXTERN(scene_trader_ref)
 const struct RoadEventScene road_events[ROAD_EVENT_COUNT] = {
-    {},
+    {0},
     {
         .scene = &gen_scene_inn,
         .bank = BANK(gen_scene_inn_ref),

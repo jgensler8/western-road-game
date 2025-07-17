@@ -11,52 +11,40 @@ EXTERN_ROAD_SPRITE_FRAMES(cacti)
 EXTERN_ROAD_SPRITE_FRAMES(inn)
 EXTERN_ROAD_SPRITE_FRAMES(rock)
 EXTERN_ROAD_SPRITE_FRAMES(shack)
+EXTERN_ROAD_SPRITE_FRAMES(road_blue_house)
+EXTERN_ROAD_SPRITE_FRAMES(trader_road)
+EXTERN_ROAD_SPRITE_FRAMES(road_sign)
 
-const struct RoadSprite rs_events[ROAD_EVENT_COUNT] = {
+#define ROAD_SPRITE_FRAMES(sprite)           \
+    {                                        \
+        .frames = {                          \
+            {.con = &rs_##sprite##_frame_0}, \
+            {.con = &rs_##sprite##_frame_1}, \
+            {.con = &rs_##sprite##_frame_2}, \
+            {.con = &rs_##sprite##_frame_3}, \
+        },                                   \
+        .sp_start = ROAD_EVENT_SP_START,     \
+    },
+struct RoadSprite rs_events[ROAD_EVENT_COUNT] = {
     {
         .sp_start = 0,
     },
     // ROAD_EVENT_INN
-    {
-        .frames = {
-            {.con = &rs_inn_frame_0},
-            {.con = &rs_inn_frame_1},
-            {.con = &rs_inn_frame_2},
-            {.con = &rs_inn_frame_3},
-        },
-        .sp_start = ROAD_EVENT_SP_START,
-    },
+    ROAD_SPRITE_FRAMES(inn)
     // ROAD_EVENT_CHERI_QUEST_1
-    {
-        .frames = {
-            {.con = &rs_shack_frame_0},
-            {.con = &rs_shack_frame_1},
-            {.con = &rs_shack_frame_2},
-            {.con = &rs_shack_frame_3},
-        },
-        .sp_start = ROAD_EVENT_SP_START,
-    },
+    ROAD_SPRITE_FRAMES(shack)
     // ROAD_EVENT_BLUE_HOUSE
-    {
-        .frames = {
-            {.con = &rs_shack_frame_0},
-            {.con = &rs_shack_frame_1},
-            {.con = &rs_shack_frame_2},
-            {.con = &rs_shack_frame_3},
-        },
-        .sp_start = ROAD_EVENT_SP_START,
-    },
+    ROAD_SPRITE_FRAMES(road_blue_house)
     // ROAD_EVENT_TRADER
-    {
-        .frames = {
-            {.con = &rs_shack_frame_0},
-            {.con = &rs_shack_frame_1},
-            {.con = &rs_shack_frame_2},
-            {.con = &rs_shack_frame_3},
-        },
-        .sp_start = ROAD_EVENT_SP_START,
-    },
-};
+    ROAD_SPRITE_FRAMES(trader_road)
+    // ROAD EVENT BANDIT A
+    ROAD_SPRITE_FRAMES(shack)
+    // ROAD EVENT BANDIT B
+    ROAD_SPRITE_FRAMES(shack)
+    // ROAD EVENT BANDIT C
+    ROAD_SPRITE_FRAMES(shack)
+    // ROAD EVENT FORK
+    ROAD_SPRITE_FRAMES(road_sign)};
 
 void render_road_sprite(struct RoadSprite *rs)
 {

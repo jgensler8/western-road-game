@@ -13,6 +13,7 @@
     .palettes = sp_shack_palettes,                 \
     .palettes_len = sp_shack_PALETTE_COUNT,        \
     .palette_start = 2,                            \
+    .palette_map = sp_shack_palette_map,           \
 }
 
 const struct SpriteAnimationConst rs_shack_frame_0 = {
@@ -26,7 +27,7 @@ const struct SpriteAnimationConst rs_shack_frame_0 = {
     .sp_index_start = ROAD_EVENT_SP_START,
     .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
 };
- const struct SpriteAnimationConst rs_shack_frame_1 = {
+const struct SpriteAnimationConst rs_shack_frame_1 = {
     .sheet = SP_SHACK_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 0,
@@ -37,7 +38,7 @@ const struct SpriteAnimationConst rs_shack_frame_0 = {
     .sp_index_start = ROAD_EVENT_SP_START,
     .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
 };
- const struct SpriteAnimationConst rs_shack_frame_2 = {
+const struct SpriteAnimationConst rs_shack_frame_2 = {
     .sheet = SP_SHACK_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 0,
@@ -48,7 +49,7 @@ const struct SpriteAnimationConst rs_shack_frame_0 = {
     .sp_index_start = ROAD_EVENT_SP_START,
     .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
 };
- const struct SpriteAnimationConst rs_shack_frame_3 = {
+const struct SpriteAnimationConst rs_shack_frame_3 = {
     .sheet = SP_SHACK_SHEET,
     .sheet_tile_x = 0,
     .sheet_tile_y = 0,

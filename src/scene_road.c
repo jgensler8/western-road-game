@@ -50,9 +50,6 @@ static void render(struct SceneRenderOptions *options)
         set_bkg_offset(4, 4, 8, 8, SCENE_BG_TILE_DATA_START, &pargs);
         text_draw_frame("A TO STEP", EMPTY);
 
-        // unforunately, can't be initialized in struct declaration
-        init_road_sprite(&rs_cacti);
-
         // road sprites
         init_road_sprite(&rs_cacti);
         init_road_sprite(&rs_rock);

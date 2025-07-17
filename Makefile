@@ -44,10 +44,10 @@ build/%.o:	src/%.s
 
 # FONT = lankygitmono.c
 FONT = lankygitmono_short.c
-ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c sp_road_sign.c
+ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c sp_road_sign.c sp_trader_road.c sp_road_blue_house.c
 METASPRITE_FIX_SOURCE = $(addprefix src/gen/metasprite_fix/,$(ASSETS))
 METASPRITE_FIX_HEADER = $(patsubst %.c,%.h,$(METASPRITE_FIX_SOURCE))
-ROAD_SPRITES = road_sprite_cacti.c road_sprite_rock.c road_sprite_inn.c road_sprite_shack.c
+ROAD_SPRITES = road_sprite_cacti.c road_sprite_rock.c road_sprite_inn.c road_sprite_shack.c road_sprite_trader.c road_sprite_blue_house.c road_sprite_road_sign.c
 CHARACTERS = character_store_owner.c character_cheri.c character_veronica.c character_trader.c character_simple.c character.c
 SCENES_GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c gen_scene_shack.c gen_scene_blue_house.c
 SCENES_CORE = scene_dialog.c scene_intro_dialog.c scene_start_menu.c road_sprite.c scene_road.c scene_shop.c scene_options.c scene_trader.c
@@ -106,6 +106,12 @@ $(ASSET_OUT)/sp_shack.c: $(ASSET_IN)/sp_shack.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
 
 $(ASSET_OUT)/sp_road_sign.c: $(ASSET_IN)/sp_road_sign.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
+
+$(ASSET_OUT)/sp_trader_road.c: $(ASSET_IN)/sp_trader_road.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
+
+$(ASSET_OUT)/sp_road_blue_house.c: $(ASSET_IN)/sp_road_blue_house.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
 
 $(ASSET_OUT)/bg_store_owner.c: $(ASSET_IN)/bg_store_owner.png

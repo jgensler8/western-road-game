@@ -27,6 +27,7 @@
         "sp_trader.h": "c",
         "bg_trader.h": "c",
         "sp_rock.h": "c",
-        "road_sprite.h": "c"
+        "road_sprite.h": "c",
+        "sp_shack.h": "c"
     }
 }

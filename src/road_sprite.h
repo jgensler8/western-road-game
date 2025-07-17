@@ -25,4 +25,4 @@ void render_road_sprite(struct RoadSprite *rs);
 extern struct RoadSprite rs_cacti;
 extern struct RoadSprite rs_rock;
 // event road sprites
-extern const struct RoadSprite rs_events[ROAD_EVENT_COUNT];
+extern struct RoadSprite rs_events[ROAD_EVENT_COUNT];
