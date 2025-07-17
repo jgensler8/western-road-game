@@ -1,4 +1,4 @@
-#pragma bank 2
+#pragma bank 5
 #include "character_trader.h"
 #include "gen/png2asset/bg_trader.h"
 #include "gen/png2asset/sp_trader.h"

@@ -1,3 +1,4 @@
+#pragma bank 5
 #include <gbdk/platform.h>
 const uint8_t sp_trader_palette_map[] = {
 	0,

@@ -1,4 +1,4 @@
-#pragma bank 2
+#pragma bank 5
 #include "scene_trader.h"
 #include "scene_road.h"
 #include <rand.h>
@@ -9,12 +9,13 @@ uint8_t progress;
 uint8_t gold_receive;
 enum Item item_give;
 enum Item item_receive;
+uint8_t offer_rendered;
 
 inline void create_trade_offer()
 {
     int possible_trades[8];
     uint8_t possible_trades_count = 0;
-    for (uint8_t i = 0; i < ITEM_COUNT; i++)
+    for (uint8_t i = 1; i < ITEM_COUNT; i++)
     {
         if (default_state.items[i] > 0)
         {
@@ -24,7 +25,7 @@ inline void create_trade_offer()
     }
     int possible_receives[8];
     uint8_t possible_receives_count = 0;
-    for (uint8_t i = 0; i < ITEM_COUNT; i++)
+    for (uint8_t i = 1; i < ITEM_COUNT; i++)
     {
         if (default_state.items[i] == 0)
         {
@@ -177,7 +178,8 @@ static void process_input(void)
                 {
                     // decline the offer
                     progress = 8;
-                    gold_receive = rand();
+                    gold_receive = rand();        
+                    offer_rendered = 0;
                     // maybe not get a follow up offer
                     // progress = 10;
                 }
@@ -202,20 +204,23 @@ static void process_input(void)
 
 static inline void render_offer_screen()
 {
-    draw_frame(9, 0, 11, 10);
-    xy_printf(10, 1, "GIVE:");
-    xy_printf(10, 2, item_name(item_give));
-    xy_printf(10, 4, "RECEIVE:");
-    xy_printf(10, 5, item_name(item_receive));
-    if (gold_receive > 0)
+    if (offer_rendered == 0)
     {
-        xy_printf(10, 6, fixed_itoa(gold_receive));
-        xy_printf(15, 6, "GOLD");
+        draw_frame(9, 0, 11, 10);
+        xy_printf(10, 1, "GIVE:");
+        xy_printf(10, 2, item_name(item_give));
+        xy_printf(10, 4, "RECEIVE:");
+        xy_printf(10, 5, item_name(item_receive));
+        if (gold_receive > 0)
+        {
+            xy_printf(10, 6, fixed_itoa(gold_receive));
+            xy_printf(15, 6, "GOLD");
+        }
+        // description
+        draw_frame(0, 10, 20, 4);
+        xy_printf(1, 11, item_details[item_receive][0]);
+        xy_printf(1, 12, item_details[item_receive][1]);
     }
-    // desecription
-    draw_frame(0, 10, 20, 4);
-    xy_printf(1, 11, item_details[item_receive][0]);
-    xy_printf(1, 12, item_details[item_receive][1]);
 }
 
 static void render(struct SceneRenderOptions *options)
@@ -225,6 +230,7 @@ static void render(struct SceneRenderOptions *options)
         menu_reset_state();
         character_init(CHARACTER_MODEL_TRADER, 1, 1);
         progress = 0;
+        offer_rendered = 0;
         gold_receive = 0;
         last_progress = 254;
         create_trade_offer();

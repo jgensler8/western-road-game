@@ -12,12 +12,20 @@ struct State default_state;
 
 void state_generate_next_event(void)
 {
-    // // pick random event
-    // if (rand() < 100)
-    // {
-    //     default_state.next_event = ROAD_EVENT_INN;
-    // }
-    default_state.next_event = ROAD_EVENT_INN;
+    // pick random event
+    uint8_t r = rand();
+    if (r < 100)
+    {
+        default_state.next_event = ROAD_EVENT_TRADER;
+    }
+    else if (r < 150)
+    {
+        default_state.next_event = ROAD_EVENT_BLUE_HOUSE;
+    }
+    else
+    {
+        default_state.next_event = ROAD_EVENT_INN;
+    }
     default_state.next_event_steps = 8;
 }
 

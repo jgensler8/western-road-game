@@ -1,3 +1,4 @@
+#pragma bank 4
 #include <gbdk/platform.h>
 const uint8_t sp_veronica_palette_map[] = {
 	0,

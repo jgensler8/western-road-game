@@ -79,6 +79,9 @@ if __name__ == "__main__":
             map_data = read_map_file(asm_filepath)
             asm_file_short = asm_filepath.removeprefix("build\\").removesuffix(".asm")
             for func, instrs in map_data.items():
+                if not func:
+                    # asm files without instructions
+                    continue
                 sum_width = sum([get_instruction_width(i)*c for i, c in instrs.items()])
                 # print(f"  {func}: {sum_width} width")
                 all_funcs[f"{asm_file_short:<{file_max_len+1}} {func:<{func_max_len+1}}"] = sum_width

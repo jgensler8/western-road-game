@@ -10,6 +10,7 @@ LCCFLAGS = -Wl-j -Wm-yoA -Wm-ya4 -Wb-ext=.rel -Wb-v $(LCC_FLAGS_GBC)
 LCC = $(GBDK_HOME)bin/lcc.exe
 PNG2ASSET = $(GBDK_HOME)bin/png2asset.exe
 ROMUSAGE = $(GBDK_HOME)bin/romusage.exe
+PYTHON = ~/AppData/Local/Programs/Python/Python313/python.exe
 
 # GBDK_DEBUG = ON
 ifdef GBDK_DEBUG
@@ -43,32 +44,42 @@ build/%.o:	src/%.s
 
 # FONT = lankygitmono.c
 FONT = lankygitmono_short.c
-ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c
+ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c sp_road_sign.c
 METASPRITE_FIX_SOURCE = $(addprefix src/gen/metasprite_fix/,$(ASSETS))
 METASPRITE_FIX_HEADER = $(patsubst %.c,%.h,$(METASPRITE_FIX_SOURCE))
+ROAD_SPRITES = road_sprite_cacti.c road_sprite_rock.c road_sprite_inn.c road_sprite_shack.c
 CHARACTERS = character_store_owner.c character_cheri.c character_veronica.c character_trader.c character_simple.c character.c
 SCENES_GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c gen_scene_shack.c gen_scene_blue_house.c
-SCENES_CORE = scene_dialog.c scene_intro_dialog.c scene_start_menu.c scene_road.c scene_shop.c scene_options.c scene_trader.c
+SCENES_CORE = scene_dialog.c scene_intro_dialog.c scene_start_menu.c road_sprite.c scene_road.c scene_shop.c scene_options.c scene_trader.c
 SCENES = $(addprefix src/,$(SCENES_CORE)) $(addprefix src/gen/scene/,$(SCENES_GENERATED))
 SRCS_CORE = data.c text.c input.c sound.c animate.c items.c
-SRCS = $(addprefix src/,$(SRCS_CORE)) $(addprefix src/gen/png2asset/,$(ASSETS)) $(addprefix src/,$(CHARACTERS)) $(METASPRITE_FIX_SOURCE) $(SCENES)
+SRCS = $(addprefix src/,$(SRCS_CORE)) $(addprefix src/gen/png2asset/,$(ASSETS)) $(addprefix src/,$(CHARACTERS)) $(addprefix src/,$(ROAD_SPRITES)) $(METASPRITE_FIX_SOURCE) $(SCENES)
 OBJS = $(patsubst src/%.c, build/%.o, $(SRCS))
 ASSET_OUT = src/gen/png2asset
 METASPRITE_FIX_OUT = src/gen/metasprite_fix
 ASSET_IN = assets
 
 clean:
-	# rm -f *.o *.lst *.map *.gb *.ihx *.sym *.cdb *.adb *.asm *.noi *.rst *.rel $(ASSETS)
+	# rm -f *.o *.lst *.map *.gb *.ihx *.sxxxym *.cdb *.adb *.asm *.noi *.rst *.rel $(ASSETS)
 	# rmdir build
 	@powershell.exe Remove-Item -Force -Recurse -Confirm build
 	mkdir build
+	@powershell.exe Remove-Item -Force -Recurse -Confirm src/gen
+	mkdir src/gen
+	mkdir src/gen/png2asset
+	mkdir src/gen/scene
 
 scene_gen:
-	python src/sg/scene_gen.py
+	$(PYTHON) src/sg/scene_gen.py
 
 check_sizes:
-	python tools/check_size_rom.py > check_sizes_rom.out
-	python tools/check_size_asm.py > check_sizes_asm.out
+	$(PYTHON) tools/check_size_rom.py > check_sizes_rom.out
+	$(PYTHON) tools/check_size_asm.py > check_sizes_asm.out
+
+metasprite_fixes: $(METASPRITE_FIX_HEADER) $(METASPRITE_FIX_SOURCE)
+
+clean_metasprite_fixes:
+	@powershell.exe Remove-Item -Force -Recurse -Confirm src/gen/metasprite_fix
 
 $(ASSET_OUT)/lankygitmono.c: $(ASSET_IN)/lankygitmono.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 1
@@ -94,6 +105,9 @@ $(ASSET_OUT)/sp_inn.c: $(ASSET_IN)/sp_inn.png
 $(ASSET_OUT)/sp_shack.c: $(ASSET_IN)/sp_shack.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
 
+$(ASSET_OUT)/sp_road_sign.c: $(ASSET_IN)/sp_road_sign.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
+
 $(ASSET_OUT)/bg_store_owner.c: $(ASSET_IN)/bg_store_owner.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 3
 
@@ -113,15 +127,16 @@ $(ASSET_OUT)/sp_veronica.c: $(ASSET_IN)/sp_veronica.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 4
 
 $(ASSET_OUT)/bg_trader.c: $(ASSET_IN)/bg_trader.png
-	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 2
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 5
 
 $(ASSET_OUT)/sp_trader.c: $(ASSET_IN)/sp_trader.png
-	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 2
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 5
 
 
 $(METASPRITE_FIX_OUT)/%.c: $(ASSET_OUT)/%.c
 	@mkdir -p $(METASPRITE_FIX_OUT)
-	@echo "#include <gbdk/platform.h>" > $@
+	@cat $< | grep 'pragma' > $@
+	@echo "#include <gbdk/platform.h>" >> $@
 	@echo "const uint8_t $(notdir $*_palette_map)[] = {" >> $@
 	@cat $< | grep 'METASPR_ITEM' | sed 's/METASPR_ITEM.*S_PAL(//g' | sed 's/))//g' >> $@
 	@echo "};" >> $@

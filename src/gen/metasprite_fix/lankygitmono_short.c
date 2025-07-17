@@ -1,3 +1,4 @@
+#pragma bank 1
 #include <gbdk/platform.h>
 const uint8_t lankygitmono_short_palette_map[] = {
 	0,

@@ -1,3 +1,4 @@
+#pragma bank 3
 #include <gbdk/platform.h>
 const uint8_t bg_store_owner_palette_map[] = {
 	0,

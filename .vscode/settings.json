@@ -25,6 +25,8 @@
         "scene_options.h": "c",
         "scene_road.h": "c",
         "sp_trader.h": "c",
-        "bg_trader.h": "c"
+        "bg_trader.h": "c",
+        "sp_rock.h": "c",
+        "road_sprite.h": "c"
     }
 }
