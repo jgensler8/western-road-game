@@ -10,6 +10,7 @@ BANKREF(bg_trader)
 
 const palette_color_t bg_trader_palettes[4] = {
 	RGB8(255,250,133), RGB8( 45, 45, 45), RGB8( 39, 49,  0), RGB8(  0,  0,  0)
+	
 };
 
 const uint8_t bg_trader_tiles[1024] = {

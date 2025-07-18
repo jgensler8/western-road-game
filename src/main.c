@@ -6,6 +6,7 @@
 #include "scene_shop.h"
 #include "scene_trader.h"
 #include "scene_road.h"
+#include "scene_road_fork.h"
 #include "gen/scene/gen_scene_inn.h"
 #include "gen/scene/gen_scene_shack.h"
 #include "gen/scene/gen_scene_blue_house.h"
@@ -56,8 +57,10 @@ void main(void)
     // default_state.items[ITEM_OVERALLS] = 1;
     // BANKREF_EXTERN(scene_trader_ref);
     // queue_scene(&scene_trader, BANK(scene_trader_ref));
-    BANKREF_EXTERN(scene_road_ref);
-    queue_scene(&scene_road, BANK(scene_road_ref));
+    // BANKREF_EXTERN(scene_road_ref);
+    // queue_scene(&scene_road, BANK(scene_road_ref));
+    BANKREF_EXTERN(scene_road_fork_ref);
+    queue_scene(&scene_road_fork, BANK(scene_road_fork_ref));
     // sound_init();
     clear_bkg();
     SHOW_BKG;

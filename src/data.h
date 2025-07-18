@@ -22,6 +22,8 @@ enum Stat
     STAT_STEPS,
     STAT_DISTANCE,
     STAT_GOLD,
+    STAT_LEFT_PATH,
+    STAT_RIGHT_PATH,
     STAT_COUNT,
 };
 
