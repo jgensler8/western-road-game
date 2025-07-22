@@ -55,7 +55,7 @@ struct Scene gen_scene_{scene_name} =
 """
 
 template_chat_input = """    case {progress_step}:
-        if(code_ready != 0) {{ {code_flag}; code_ready = 0; }}
+        if(code_ready != 0) {{ {code_flag}; if({optional_set_quest} != QUEST_NONE) {{ default_state.quest = {optional_set_quest}; }} code_ready = 0; }}
         if({render_if_condition}) {{
             if({jump_enabled}){{
                 progress = {jump_progress_step};
@@ -155,7 +155,7 @@ class Node:
         self.id: int = -1
 
 
-dialog_re = re.compile(r"^((?:\w+=\S+\s+)*)(\S+)\s*(.*)$")
+dialog_re = re.compile(r"^((?:[A-Z]+=\S+ *)*)([a-z]+)? *(.*)?$")
 
 
 def parse_dialog(dialog: str) -> DialogOptions:
@@ -170,7 +170,12 @@ def parse_dialog(dialog: str) -> DialogOptions:
             kv_parts = pair_string.split("=", 1)
             flags[kv_parts[0]] = kv_parts[1]
     character = m.group(2)
+    if not character:
+        character = "n"
+        # raise ValueError(f"no character talking: {dialog}")
     line = m.group(3)
+    if not line:
+        line = ""
     lines = ["" for i in range(2)]
     curline = 0
     max_line_len = 18
@@ -227,6 +232,7 @@ def dialog_map_all_nodes(start: Node):
     nodes: List[Node] = [start]
     all_nodes = [start]
     while len(nodes) > 0:
+        # dequeue
         cur = nodes[0]
         nodes = nodes[1:]
         if cur.next != None:
@@ -325,15 +331,19 @@ def get_jump_enabled(cur: Node) -> str:
     return "0"
 
 
-def get_progress_for_label(cur: Node) -> int:
+def get_progress_for_label(start: Node, cur: Node) -> int:
     label = cur.options.flags.get("JUMP", None)
     if not label:
         return 254
-    for node in dialog_map_all_nodes(cur):
+    for node in dialog_map_all_nodes(start):
         if node.options.flags.get("LABEL", None) == label:
-            print(f"found {node.id}")
+            # print(f"found {node.id}")
             return node.id
     raise ValueError(f"jump specified but label not found: {label}")
+
+
+def get_optional_set_quest(cur: Node) -> str:
+    return cur.options.flags.get("SETQUEST", "QUEST_NONE")
 
 
 def dialog_render(start: Node, characters: any) -> (str, str, str):
@@ -352,7 +362,8 @@ def dialog_render(start: Node, characters: any) -> (str, str, str):
                 render_if_condition=get_render_if_condition(cur),
                 code_flag=get_code_flag(cur.options),
                 jump_enabled=get_jump_enabled(cur),
-                jump_progress_step=get_progress_for_label(cur),
+                jump_progress_step=get_progress_for_label(start, cur),
+                optional_set_quest=get_optional_set_quest(cur),
             )
             render += template_chat_render.format(
                 progress_step=cur.id,

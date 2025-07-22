@@ -1,8 +1,8 @@
 bank: 3
 dialog:
-- RENDERIF=default_state.inn_visits==0 i hello there traveler
-- RENDERIF=default_state.inn_visits>0 i we meet again
-- RENDERIF=default_state.inn_visits>0 JUMP=prompt n
+- RENDERIF=STAT(INN_VISITS)==0 i hello there traveler
+- RENDERIF=STAT(INN_VISITS)>0 i we meet again
+- RENDERIF=STAT(INN_VISITS)>0 JUMP=prompt n
 - i where are you headed?
 - - - p headed home
     - i is that so?
@@ -12,6 +12,6 @@ dialog:
   - - p on a vacation
     - i out here?
     - i well, to each there own
-- LABEL=prompt CODE=default_state.inn_visits+=1 i anyway, what can i do for you?
+- LABEL=prompt CODE=INCR(INN_VISITS) i anyway, what can i do for you?
 - - - SCENESWAP=scene_shop m shop
   - - SCENESWAP=gen_scene_customers m customers

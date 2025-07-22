@@ -12,7 +12,7 @@ dialog:
     - cr a small shed
     - cr it should be off the road
     - cr did you get all that?
-    - SETQUEST=SHED1 p uhm... sure!
+    - SETQUEST=QUEST_CHERI_QUEST_1 p uhm... sure!
   - - p no, i'm fine
     - cr really? aww...
     - cr i was really hoping

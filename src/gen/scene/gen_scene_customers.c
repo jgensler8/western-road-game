@@ -20,7 +20,7 @@ BANKREF_EXTERN(scene_road_ref)
 static void process_input(void) {
     switch(progress){
             case 0:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -46,7 +46,7 @@ static void process_input(void) {
         }
         break;
     case 1:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -72,7 +72,7 @@ static void process_input(void) {
         }
         break;
     case 2:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -98,7 +98,7 @@ static void process_input(void) {
         }
         break;
     case 3:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -124,7 +124,7 @@ static void process_input(void) {
         }
         break;
     case 4:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -150,7 +150,7 @@ static void process_input(void) {
         }
         break;
     case 7:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -176,7 +176,7 @@ static void process_input(void) {
         }
         break;
     case 9:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -202,7 +202,7 @@ static void process_input(void) {
         }
         break;
     case 11:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -228,7 +228,7 @@ static void process_input(void) {
         }
         break;
     case 13:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -254,7 +254,7 @@ static void process_input(void) {
         }
         break;
     case 15:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -280,7 +280,7 @@ static void process_input(void) {
         }
         break;
     case 17:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -306,7 +306,7 @@ static void process_input(void) {
         }
         break;
     case 19:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -332,7 +332,7 @@ static void process_input(void) {
         }
         break;
     case 21:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_CHERI_QUEST_1 != QUEST_NONE) { default_state.quest = QUEST_CHERI_QUEST_1; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -358,7 +358,7 @@ static void process_input(void) {
         }
         break;
     case 8:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -384,7 +384,7 @@ static void process_input(void) {
         }
         break;
     case 10:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -410,7 +410,7 @@ static void process_input(void) {
         }
         break;
     case 12:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -436,7 +436,7 @@ static void process_input(void) {
         }
         break;
     case 14:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -462,7 +462,7 @@ static void process_input(void) {
         }
         break;
     case 16:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -488,7 +488,7 @@ static void process_input(void) {
         }
         break;
     case 18:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -514,7 +514,7 @@ static void process_input(void) {
         }
         break;
     case 20:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;
@@ -558,7 +558,7 @@ static void process_input(void) {
         }
         break;
     case 6:
-        if(code_ready != 0) { ; code_ready = 0; }
+        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
         if(1) {
             if(0){
                 progress = 254;

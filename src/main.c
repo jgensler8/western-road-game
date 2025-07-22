@@ -37,7 +37,7 @@ void main(void)
     };
     default_state.calculations[0] = default_calculation;
     default_state.stats[STAT_GOLD] = 1;
-    default_state.inn_visits = 0;
+    default_state.stats[STAT_INN_VISITS] = 0;
     default_state.next_event = ROAD_EVENT_NONE;
     default_state.next_event_steps = 0;
     // objective init
@@ -61,6 +61,7 @@ void main(void)
     // queue_scene(&scene_road, BANK(scene_road_ref));
     // BANKREF_EXTERN(scene_road_fork_ref);
     // queue_scene(&scene_road_fork, BANK(scene_road_fork_ref));
+    default_state.stats[STAT_VERONICA_VISITS] = 1;
     BANKREF_EXTERN(gen_scene_blue_house_ref);
     queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
     // sound_init();

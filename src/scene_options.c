@@ -4,6 +4,10 @@
 static uint8_t submenu_swapped;
 static uint8_t main_menu_cursor;
 static uint8_t main_menu_cursor_last;
+static uint8_t items_cursor;
+static uint8_t items_cursor_last;
+#define MAX_VIEWABLE_ITEMS 12
+static uint8_t viewable_items[MAX_VIEWABLE_ITEMS] = {0};
 
 static enum Focus {
     MAIN_MENU,
@@ -83,7 +87,21 @@ static void process_input(void)
         }
         break;
     case VIEW_ITEMS:
-        if (joypad_b_pressed)
+        if (joypad_up_pressed)
+        {
+            if (items_cursor > 0)
+            {
+                items_cursor -= 1;
+            }
+        }
+        else if (joypad_down_pressed)
+        {
+            if (items_cursor < MAX_VIEWABLE_ITEMS)
+            {
+                items_cursor += 1;
+            }
+        }
+        else if (joypad_b_pressed)
         {
             set_focus(MAIN_MENU);
         }
@@ -103,30 +121,35 @@ static inline void print_quest(void)
     case QUEST_CHERI_QUEST_1:
         xy_printf_win(quest_x, quest_y, "CHERI: SHACK");
         break;
+    case QUEST_VERONICA_QUEST_1:
+        xy_printf_win(quest_x, quest_y, "VERONICA: PACKAGE DELIVERY");
+        break;
     }
 }
 
 static inline void print_goal(void)
 {
+    const uint8_t goal_x = 1;
+    const uint8_t goal_y = 10;
     switch (default_state.goal)
     {
     case GOAL_NONE:
-        xy_printf_win(2, 1, "NONE");
+        xy_printf_win(goal_x, goal_y, "NONE");
         break;
     case GOAL_DEFAULT:
-        xy_printf_win(2, 1, "DEFAULT");
+        xy_printf_win(goal_x, goal_y, "DEFAULT");
         break;
     case GOAL_100_STEPS:
-        xy_printf_win(2, 1, "100 STEPS");
+        xy_printf_win(goal_x, goal_y, "100 STEPS");
         break;
     case GOAL_100_GOLD:
-        xy_printf_win(2, 1, "100 GOLD");
+        xy_printf_win(goal_x, goal_y, "100 GOLD");
         break;
     case GOAL_MINUS_100_STEPS:
-        xy_printf_win(2, 1, "-100 STEPS");
+        xy_printf_win(goal_x, goal_y, "-100 STEPS");
         break;
     case GOAL_MINUS_100_GOLD:
-        xy_printf_win(2, 1, "-100 GOLD");
+        xy_printf_win(goal_x, goal_y, "-100 GOLD");
         break;
     }
 }
@@ -152,6 +175,48 @@ static inline void print_stats(void)
             break;
         }
     }
+}
+
+static void print_items(void)
+{
+    uint8_t row = 0;
+    const uint8_t text_x = 2;
+    const uint8_t name_y = 1;
+    for (uint8_t i = ITEM_NONE + 1; i < ITEM_COUNT && row < MAX_VIEWABLE_ITEMS; i++)
+    {
+        if (default_state.items[i] == 0)
+        {
+            continue;
+        }
+        viewable_items[row] = i;
+        xy_printf_win(text_x, name_y + row, item_name(i));
+        row += 1;
+    }
+}
+
+static void print_item_cursor(void)
+{
+    if (items_cursor == items_cursor_last)
+    {
+        return;
+    }
+    xy_printf_win(1, 1 + items_cursor, ">");
+    xy_printf_win(1, 1 + items_cursor_last, " ");
+    items_cursor_last = items_cursor;
+}
+
+static void print_item_details(void)
+{
+    if (items_cursor == items_cursor_last)
+    {
+        return;
+    }
+    fill_win_rect(1, MAX_VIEWABLE_ITEMS + 3, 18, 2, 0);
+    const uint8_t text_x = 1;
+    const uint8_t details_y = MAX_VIEWABLE_ITEMS + 3;
+    uint8_t item = viewable_items[items_cursor];
+    xy_printf_win(text_x, details_y, item_details[item][0]);
+    xy_printf_win(text_x, details_y + 1, item_details[item][1]);
 }
 
 static void render(struct SceneRenderOptions *options)
@@ -197,8 +262,12 @@ static void render(struct SceneRenderOptions *options)
             print_stats();
             break;
         case VIEW_ITEMS:
-            draw_frame_win(0, 0, 20, 14);
+            items_cursor = 0;
+            items_cursor_last = 254;
+            draw_frame_win(0, 0, 20, MAX_VIEWABLE_ITEMS + 2);
+            draw_frame_win(0, MAX_VIEWABLE_ITEMS + 2, 20, 4);
             xy_printf_win(6, 0, "ITEMS");
+            print_items();
             break;
         }
         submenu_swapped = 0;
@@ -212,6 +281,8 @@ static void render(struct SceneRenderOptions *options)
     case VIEW_OBJETIVES:
     case VIEW_STATS:
     case VIEW_ITEMS:
+        print_item_details();
+        print_item_cursor();
         break;
     }
 }

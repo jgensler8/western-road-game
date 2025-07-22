@@ -22,6 +22,8 @@ enum Stat
     STAT_STEPS,
     STAT_DISTANCE,
     STAT_GOLD,
+    STAT_INN_VISITS,
+    STAT_VERONICA_VISITS,
     STAT_LEFT_PATH,
     STAT_RIGHT_PATH,
     STAT_COUNT,
@@ -76,6 +78,7 @@ enum Quest
 {
     QUEST_NONE,
     QUEST_CHERI_QUEST_1,
+    QUEST_VERONICA_QUEST_1,
     QUEST_COUNT,
 };
 
@@ -101,8 +104,11 @@ struct State
     enum Goal goal;
     enum RoadEvent next_event;
     uint16_t next_event_steps;
-    uint16_t inn_visits;
 };
+#define STAT(stat_short) default_state.stats[STAT_##stat_short]
+#define INCR(stat_short) default_state.stats[STAT_##stat_short] += 1;
+#define ADDITEM(item_short) default_state.items[ITEM_##item_short] += 1;
+#define REMOVEITEM(item_short) default_state.items[ITEM_##item_short] -= 1;
 extern struct State default_state;
 void state_generate_next_event(void);
 void state_on_step(void);
