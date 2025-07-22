@@ -31,6 +31,7 @@ static struct ProgressableFrame frame;
 {variables}
 
 static void process_input(void) {{
+    uint8_t local_joypad_a_pressed = joypad_a_pressed;
     switch(progress){{
         {process_input}
     }}
@@ -62,7 +63,7 @@ template_chat_input = """    case {progress_step}:
                 progress_changed = 1;
                 code_ready = 1;
             }}
-            if(joypad_a_pressed)
+            if(local_joypad_a_pressed)
             {{
                 {optional_scene_swap}
                 if(text_frame_has_progress(&frame) && !frame.fast_forward)

@@ -1,6 +1,7 @@
 import os
 import re
 import glob
+import json
 from typing import List, Dict
 
 
@@ -33,46 +34,29 @@ def read_map_file(filepath) -> Dict[str, Dict[str, int]]:
     return function_instructions
 
 
-def get_instruction_width(instruction) -> int:
-    if instruction in ["add", "adc", "sub", "sbc", "and", "xor", "or", "cp"]:
-        return 2
-    elif instruction in ["inc", "dec", "daa", "cpl", "scf", "ccf"]:
-        return 1
-    elif instruction in ["nop", "halt", "stop", "di", "ei"]:
-        return 1
-    elif instruction in [
-        "rlca",
-        "rrca",
-        "rla",
-        "rra",
-        "rlc",
-        "rrc",
-        "rl",
-        "rr",
-        "sla",
-        "sra",
-        "srl",
-    ]:
-        return 1
-    elif instruction in ["bit", "set", "res"]:
-        return 2
-    elif instruction in ["jp", "jr", "call", "ret", "reti", "rst"]:
-        return 2
-    elif instruction in ["pop", "push", "ld", "ldh", "ldhl"]:
+def get_instruction_width(instruction, opcodes_data) -> int:
+    for opcode_info in opcodes_data["unprefixed"].values():
+        if opcode_info["mnemonic"].lower() == instruction.lower():
+            return opcode_info["bytes"]
+    for opcode_info in opcodes_data["cbprefixed"].values():
+        if opcode_info["mnemonic"].lower() == instruction.lower():
+            return opcode_info["bytes"]
+    if instruction == "ldhl":
         return 3
-    else:
-        print(f"Unknown instruction: {instruction}")
-        return 0
+    print(f"Unknown instruction: {instruction}")
+    return 0
 
 
 if __name__ == "__main__":
-    # Use glob to get all .asm files in the 'build' directory
-    asm_files = glob.glob("build/*.asm")
-
     all_funcs = {}
-    
     file_max_len = 32
     func_max_len = 36
+
+    OPCODES_FILE = "tools/Opcodes.json"
+    with open(OPCODES_FILE, "r") as f:
+        opcodes_data = json.load(f)
+
+    asm_files = glob.glob(pathname="build/**/*.asm", recursive=True)
     for asm_filepath in asm_files:
         if os.path.exists(asm_filepath):
             # print(f"Reading map file: {asm_filepath}")
@@ -82,11 +66,17 @@ if __name__ == "__main__":
                 if not func:
                     # asm files without instructions
                     continue
-                sum_width = sum([get_instruction_width(i)*c for i, c in instrs.items()])
+                sum_width = sum(
+                    [
+                        get_instruction_width(i, opcodes_data) * c
+                        for i, c in instrs.items()
+                    ]
+                )
                 # print(f"  {func}: {sum_width} width")
-                all_funcs[f"{asm_file_short:<{file_max_len+1}} {func:<{func_max_len+1}}"] = sum_width
+                all_funcs[
+                    f"{asm_file_short:<{file_max_len+1}} {func:<{func_max_len+1}}"
+                ] = sum_width
         else:
             print(f"File not found: {asm_filepath}")
     for k, v in sorted(all_funcs.items(), key=lambda x: x[1], reverse=True):
         print(f"{k:<40} {v}")
-
