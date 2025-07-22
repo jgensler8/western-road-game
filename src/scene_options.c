@@ -109,7 +109,7 @@ static void process_input(void)
     }
 }
 
-static inline void print_quest(void)
+static void print_quest(void)
 {
     const uint8_t quest_x = 1;
     const uint8_t quest_y = 2;
@@ -122,12 +122,13 @@ static inline void print_quest(void)
         xy_printf_win(quest_x, quest_y, "CHERI: SHACK");
         break;
     case QUEST_VERONICA_QUEST_1:
-        xy_printf_win(quest_x, quest_y, "VERONICA: PACKAGE DELIVERY");
+        xy_printf_win(quest_x, quest_y, "VERONICA: DELIVER");
+        xy_printf_win(quest_x, quest_y + 1, "PACKAGE TO SHOP");
         break;
     }
 }
 
-static inline void print_goal(void)
+static void print_goal(void)
 {
     const uint8_t goal_x = 1;
     const uint8_t goal_y = 10;

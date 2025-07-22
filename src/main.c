@@ -61,7 +61,7 @@ void main(void)
     // queue_scene(&scene_road, BANK(scene_road_ref));
     // BANKREF_EXTERN(scene_road_fork_ref);
     // queue_scene(&scene_road_fork, BANK(scene_road_fork_ref));
-    default_state.stats[STAT_VERONICA_VISITS] = 1;
+    default_state.stats[STAT_VERONICA_VISITS] = 0;
     BANKREF_EXTERN(gen_scene_blue_house_ref);
     queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
     // sound_init();

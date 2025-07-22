@@ -30,7 +30,7 @@ static void process_input(void) {
     switch(progress){
             case 0:
         if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
-        if(default_state.quest!=QUEST_VERONICA_QUEST_1) {
+        if(STAT(VERONICA_VISITS)>1&&default_state.quest!=QUEST_VERONICA_QUEST_1) {
             if(1){
                 progress = 30;
                 progress_changed = 1;
