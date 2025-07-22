@@ -1,4 +1,4 @@
-#pragma bank 4
+#pragma bank 7
 #include "character_veronica.h"
 #include "character_simple.h"
 #include "gen/png2asset/bg_veronica.h"

@@ -127,10 +127,10 @@ $(ASSET_OUT)/sp_cheri.c: $(ASSET_IN)/sp_cheri.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 4
 
 $(ASSET_OUT)/bg_veronica.c: $(ASSET_IN)/bg_veronica.png
-	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 4
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 7
 
 $(ASSET_OUT)/sp_veronica.c: $(ASSET_IN)/sp_veronica.png
-	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 4
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 7
 
 $(ASSET_OUT)/bg_trader.c: $(ASSET_IN)/bg_trader.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 5

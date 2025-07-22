@@ -1,4 +1,4 @@
-#pragma bank 4
+#pragma bank 7
 #include "gen_scene_blue_house.h"
 
 static uint8_t progress;

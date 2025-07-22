@@ -28,6 +28,7 @@
         "bg_trader.h": "c",
         "sp_rock.h": "c",
         "road_sprite.h": "c",
-        "sp_shack.h": "c"
+        "sp_shack.h": "c",
+        "character_veronica.h": "c"
     }
 }
