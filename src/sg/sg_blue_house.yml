@@ -49,7 +49,7 @@ dialog:
 #
 # part one, no delivery
 #
-- LABEL=nodelivery v hmm seem you haven't
+- LABEL=nodelivery v hmm seems you haven't
 - v delivered the package
 - ADDITEM=ITEM_BLUE_PACKAGE n she hands you a blue package
 - v here is another one

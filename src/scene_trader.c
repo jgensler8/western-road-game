@@ -15,7 +15,7 @@ inline void create_trade_offer()
 {
     int possible_trades[8];
     uint8_t possible_trades_count = 0;
-    for (uint8_t i = 1; i < ITEM_COUNT; i++)
+    for (uint8_t i = ITEM_NONE + 1; i < ITEM_COUNT; i++)
     {
         if (default_state.items[i] > 0)
         {
@@ -25,7 +25,7 @@ inline void create_trade_offer()
     }
     int possible_receives[8];
     uint8_t possible_receives_count = 0;
-    for (uint8_t i = 1; i < ITEM_COUNT; i++)
+    for (uint8_t i = ITEM_NONE + 1; i < ITEM_COUNT; i++)
     {
         if (default_state.items[i] == 0)
         {
@@ -33,7 +33,14 @@ inline void create_trade_offer()
             possible_receives_count++;
         }
     }
-    item_receive = possible_receives[rand() % possible_receives_count];
+    if (possible_receives_count == 0)
+    {
+        item_receive = rand() % ITEM_COUNT;
+    }
+    else
+    {
+        item_receive = possible_receives[rand() % possible_receives_count];
+    }
     if (possible_trades_count == 0)
     {
         item_give = ITEM_NONE;
@@ -178,10 +185,13 @@ static void process_input(void)
                 {
                     // decline the offer
                     progress = 8;
-                    gold_receive = rand();        
+                    gold_receive = rand();
                     offer_rendered = 0;
-                    // maybe not get a follow up offer
-                    // progress = 10;
+                    if (rand() < 180)
+                    {
+                        // maybe not get a follow up offer
+                        progress = 11;
+                    }
                 }
             }
             break;
