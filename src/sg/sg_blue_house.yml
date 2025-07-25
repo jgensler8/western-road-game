@@ -3,7 +3,7 @@ dialog:
 #
 # Part 1 (intro, maybe start the quest)
 #
-- RENDERIF=STAT(VERONICA_VISITS)>1&&default_state.quest!=QUEST_VERONICA_QUEST_1 JUMP=restartquest n
+- RENDERIF=STAT(VERONICA_VISITS)>=1&&default_state.quest!=QUEST_VERONICA_QUEST_1 JUMP=restartquest n
 - RENDERIF=default_state.quest==QUEST_VERONICA_QUEST_1 JUMP=nodelivery n
 - v hello there, traveler
 - v have we met before?
