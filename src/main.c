@@ -55,14 +55,14 @@ void main(void)
     // BANKREF_EXTERN(scene_shop_ref);
     // queue_scene(&scene_shop, BANK(scene_shop_ref));
     // default_state.items[ITEM_OVERALLS] = 1;
-    for (uint8_t i = ITEM_NONE + 1; i < ITEM_COUNT; i++)
-    {
-        default_state.items[i] = 1;
-    }
-    BANKREF_EXTERN(scene_trader_ref);
-    queue_scene(&scene_trader, BANK(scene_trader_ref));
-    // BANKREF_EXTERN(scene_road_ref);
-    // queue_scene(&scene_road, BANK(scene_road_ref));
+    // for (uint8_t i = ITEM_NONE + 1; i < ITEM_COUNT; i++)
+    // {
+    //     default_state.items[i] = 1;
+    // }
+    // BANKREF_EXTERN(scene_trader_ref);
+    // queue_scene(&scene_trader, BANK(scene_trader_ref));
+    BANKREF_EXTERN(scene_road_ref);
+    queue_scene(&scene_road, BANK(scene_road_ref));
     // BANKREF_EXTERN(scene_road_fork_ref);
     // queue_scene(&scene_road_fork, BANK(scene_road_fork_ref));
     // default_state.stats[STAT_VERONICA_VISITS] = 0;

@@ -1787,7 +1787,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 36:
         if(progress_changed) {
-            text_progress_init("HMM SEEM YOU", "HAVEN'T", &frame);
+            text_progress_init("HMM SEEMS YOU", "HAVEN'T", &frame);
             character_start_talking(CHARACTER_MODEL_VERONICA);
         }
         if(!text_draw_frame_progress(&frame))

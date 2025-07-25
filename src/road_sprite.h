@@ -18,6 +18,15 @@ static struct RoadSprite
 #define SP_EVENT_SLOT SHEET_SLOT(2)
 #define ROAD_EVENT_SP_START 16
 
+#define RS_LEFT_X_0 40
+#define RS_LEFT_Y_0 22
+#define RS_LEFT_X_1 34
+#define RS_LEFT_Y_1 38
+#define RS_LEFT_X_2 26
+#define RS_LEFT_Y_2 50
+#define RS_LEFT_X_3 14
+#define RS_LEFT_Y_3 60
+
 void init_road_sprite(struct RoadSprite *rs);
 void render_road_sprite(struct RoadSprite *rs);
 

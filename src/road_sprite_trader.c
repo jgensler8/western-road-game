@@ -22,8 +22,8 @@ const struct SpriteAnimationConst rs_trader_road_frame_0 = {
     .sheet_tile_y = 0,
     .tile_width = 1,
     .tile_height = 1,
-    .screen_x = 60,
-    .screen_y = 5,
+    .screen_x = RS_LEFT_X_0,
+    .screen_y = RS_LEFT_Y_0,
     .sp_index_start = ROAD_EVENT_SP_START,
     .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 0),
 };
@@ -33,8 +33,8 @@ const struct SpriteAnimationConst rs_trader_road_frame_1 = {
     .sheet_tile_y = 0,
     .tile_width = 1,
     .tile_height = 2,
-    .screen_x = 60,
-    .screen_y = 5,
+    .screen_x = RS_LEFT_X_1,
+    .screen_y = RS_LEFT_Y_1,
     .sp_index_start = ROAD_EVENT_SP_START,
     .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 2, 0),
 };
@@ -44,8 +44,8 @@ const struct SpriteAnimationConst rs_trader_road_frame_2 = {
     .sheet_tile_y = 2,
     .tile_width = 2,
     .tile_height = 2,
-    .screen_x = 60,
-    .screen_y = 5,
+    .screen_x = RS_LEFT_X_2,
+    .screen_y = RS_LEFT_Y_2,
     .sp_index_start = ROAD_EVENT_SP_START,
     .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 2, 2),
 };
@@ -55,8 +55,8 @@ const struct SpriteAnimationConst rs_trader_road_frame_3 = {
     .sheet_tile_y = 1,
     .tile_width = 2,
     .tile_height = 3,
-    .screen_x = 60,
-    .screen_y = 5,
+    .screen_x = RS_LEFT_X_3,
+    .screen_y = RS_LEFT_Y_3,
     .sp_index_start = ROAD_EVENT_SP_START,
     .frame_tiles = ANI_FRAMES(SHEET_SLOT(2), 4, 4, 0, 1),
 };
