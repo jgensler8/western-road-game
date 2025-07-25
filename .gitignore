@@ -10,6 +10,7 @@
 *.sav
 *.gbc
 *.out
+*.zip
 Gemini.md
 assets_3p/
 build/

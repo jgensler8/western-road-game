@@ -11,7 +11,7 @@ dialog:
     - i well, its a long road...
   - - p on a vacation
     - i out here?
-    - i well, to each there own
+    - i well, to each their own
 - LABEL=prompt CODE=INCR(INN_VISITS) i anyway, what can i do for you?
 - - - SCENESWAP=scene_shop m shop
   - - SCENESWAP=gen_scene_customers m customers
