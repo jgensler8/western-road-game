@@ -2,11 +2,12 @@
 #include "input.h"
 #include "text.h"
 #include "sound.h"
-#include "scene_start_menu.h"
+#include "scene_title.h"
 #include "scene_shop.h"
 #include "scene_trader.h"
 #include "scene_road.h"
 #include "scene_road_fork.h"
+#include "gen/scene/gen_scene_intro.h"
 #include "gen/scene/gen_scene_inn.h"
 #include "gen/scene/gen_scene_shack.h"
 #include "gen/scene/gen_scene_blue_house.h"
@@ -45,8 +46,8 @@ void main(void)
     default_state.goal = GOAL_NONE;
     default_state.quest = QUEST_NONE;
     SCENE_OPTIONS_INIT
-    // BANKREF_EXTERN(scene_title_ref)
-    // queue_scene(&scene_title, BANK(scene_title_ref));
+    BANKREF_EXTERN(scene_title_ref)
+    queue_scene(&scene_title, BANK(scene_title_ref));
     // BANKREF_EXTERN(gen_scene_blue_house_ref);
     // queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
     // BANKREF_EXTERN(gen_scene_inn_ref);
@@ -69,8 +70,8 @@ void main(void)
     // default_state.stats[STAT_VERONICA_VISITS] = 0;
     // BANKREF_EXTERN(gen_scene_blue_house_ref);
     // queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
-    BANKREF_EXTERN(scene_bandit_ref);
-    queue_scene(&scene_bandit, BANK(scene_bandit_ref));
+    // BANKREF_EXTERN(scene_bandit_ref);
+    // queue_scene(&scene_bandit, BANK(scene_bandit_ref));
     // sound_init();
     clear_bkg();
     SHOW_BKG;

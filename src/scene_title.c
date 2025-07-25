@@ -1,7 +1,7 @@
 #pragma bank 2
-#include "scene_start_menu.h"
+#include "scene_title.h"
 #include "scene_common.h"
-#include "scene_intro_dialog.h"
+#include "gen/scene/gen_scene_intro.h"
 
 struct Menu start_menu = {
     .options = {
@@ -11,7 +11,7 @@ struct Menu start_menu = {
     .max_option = 1,
     .selection = 0,
 };
-BANKREF_EXTERN(scene_story_ref)
+BANKREF_EXTERN(gen_scene_intro_ref)
 void scene_title_process_input(void)
 {
     if (menu_process_input(&start_menu))
@@ -20,7 +20,7 @@ void scene_title_process_input(void)
         switch (start_menu.selection)
         {
         case 0:
-            queue_scene(&scene_story, BANK(scene_story_ref));
+            queue_scene(&gen_scene_intro, BANK(gen_scene_intro_ref));
             break;
         case 1:
             // TODO: save/load

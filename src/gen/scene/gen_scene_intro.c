@@ -230,84 +230,6 @@ static void process_input(void) {
             }
             if(local_joypad_a_pressed)
             {
-                
-                if(text_frame_has_progress(&frame) && !frame.fast_forward)
-                {
-                    frame.fast_forward = 1;
-                } else {
-                    progress = 9;
-                    progress_changed = 1;
-                    code_ready = 1;
-                }
-            }
-        } else {
-            progress = 9;
-            progress_changed = 1;
-            code_ready = 1;
-        }
-        break;
-    case 9:
-        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
-        if(1) {
-            if(0){
-                progress = 254;
-                progress_changed = 1;
-                code_ready = 1;
-            }
-            if(local_joypad_a_pressed)
-            {
-                
-                if(text_frame_has_progress(&frame) && !frame.fast_forward)
-                {
-                    frame.fast_forward = 1;
-                } else {
-                    progress = 10;
-                    progress_changed = 1;
-                    code_ready = 1;
-                }
-            }
-        } else {
-            progress = 10;
-            progress_changed = 1;
-            code_ready = 1;
-        }
-        break;
-    case 10:
-        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
-        if(1) {
-            if(0){
-                progress = 254;
-                progress_changed = 1;
-                code_ready = 1;
-            }
-            if(local_joypad_a_pressed)
-            {
-                
-                if(text_frame_has_progress(&frame) && !frame.fast_forward)
-                {
-                    frame.fast_forward = 1;
-                } else {
-                    progress = 11;
-                    progress_changed = 1;
-                    code_ready = 1;
-                }
-            }
-        } else {
-            progress = 11;
-            progress_changed = 1;
-            code_ready = 1;
-        }
-        break;
-    case 11:
-        if(code_ready != 0) { ; if(QUEST_NONE != QUEST_NONE) { default_state.quest = QUEST_NONE; } code_ready = 0; }
-        if(1) {
-            if(0){
-                progress = 254;
-                progress_changed = 1;
-                code_ready = 1;
-            }
-            if(local_joypad_a_pressed)
-            {
                 queue_scene(&scene_road, BANK(scene_road_ref));
                 if(text_frame_has_progress(&frame) && !frame.fast_forward)
                 {
@@ -355,7 +277,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 2:
         if(progress_changed) {
-            text_progress_init("HERE, TAKE THIS", "MONEY", &frame);
+            text_progress_init("\"HERE, TAKE THIS", "MONEY\"", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
@@ -365,7 +287,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 3:
         if(progress_changed) {
-            text_progress_init("I HAVE A PRESENT", "WAITING FOR YOU", &frame);
+            text_progress_init("\"I HAVE A PRESENT", "WAITING FOR YOU\"", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
@@ -375,7 +297,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 4:
         if(progress_changed) {
-            text_progress_init("ITS AT THE END OF", "THE PATH", &frame);
+            text_progress_init("\"ITS AT THE END", "OF THE PATH\"", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
@@ -395,7 +317,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 6:
         if(progress_changed) {
-            text_progress_init("BUT, I DON'T EVEN", "KNOW WHERE I AM...", &frame);
+            text_progress_init("THE PATH CAN'T BE", "THAT LONG", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
@@ -405,7 +327,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 7:
         if(progress_changed) {
-            text_progress_init("...", "", &frame);
+            text_progress_init("LET'S TAKE A", "LOOK...", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))
@@ -415,37 +337,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 8:
         if(progress_changed) {
-            text_progress_init("IF I DON'T KNOW", "WHY I'M HERE...", &frame);
-            character_start_talking(CHARACTER_MODEL_NONE);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_NONE);
-        };
-        break;
-    case 9:
-        if(progress_changed) {
-            text_progress_init("THEN I DON'T", "REALLY HAVE MUCH", &frame);
-            character_start_talking(CHARACTER_MODEL_NONE);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_NONE);
-        };
-        break;
-    case 10:
-        if(progress_changed) {
-            text_progress_init("OF A CHOICE", "", &frame);
-            character_start_talking(CHARACTER_MODEL_NONE);
-        }
-        if(!text_draw_frame_progress(&frame))
-        {
-            character_stop_talking(CHARACTER_MODEL_NONE);
-        };
-        break;
-    case 11:
-        if(progress_changed) {
-            text_progress_init("YOU OPEN THE DOOR", "AND EMBARK", &frame);
+            text_progress_init("YOU OPEN THE DOOR", "", &frame);
             character_start_talking(CHARACTER_MODEL_NONE);
         }
         if(!text_draw_frame_progress(&frame))

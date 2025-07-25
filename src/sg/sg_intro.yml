@@ -2,13 +2,10 @@ bank: 2
 dialog:
 - n you wake up
 - n what's this? oh, a piece of paper
-- n here, take this money
-- n i have a present waiting for you
-- n its at the end of the path
+- n \"here, take this money\"
+- n \"i have a present waiting for you\"
+- n \"its at the end of the path\"
 - n the end of the path?
-- n but, i don't even know where i am...
-- n ...
-- n if i don't know why i'm here...
-- n then i don't really have much
-- n of a choice
-- SCENESWAP=scene_road n you open the door and embark
+- n the path can't be that long
+- n let's take a look...
+- SCENESWAP=scene_road n you open the door
