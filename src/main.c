@@ -10,6 +10,7 @@
 #include "gen/scene/gen_scene_inn.h"
 #include "gen/scene/gen_scene_shack.h"
 #include "gen/scene/gen_scene_blue_house.h"
+#include "scene_bandit.h"
 #include <gb/hardware.h>
 
 struct Scene *current_scene = NULL;
@@ -61,13 +62,15 @@ void main(void)
     // }
     // BANKREF_EXTERN(scene_trader_ref);
     // queue_scene(&scene_trader, BANK(scene_trader_ref));
-    BANKREF_EXTERN(scene_road_ref);
-    queue_scene(&scene_road, BANK(scene_road_ref));
+    // BANKREF_EXTERN(scene_road_ref);
+    // queue_scene(&scene_road, BANK(scene_road_ref));
     // BANKREF_EXTERN(scene_road_fork_ref);
     // queue_scene(&scene_road_fork, BANK(scene_road_fork_ref));
     // default_state.stats[STAT_VERONICA_VISITS] = 0;
     // BANKREF_EXTERN(gen_scene_blue_house_ref);
     // queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
+    BANKREF_EXTERN(scene_bandit_ref);
+    queue_scene(&scene_bandit, BANK(scene_bandit_ref));
     // sound_init();
     clear_bkg();
     SHOW_BKG;

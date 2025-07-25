@@ -5,6 +5,7 @@
 #include "character_cheri.h"
 #include "character_veronica.h"
 #include "character_trader.h"
+#include "character_bandit_a.h"
 
 void character_reset(void)
 {
@@ -13,6 +14,7 @@ BANKREF_EXTERN(character_store_owner_ref)
 BANKREF_EXTERN(character_cheri_ref)
 BANKREF_EXTERN(character_veronica_ref)
 BANKREF_EXTERN(character_trader_ref)
+BANKREF_EXTERN(character_bandit_a_ref)
 struct BankedCharacter
 {
     const struct Character *character;
@@ -25,6 +27,7 @@ const struct BankedCharacter bankedCharacters[CHARACTER_MODEL_COUNT] = {
     {.character = &character_cheri, .bank = BANK(character_cheri_ref)},
     {.character = &character_veronica, .bank = BANK(character_veronica_ref)},
     {.character = &character_trader, .bank = BANK(character_trader_ref)},
+    {.character = &character_bandit_a, .bank = BANK(character_bandit_a_ref)},
 };
 void character_init(enum CharacterModel model, uint8_t tile_x, uint8_t tile_y)
 {

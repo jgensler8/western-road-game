@@ -44,13 +44,13 @@ build/%.o:	src/%.s
 
 # FONT = lankygitmono.c
 FONT = lankygitmono_short.c
-ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c sp_road_sign.c sp_trader_road.c sp_road_blue_house.c
+ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c bg_bandit_a.c sp_bandit_a.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c sp_road_sign.c sp_trader_road.c sp_road_blue_house.c
 METASPRITE_FIX_SOURCE = $(addprefix src/gen/metasprite_fix/,$(ASSETS))
 METASPRITE_FIX_HEADER = $(patsubst %.c,%.h,$(METASPRITE_FIX_SOURCE))
 ROAD_SPRITES = road_sprite_cacti.c road_sprite_rock.c road_sprite_inn.c road_sprite_shack.c road_sprite_trader.c road_sprite_blue_house.c road_sprite_road_sign.c
-CHARACTERS = character_store_owner.c character_cheri.c character_veronica.c character_trader.c character_simple.c character.c
+CHARACTERS = character_store_owner.c character_cheri.c character_veronica.c character_trader.c character_bandit_a.c character_simple.c character.c
 SCENES_GENERATED = gen_scene_inn.c gen_scene_customers.c gen_scene_intro.c gen_scene_shack.c gen_scene_blue_house.c
-SCENES_CORE = scene_dialog.c scene_intro_dialog.c scene_start_menu.c road_sprite.c scene_road.c scene_shop.c scene_options.c scene_trader.c scene_road_fork.c
+SCENES_CORE = scene_dialog.c scene_intro_dialog.c scene_start_menu.c road_sprite.c scene_road.c scene_shop.c scene_options.c scene_trader.c scene_road_fork.c scene_bandit.c
 SCENES = $(addprefix src/,$(SCENES_CORE)) $(addprefix src/gen/scene/,$(SCENES_GENERATED))
 SRCS_CORE = data.c text.c input.c sound.c animate.c items.c
 SRCS = $(addprefix src/,$(SRCS_CORE)) $(addprefix src/gen/png2asset/,$(ASSETS)) $(addprefix src/,$(CHARACTERS)) $(addprefix src/,$(ROAD_SPRITES)) $(METASPRITE_FIX_SOURCE) $(SCENES)
@@ -137,6 +137,12 @@ $(ASSET_OUT)/bg_trader.c: $(ASSET_IN)/bg_trader.png
 
 $(ASSET_OUT)/sp_trader.c: $(ASSET_IN)/sp_trader.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 5
+
+$(ASSET_OUT)/bg_bandit_a.c: $(ASSET_IN)/bg_bandit_a.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 7 -sprite_no_optimize -b 8
+
+$(ASSET_OUT)/sp_bandit_a.c: $(ASSET_IN)/sp_bandit_a.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -max_palettes 3 -sprite_no_optimize -b 8
 
 
 $(METASPRITE_FIX_OUT)/%.c: $(ASSET_OUT)/%.c
