@@ -606,7 +606,7 @@ static void render(const struct SceneRenderOptions* options) {
         break;
     case 14:
         if(progress_changed) {
-            text_progress_init("WELL, TO EACH", "THERE OWN", &frame);
+            text_progress_init("WELL, TO EACH", "THEIR OWN", &frame);
             character_start_talking(CHARACTER_MODEL_STORE_OWNER);
         }
         if(!text_draw_frame_progress(&frame))

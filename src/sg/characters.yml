@@ -14,3 +14,5 @@ characters:
     character_model: CHARACTER_MODEL_CHERI
   v:
     character_model: CHARACTER_MODEL_VERONICA
+  a:
+    character_model: CHARACTER_MODEL_BANDIT_A

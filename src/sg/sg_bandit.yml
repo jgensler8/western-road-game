@@ -1,0 +1,60 @@
+bank: 8
+dialog:
+- a halt!
+- - - p let me go!
+    - a i don't think so
+    - a i've had a bad day
+    - a and now you'll have one too
+    - RENDERIF=STAT(GOLD)>0 JUMP=coin a
+    - a wait... you don't have any coins!
+    - a what a waste of time!
+    - JUMP=done a humph!
+  - - p what do you want?
+    - a me? want?
+    - a let's test your luck
+    - a answer this question and ...
+    - a you'll be free!
+    - JUMP=question a now lets see...
+
+# 
+# coin
+#
+- LABEL=coin a for a small fee...
+- a i'll let you go
+- a sound fair?
+- - - p no! definitely not
+    - a have it your way then!
+    - CODE=STAT(GOLD)=0 a i'll take it all!
+    - JUMP=done p hahaha!
+  - - p fine...
+    - a very well then
+    - CODE=STAT(GOLD)-=1 a just one should be enough
+    - JUMP=done p see you around
+
+#
+# 
+#
+- LABEL=question a how many steps have you taken?
+- a even or odd?
+- - - p even
+    - RENDERIF=STAT(STEPS)%2==0 JUMP=questioncorrect
+    - JUMP=questionfail
+  - - p odd
+    - RENDERIF=STAT(STEPS)%2==1 JUMP=questioncorrect
+    - JUMP=questionfail
+
+- LABEL=questioncorrect a wow correct!
+- a let me reward you
+- a something special, too!
+- JUMP=done
+
+- LABEL=questionfail a seems like ...
+- a you need to learn a lesson
+- a here is a fee for my time
+- CODE=STAT(GOLD)-=1 a that will be all
+
+#
+# done
+#
+
+- LABEL=done SCENESWAP=scene_road n ...

@@ -11,6 +11,7 @@
 #include "gen/scene/gen_scene_inn.h"
 #include "gen/scene/gen_scene_shack.h"
 #include "gen/scene/gen_scene_blue_house.h"
+#include "gen/scene/gen_scene_bandit.h"
 #include "scene_bandit.h"
 #include <gb/hardware.h>
 
@@ -46,8 +47,8 @@ void main(void)
     default_state.goal = GOAL_NONE;
     default_state.quest = QUEST_NONE;
     SCENE_OPTIONS_INIT
-    BANKREF_EXTERN(scene_title_ref)
-    queue_scene(&scene_title, BANK(scene_title_ref));
+    // BANKREF_EXTERN(scene_title_ref)
+    // queue_scene(&scene_title, BANK(scene_title_ref));
     // BANKREF_EXTERN(gen_scene_blue_house_ref);
     // queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
     // BANKREF_EXTERN(gen_scene_inn_ref);
@@ -72,6 +73,8 @@ void main(void)
     // queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
     // BANKREF_EXTERN(scene_bandit_ref);
     // queue_scene(&scene_bandit, BANK(scene_bandit_ref));
+    BANKREF_EXTERN(gen_scene_bandit_ref);
+    queue_scene(&gen_scene_bandit, BANK(gen_scene_bandit_ref));
     // sound_init();
     clear_bkg();
     SHOW_BKG;

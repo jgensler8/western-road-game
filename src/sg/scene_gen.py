@@ -332,11 +332,11 @@ def get_jump_enabled(cur: Node) -> str:
     return "0"
 
 
-def get_progress_for_label(start: Node, cur: Node) -> int:
+def get_progress_for_label(beginning: Node, cur: Node) -> int:
     label = cur.options.flags.get("JUMP", None)
     if not label:
         return 254
-    for node in dialog_map_all_nodes(start):
+    for node in dialog_map_all_nodes(beginning):
         if node.options.flags.get("LABEL", None) == label:
             # print(f"found {node.id}")
             return node.id
@@ -347,7 +347,7 @@ def get_optional_set_quest(cur: Node) -> str:
     return cur.options.flags.get("SETQUEST", "QUEST_NONE")
 
 
-def dialog_render(start: Node, characters: any) -> (str, str, str):
+def dialog_render(beginning: Node, start: Node, characters: any) -> (str, str, str):
     variables = ""
     process_input = ""
     render = ""
@@ -363,7 +363,7 @@ def dialog_render(start: Node, characters: any) -> (str, str, str):
                 render_if_condition=get_render_if_condition(cur),
                 code_flag=get_code_flag(cur.options),
                 jump_enabled=get_jump_enabled(cur),
-                jump_progress_step=get_progress_for_label(start, cur),
+                jump_progress_step=get_progress_for_label(beginning, cur),
                 optional_set_quest=get_optional_set_quest(cur),
             )
             render += template_chat_render.format(
@@ -377,11 +377,15 @@ def dialog_render(start: Node, characters: any) -> (str, str, str):
             )
         elif cur.type == NodeType.MENU:
             # menu
-            (v, pi, r) = dialog_render(start=cur.child[0], characters=characters)
+            (v, pi, r) = dialog_render(
+                beginning=beginning, start=cur.child[0], characters=characters
+            )
             variables += v
             process_input += pi
             render += r
-            (v, pi, r) = dialog_render(start=cur.child[1], characters=characters)
+            (v, pi, r) = dialog_render(
+                beginning=beginning, start=cur.child[1], characters=characters
+            )
             variables += v
             process_input += pi
             render += r
@@ -418,7 +422,7 @@ if __name__ == "__main__":
         dialog_build_map(parent=dialog_map, dialog_arr=parsed["dialog"])
         dialog_map_init_ids(start=dialog_map.child[0])
         (variables, process_input, render) = dialog_render(
-            start=dialog_map.child[0], characters=characters_yml
+            beginning=dialog_map, start=dialog_map.child[0], characters=characters_yml
         )
         variables += get_scene_swap_extern(start=dialog_map.child[0])
         character_options = dialog_all_character_options(start=dialog_map.child[0])
