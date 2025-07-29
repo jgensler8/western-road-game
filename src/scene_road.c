@@ -38,6 +38,7 @@ static void render(struct SceneRenderOptions *options)
 {
     if (options->swapped)
     {
+        sound_play_song(SONG_ROAD);
         // palettes
         palette_util_init_bkg(PALETTE_UTIL_BG(bg_road));
 

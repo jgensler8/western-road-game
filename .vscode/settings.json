@@ -30,6 +30,7 @@
         "road_sprite.h": "c",
         "sp_shack.h": "c",
         "character_veronica.h": "c",
-        "gen_scene_bandit.h": "c"
+        "gen_scene_bandit.h": "c",
+        "hugedriver.h": "c"
     }
 }

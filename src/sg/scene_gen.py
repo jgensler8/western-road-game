@@ -38,7 +38,7 @@ static void process_input(void) {{
 }}
 
 static void render(const struct SceneRenderOptions* options) {{
-    if(options->swapped){{ {character_init_string} progress = 0; progress_changed = 1; code_ready = 1; }}
+    if(options->swapped){{ {character_init_string} sound_play_song({song}); progress = 0; progress_changed = 1; code_ready = 1; }}
     {character_render_string}
     switch(progress)
     {{
@@ -439,6 +439,7 @@ if __name__ == "__main__":
         # template c file (use format)
         c_content = template_c.format(
             bank=parsed.get("bank", default_bank),
+            song=parsed.get("song", "SONG_NONE"),
             scene_name=scene_name,
             variables=variables,
             process_input=process_input,

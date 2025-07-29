@@ -238,6 +238,7 @@ static void render(struct SceneRenderOptions *options)
 {
     if (options->swapped)
     {
+        sound_play_song(SONG_TRADER);
         menu_reset_state();
         character_init(CHARACTER_MODEL_TRADER, 1, 1);
         progress = 0;

@@ -487,7 +487,7 @@ static void process_input(void) {
 }
 
 static void render(const struct SceneRenderOptions* options) {
-    if(options->swapped){ character_init(CHARACTER_MODEL_STORE_OWNER,1,1); progress = 0; progress_changed = 1; code_ready = 1; }
+    if(options->swapped){ character_init(CHARACTER_MODEL_STORE_OWNER,1,1); sound_play_song(SONG_NONE); progress = 0; progress_changed = 1; code_ready = 1; }
     character_render(CHARACTER_MODEL_STORE_OWNER, CHARACTER_EXPRESSION_DEFAULT);
     switch(progress)
     {

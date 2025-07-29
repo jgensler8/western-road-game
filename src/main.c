@@ -12,7 +12,6 @@
 #include "gen/scene/gen_scene_shack.h"
 #include "gen/scene/gen_scene_blue_house.h"
 #include "gen/scene/gen_scene_bandit.h"
-#include "scene_bandit.h"
 #include <gb/hardware.h>
 
 struct Scene *current_scene = NULL;
@@ -75,7 +74,7 @@ void main(void)
     // queue_scene(&scene_bandit, BANK(scene_bandit_ref));
     BANKREF_EXTERN(gen_scene_bandit_ref);
     queue_scene(&gen_scene_bandit, BANK(gen_scene_bandit_ref));
-    // sound_init();
+    sound_init();
     clear_bkg();
     SHOW_BKG;
     SHOW_SPRITES;

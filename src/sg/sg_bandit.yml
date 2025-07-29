@@ -1,4 +1,5 @@
 bank: 8
+song: SONG_BANDIT
 dialog:
 - a halt!
 - - - p let me go!
