@@ -17,7 +17,7 @@ void draw_frame(uint8_t screen_x, uint8_t screen_y, uint8_t width, uint8_t heigh
 void draw_frame_win(uint8_t screen_x, uint8_t screen_y, uint8_t width, uint8_t height);
 void text_draw_frame(char *line_1, char *line_2);
 
-#define PROGRESS_FRAME_WAIT 4
+#define PROGRESS_FRAME_WAIT 3
 struct ProgressableFrame
 {
     char *line_1;

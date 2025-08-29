@@ -44,7 +44,7 @@ build/%.o:	src/%.s
 
 # FONT = lankygitmono.c
 FONT = lankygitmono_short.c
-ASSETS = $(FONT) sframe7.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c bg_bandit_a.c sp_bandit_a.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c sp_road_sign.c sp_trader_road.c sp_road_blue_house.c
+ASSETS = $(FONT) sframe7.c western_road_title.c bg_road.c sp_cacti.c bg_store_owner.c sp_store_owner.c bg_cheri.c sp_cheri.c bg_veronica.c sp_veronica.c bg_bandit_a.c sp_bandit_a.c sp_inn.c sp_shack.c sp_rock.c bg_trader.c sp_trader.c sp_road_sign.c sp_trader_road.c sp_road_blue_house.c
 METASPRITE_FIX_SOURCE = $(addprefix src/gen/metasprite_fix/,$(ASSETS))
 METASPRITE_FIX_HEADER = $(patsubst %.c,%.h,$(METASPRITE_FIX_SOURCE))
 ROAD_SPRITES = road_sprite_cacti.c road_sprite_rock.c road_sprite_inn.c road_sprite_shack.c road_sprite_trader.c road_sprite_blue_house.c road_sprite_road_sign.c
@@ -90,6 +90,9 @@ $(ASSET_OUT)/lankygitmono_short.c: $(ASSET_IN)/lankygitmono_short.png
 
 $(ASSET_OUT)/sframe7.c: $(ASSET_IN)/sframe7.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 1
+
+$(ASSET_OUT)/western_road_title.c: $(ASSET_IN)/western_road_title.png
+	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2
 
 $(ASSET_OUT)/bg_road.c: $(ASSET_IN)/bg_road.png
 	$(PNG2ASSET) $< -o $@ -noflip -bpp 2 -spr8x8 -sprite_no_optimize -b 2

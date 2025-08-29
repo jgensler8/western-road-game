@@ -38,7 +38,7 @@ void main(void)
         .change = STAT_CHANGE_INC,
     };
     default_state.calculations[0] = default_calculation;
-    default_state.stats[STAT_GOLD] = 1;
+    default_state.stats[STAT_GOLD] = 5;
     default_state.stats[STAT_INN_VISITS] = 0;
     default_state.next_event = ROAD_EVENT_NONE;
     default_state.next_event_steps = 0;
@@ -46,8 +46,8 @@ void main(void)
     default_state.goal = GOAL_NONE;
     default_state.quest = QUEST_NONE;
     SCENE_OPTIONS_INIT
-    // BANKREF_EXTERN(scene_title_ref)
-    // queue_scene(&scene_title, BANK(scene_title_ref));
+    BANKREF_EXTERN(scene_title_ref)
+    queue_scene(&scene_title, BANK(scene_title_ref));
     // BANKREF_EXTERN(gen_scene_blue_house_ref);
     // queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
     // BANKREF_EXTERN(gen_scene_inn_ref);
@@ -72,8 +72,8 @@ void main(void)
     // queue_scene(&gen_scene_blue_house, BANK(gen_scene_blue_house_ref));
     // BANKREF_EXTERN(scene_bandit_ref);
     // queue_scene(&scene_bandit, BANK(scene_bandit_ref));
-    BANKREF_EXTERN(gen_scene_bandit_ref);
-    queue_scene(&gen_scene_bandit, BANK(gen_scene_bandit_ref));
+    // BANKREF_EXTERN(gen_scene_bandit_ref);
+    // queue_scene(&gen_scene_bandit, BANK(gen_scene_bandit_ref));
     sound_init();
     clear_bkg();
     SHOW_BKG;

@@ -31,6 +31,8 @@
         "sp_shack.h": "c",
         "character_veronica.h": "c",
         "gen_scene_bandit.h": "c",
-        "hugedriver.h": "c"
+        "hugedriver.h": "c",
+        "gen_scene_intro.h": "c",
+        "western_road_title.h": "c"
     }
 }
